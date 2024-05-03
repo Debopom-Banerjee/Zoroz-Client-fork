@@ -1,4 +1,3 @@
-import { supabase } from "@/lib/supabase-client";
 import axios from "axios";
 
 export async function getUserInfo() {
