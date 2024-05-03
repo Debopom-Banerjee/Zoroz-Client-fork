@@ -1,10 +1,10 @@
-import { User } from "@supabase/supabase-js";
+
 
 interface cartType{
   product_id: string;
   quantity: number;
 }
-export interface IUser extends User {
+export interface IUser {
   _id: string;
   name: string;
   email: string;
