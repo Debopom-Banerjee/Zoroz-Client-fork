@@ -1,6 +1,5 @@
 "use client";
 import { useUser } from "@/lib/store/user";
-import { login } from "@/utils/functions/login";
 import { phoneLogin } from "@/utils/functions/phoneLogin";
 import { verifyOtp } from "@/utils/functions/verifyOtp";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
@@ -21,17 +20,6 @@ const AuthModal = ({
   const [phone, setPhone] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  const handleLogin = async () => {
-    try {
-      const data = await login();
-      setTimeout(() => {
-        toast.success("Login Successful");
-      }, 5000);
-      onClose();
-    } catch {
-      toast.error("Login Failed");
-    }
-  };
   const clientID =
     process.env.GOOGLE_CLIENT_ID ||
     "809204834816-f3stqre8cdau2vhaq8rjgnb047pm2q64.apps.googleusercontent.com";
