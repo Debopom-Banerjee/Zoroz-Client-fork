@@ -25,6 +25,7 @@ const MassProductAdd = () => {
    }, [csvData!=null]);
    const handleSubmit = async ()=>{
     try{
+      
       const data = await addMultipleProducts(csvData);
       toast.success("Multiple Products Added !")
     }

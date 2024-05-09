@@ -7,8 +7,9 @@ import { useUser } from "@/lib/store/user";
 import { addMultipleOrder } from "@/utils/functions/addMultipleOrders";
 import { fetchCart } from "@/utils/functions/fetchCart";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const page = () => {
   const [inputs, setInputs] = useState({
@@ -27,6 +28,7 @@ const page = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
   const user = useUser((state) => state.user);
+  const router = useRouter();
   const [cartData, setCartData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -96,16 +98,17 @@ const page = () => {
       const data = await addMultipleOrder(orderDetails)
       if(data?.status==201){
         toast.success("Order Placed Successfully")
+        router.push("/profile/orders")
       }
     }
     catch{
-
+      toast.error("Error Occured !")
     }
   }
   return (
     <>
     <Navbar />
-  
+    <Toaster position="bottom-right" />
     <div className="min-h-[80vh]">
       <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start justify-center mx-auto w-full">
         <div className="bg-white w-full flex flex-col items-center gap-3 lg:w-[40%] rounded-xl p-4">
@@ -115,7 +118,7 @@ const page = () => {
               id="name"
               name="Name"
               type="text"
-              placeholder="Enter your name"
+              
               value={inputs.name}
               width="40%"
               onChange={handleInputChange}
@@ -125,7 +128,7 @@ const page = () => {
               name="Email"
               type="email"
               width="40%"
-              placeholder="Enter your email"
+              
               value={inputs.email}
               onChange={handleInputChange}
             />
@@ -164,7 +167,7 @@ const page = () => {
             />
           </div>
           <div className="flex flex-row flex-wrap items-center px-3 font-semibold  md:gap-2">
-                <label htmlFor="gender">Gender : </label>
+                <label htmlFor="payment_method">Payment Method : </label>
                 <div className="flex w-full flex-row flex-wrap items-center gap-10  max-md:justify-between  md:items-center md:gap-16 ">
                   <label className="flex flex-row items-center gap-1">
                     <input

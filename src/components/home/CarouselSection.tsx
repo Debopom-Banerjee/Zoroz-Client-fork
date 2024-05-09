@@ -16,40 +16,34 @@ const CarouselSection = () => {
     <div className="w-full ">
     <Carousel slideInterval={5000} className='h-[200px] lg:h-[300px] z-10 relative'>
       <Image
-        width={96}
+        width={500}
         height={96}
-        src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
+        src="https://i.postimg.cc/BnyQb2Zd/banner1.jpg"
         alt="..."
         className='z-10'
       />
       <Image
-        width={96}
+        width={500}
         height={96}
-        src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
+        src="https://i.postimg.cc/Wb54RQBp/banner2.jpg"
         alt="..."
         className='z-10'
       />
       <Image
-        width={96}
+        width={500}
         height={96}
-        src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
+        src="https://i.postimg.cc/6pTpBMKr/banner3.jpg"
         alt="..."
         className='z-10'
       />
       <Image
-        width={96}
+        width={500}
         height={96}
-        src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
+        src="https://i.postimg.cc/7L2P2bfb/banner4.jpg"
         alt="..."
         className='z-10'
       />
-      <Image
-        width={96}
-        height={96}
-        src="https://flowbite.com/docs/images/carousel/carousel-5.svg"
-        alt="..."
-        className='z-10'
-      />
+     
     </Carousel>
     <div className='hidden md:flex flex-row items-center justify-between border  rounded-b-xl'>
         <CarouselTabSelector />

@@ -84,6 +84,7 @@ const page = () => {
                       <td
                         className="border border-gray-300 px-4 py-2"
                         onClick={() => {
+                          console.log(registration)
                           setModalData(registration);
                           setIsOpen(true);
                         }}
@@ -104,13 +105,16 @@ const page = () => {
 
                    
                       <td className="border border-gray-300  py-2">
-                        {registration.customer.phone}
+                        {registration && registration?.customer?.phone}
                       </td>
                       <td className="border border-gray-300  py-2">
                         {registration.payment_method}
                       </td>
                       <td className="border border-gray-300  py-2">
-                        <button onClick={()=>setIsOpen(true)} className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
+                        <button onClick={()=>{
+                          setIsOpen(true)
+                          setModalData(registration);
+                          }} className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
                           View Details
                         </button>
                       </td>
@@ -149,6 +153,7 @@ const ApproveModal = ({
   data: any;
   setFilteredResults: any;
 }) => {
+  console.log(data)
   const [imageUrl, setImageUrl] = useState<any>("");
   const [loaded, setLoaded] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);

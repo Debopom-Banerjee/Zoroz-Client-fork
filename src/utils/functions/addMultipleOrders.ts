@@ -1,11 +1,15 @@
 import axios from "axios";
-
+import { v4 as uuidv4 } from 'uuid';
 export const addMultipleOrder = async(data:any)=>{
     try {
+      const ordersWithData = data.map((order:any) => ({
+        ...order,
+        transaction_id: uuidv4() // Generate UUID for each order
+    }));
         const token: any = localStorage.getItem("token");
         const response = await axios.post(
           `https://zoroz-ecommerce-backend.onrender.com/orders/add-multiple`,
-          data,
+          ordersWithData,
           {
             headers: {
               Authorization: `Bearer ${token}`,

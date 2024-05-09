@@ -14,7 +14,7 @@ const SessionProvider = () => {
   const readUserSession = async () => {
     try {
       const data = await getUserInfo();
-
+      console.log(data)
       setUser(data);
       if (data) {
         const cart = await fetchCart(data._id);

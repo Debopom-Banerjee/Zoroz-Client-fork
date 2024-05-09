@@ -4,12 +4,12 @@ import React from "react";
 
 const Brand = ({brand}:{brand:any}) => {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <Link href={`/products/brands/${brand.name}`} className="flex flex-col items-center gap-2">
       <div className=" bg-white rounded-full border border-slate-300 p-4 py-6">
         <img src={brand.image} width={80} height={80} alt="" />
       </div>
       <h1 className="text-xs">{brand.name}</h1>
-    </div>
+    </Link>
   );
 };
 
@@ -36,11 +36,11 @@ const ProductCard = ({product}:{product:any}) => {
 
 const SpecialCategory = ({ category }: { category: any }) => {
   return (
-    <div className="bg-[#ffedcb] border px-5 pt-5 pb-10 rounded-xl flex flex-col items-center gap-1">
+    <Link href={`/products/categories/${category.name}`} className="bg-[#ffedcb] border px-5 pt-5 pb-10 rounded-xl flex flex-col items-center gap-1">
       <img src={category.image} width={200} height={100} alt="" />
       <h1 className="font-semibold text-sm">{category.name}</h1>
       <h1 className="text-xs">Explore Now</h1>
-    </div>
+    </Link>
   );
 };
 
@@ -84,14 +84,16 @@ const SellingCategory = ({ product }: { product: any }) => {
       <div className="flex bg-[#efeff4] flex-col items-start justify-center gap-5 ">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-2 px-4 py-4">
           <TopBrands brands={product.brands} />
-
           <CategoriesAssemble categories={product.sub_categories} />
         </div>
 
-        <div className="px-2 md:px-4 pb-4 md:flex flex-row flex-wrap grid grid-cols-2 gap-2 items-center  justify-center">
-          {product.products.map((productData: any, index: number) => {
-            return <ProductCard product={productData} />;
-          })}
+        <div className="px-2 md:px-4 pb-4 md:flex flex-row flex-wrap gap-10 items-center  justify-center">
+        {product.products.slice(0, 4).map((productData: any, index: number) => {
+  return(  
+    <ProductCard product={productData} key={index} />
+  );
+})}
+
         </div>
       </div>
     </div>

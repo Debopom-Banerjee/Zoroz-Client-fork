@@ -3,32 +3,41 @@ import { Carousel } from "flowbite-react";
 import Image from "next/image";
 import CarouselSection from "./CarouselSection";
 import Link from "next/link";
-const SideChip = () => {
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { getCategories } from "@/utils/functions/getCategories";
+
+const referralCardImages = [
+  "https://i.postimg.cc/QNktmBST/banner5.jpg",
+  "https://i.postimg.cc/yxP885WP/banner6.jpg",
+  "https://i.postimg.cc/bNyvBzFF/banner7.jpg"
+]
+
+const SideChip = ({category}:{category:any}) => {
   return (
-    <Link href={"/"} className="flex flex-row items-center gap-2">
-      <Image src="/assets/home/chair.jpg" width={40} height={40} alt="chair" />
-      <h1 className="text-sm">Office Stationery & Supplies</h1>
+    <Link href={`/products/${category}`} className="flex font-semibold hover:text-red-500 duration-300 flex-row items-center gap-2">
+      
+      <h1 className="text-sm">{category}</h1>
     </Link>
   );
 };
 
-const MobileChip = () => {
+const MobileChip = ({ category }: { category: any }) => {
   return (
-    <div className="flex flex-col items-center px-5 pb-3 bg-gray-300 rounded-xl">
-      <Image src="/assets/home/chair.jpg" width={40} height={40} alt="chair" />
-      <h1 className="text-sm">Office Stationery & Supplies</h1>
-    </div>
+    <Link href={`/products/${category}`} className="flex flex-col items-center font-semibold  px-5 py-3 bg-gray-300 rounded-xl">
+      <h1 className="text-sm">{category}</h1>
+    </Link>
   );
 };
 
-const ReferralCards = () => {
+const ReferralCards = ({image}:{image:string}) => {
   return (
     <div className="w-full h-full flex flex-row items-center gap-2">
       <Image
-        width={96}
+        width={500}
         height={100}
-        src="https://cdn.moglix.com/cms/flyout/Images_2024-04-05_17-20-42_Gold_pwa-waxpol.png"
-        className="w-full md:h-36"
+        src={image}
+      
         alt="chair"
       />
     </div>
@@ -36,25 +45,27 @@ const ReferralCards = () => {
 };
 
 const Hero = () => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getCategories();
+      console.log(res);
+      setCategories(res.map((category: any) => category.name));
+    };
+    fetchCategories();
+  }, []);
   return (
     <div className="w-full flex flex-col md:flex-row  items-start justify-center gap-5 my-5 ">
       <div className="hidden md:flex flex-col h-full items-start gap-5 w-auto pl-3 pr-16 py-5  bg-white rounded-xl">
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
-        <SideChip />
+       {
+        categories?.map((category:any)=>{
+          return(
+            <SideChip category={category} />
+          )
+        })
+       }
         <div className="flex flex-row items-center gap-2">
-          <Image
-            src="/assets/home/chair.jpg"
-            width={40}
-            height={40}
-            alt="chair"
-          />
+        
           <h1 className="text-red-500 text-sm">View All Categories</h1>
         </div>
       </div>
@@ -64,26 +75,21 @@ const Hero = () => {
           <CarouselSection />
         </div>
         <div className="flex flex-col md:flex-row gap-1 items-center  h-full justify-between">
-          <ReferralCards />
-          <ReferralCards />
-          <ReferralCards />
+          {referralCardImages?.map((image:string,index:number)=>{
+            return(
+              <ReferralCards image={image} />
+            )
+          })}
         </div>
-        
       </div>
       <div className="flex md:hidden flex-col items-start gap-4">
         <h1 className="text-start font-semibold text-xl">
           Trending Categories
         </h1>
         <div className="grid grid-cols-3 gap-2 ">
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
-          <MobileChip />
+          {categories.map((category: any, index: number) => {
+            return <MobileChip key={index} category={category} />;
+          })}
         </div>
       </div>
     </div>

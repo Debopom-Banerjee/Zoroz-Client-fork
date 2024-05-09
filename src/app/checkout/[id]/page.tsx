@@ -6,9 +6,9 @@ import Footer from "@/components/home/Footer";
 import { useUser } from "@/lib/store/user";
 import { addOrder } from "@/utils/functions/addOrder";
 import { getProductById } from "@/utils/functions/getProductById";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { PuffLoader } from "react-spinners";
 
@@ -72,6 +72,7 @@ const page = () => {
     }
   }, [user, productData, productQuantity]);
 
+  const router =useRouter();
   const handleAddOrder = async () => {
     const orderDetails = {
       product_id: productId,
@@ -90,16 +91,18 @@ const page = () => {
       status: "pending",
       vendor_approval: false,
       admin_approval: false,
+      payment_method: inputs.payment_method,
     };
     const data = await addOrder(orderDetails);
     if (data?.status === 201) {
       toast.success("Order Placed Successfully");
+      router.push("/profile/orders");
     }
   };
   return (
     <>
       <Navbar />
-
+    <Toaster position="bottom-right" />
       <div className="min-h-[80vh]">
         {loading ? (
           <div className="flex items-center justify-center h-screen">
@@ -192,7 +195,7 @@ const page = () => {
                 />
               </div>
               <div className="flex flex-row flex-wrap items-center px-3 font-semibold  md:gap-2">
-                <label htmlFor="gender">Gender : </label>
+                <label htmlFor="payment_method">Payment Method : </label>
                 <div className="flex w-full flex-row flex-wrap items-center gap-10  max-md:justify-between  md:items-center md:gap-16 ">
                   <label className="flex flex-row items-center gap-1">
                     <input

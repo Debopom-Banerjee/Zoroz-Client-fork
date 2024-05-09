@@ -133,11 +133,11 @@ const Navbar = () => {
             <IoPerson size={25} className="text-slate-600" />
             <p className="text-slate-600 ">{user ?  "Logout" : "Login Now"}</p>
           </div>}
-          <div className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
+          <Link href={`/profile/orders`} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
             <RiGpsFill size={25} className="text-slate-600" />
             <p className="text-slate-600">Track Order</p>
-          </div>
-          <Link href={"/cart"} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
+          </Link>
+          <Link href={"/profile/cart"} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
             <IoMdCart size={25} className="text-slate-600" />
             <p className="text-slate-600">Cart {cart && cart?.cart?.length}</p>
           </Link>

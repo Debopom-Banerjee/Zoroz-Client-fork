@@ -34,7 +34,7 @@ const FormElement = ({
       disabled={disabled}
       id={id}
       placeholder={placeholder}
-      className={` w-full  border-b border-black px-2 py-1 font-semibold max-md:w-full focus:border-b bg-transparent `}
+      className={` w-full  border-b rounded-md border-black px-2 py-1 font-semibold max-md:w-full focus:border-b bg-transparent `}
     />
   </div>
   )
