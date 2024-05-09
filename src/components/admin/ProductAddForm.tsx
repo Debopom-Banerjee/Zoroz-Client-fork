@@ -169,16 +169,17 @@ const ProductAddForm = () => {
   }, [inputs.brand]);
   console.log(inputs);
   return (
-    <div className="p-5 w-4/5 flex flex-col gap-5 items-start bg-white border-2 border-black rounded-xl mx-auto">
+    <div className="p-5 w-4/5 flex flex-col gap-5 items-start bg-white border-2 border-red-600 rounded-xl mx-auto">
       <h1 className="font-semibold text-2xl">Add Product</h1>
       <Toaster position="bottom-right" />
-      <div className=" flex flex-row mx-auto justify-center items-center flex-wrap gap-3 w-full">
+      <div className=" flex flex-row mx-auto  flex-wrap gap-3 w-full">
         <FormElement
           id="name"
           name="Name"
           value={inputs.name}
           onChange={handleInputChange}
           type="text"
+          width="40%"
         />
 
         <FormElement
@@ -187,6 +188,7 @@ const ProductAddForm = () => {
           value={inputs.mrp}
           onChange={handleInputChange}
           type="number"
+          width="40%"
         />
         <FormElement
           id="price"
@@ -194,6 +196,7 @@ const ProductAddForm = () => {
           value={inputs.price}
           onChange={handleInputChange}
           type="number"
+          width="20%"
         />
         <FormElement
           id="stock_count"
@@ -201,6 +204,7 @@ const ProductAddForm = () => {
           value={inputs.stock_count}
           onChange={handleInputChange}
           type="number"
+          width="20%"
         />
         <FormElement
           id="image"
@@ -208,6 +212,7 @@ const ProductAddForm = () => {
           value={inputs.image}
           onChange={handleInputChange}
           type="text"
+          width="40%"
         />
         <FormElement
           id="video_link"
@@ -215,6 +220,7 @@ const ProductAddForm = () => {
           value={inputs.video_link}
           onChange={handleInputChange}
           type="text"
+          width="40%"
         />
 
         <FormElement
@@ -223,6 +229,7 @@ const ProductAddForm = () => {
           value={inputs.warranty}
           onChange={handleInputChange}
           type="text"
+          width="20%"
         />
       </div>
       <div className="flex flex-row items-center gap-10 justify-center w-full flex-wrap">
@@ -265,12 +272,12 @@ const ProductAddForm = () => {
         <ReactQuill
           theme="snow"
           value={inputs.description}
-          className="w-full   text-[#1a8fdd]"
+          className="w-full   text-red-600"
           onChange={(value) => handleQuillChange(value, "description")}
         />
       </div>
       <div className="flex flex-col items-start gap-5">
-        <div className="flex flex-col  items-start gap-2 text-[#1a8fdd]">
+        <div className="flex flex-col  items-start gap-2 text-red-600">
           <label
             htmlFor={"specifications"}
             className="font-semibold flex flex-row items-center gap-2  text-base md:text-lg"
@@ -306,7 +313,7 @@ const ProductAddForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-col  items-start gap-2 text-[#1a8fdd]">
+        <div className="flex flex-col  items-start gap-2 text-red-600">
           <label
             htmlFor={"benefits"}
             className="font-semibold flex flex-row items-center gap-2  text-base md:text-lg"
@@ -347,7 +354,7 @@ const ProductAddForm = () => {
             ))}
         </div>
 
-        <div className="flex flex-col  items-start gap-2 text-[#1a8fdd]">
+        <div className="flex flex-col  items-start gap-2 text-red-600">
           <label
             htmlFor={"features"}
             className="font-semibold flex flex-row items-center gap-2  text-base md:text-lg"

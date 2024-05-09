@@ -10,10 +10,10 @@ const InfoCard = ({ title, value, color,icon }: {
   icon?: React.ReactNode
 }) => {
   return (
-    <div className={`bg-${color}-400 p-3 justify-between  text-white flex flex-row items-start rounded-md shadow-md w-[400px] h-[200px]`}>
-      <div className='flex mt-10 flex-col items-start gap-5'>
-      <h1 className='text-3xl font-semibold'>{title}</h1>
-      <p className='text-2xl font-bold'>{value}</p>
+    <div className={`bg-${color}-400 p-3 mx-auto w-[300px] h-[150px] justify-between  text-white flex flex-row items-start rounded-md shadow-md `}>
+      <div className='flex  flex-col items-start gap-5'>
+      <h1 className='text-2xl font-semibold'>{title}</h1>
+      <p className='text-xl font-bold'>{value}</p>
       </div>
       {icon}
     </div>

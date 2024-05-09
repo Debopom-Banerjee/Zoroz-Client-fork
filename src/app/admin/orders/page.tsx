@@ -31,9 +31,9 @@ const page = () => {
       ) : (
         <div className="overflow-x-auto px-3 w-full mx-auto">
           <table className="w-full oveflow-x-auto table-auto border border-gray-300 rounded-xl">
-            <thead>
-              <tr className="text-center">
-                <th>Sl. No.</th>
+          <thead className="bg-red-600 text-white font-sans tracking-wider">
+              <tr className="text-center py-4">
+                <th className="py-4">Sl. No.</th>
 
                 <th>Product Name</th>
                 <th>Quantity</th>
@@ -47,7 +47,7 @@ const page = () => {
                 {/* <th>Registered at</th> */}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="font-sans tracking-wide">
               {!(filteredResults?.length > 0) ?  
               <div className="min-h-[80vh] flex flex-col items-center justify-center mx-auto w-full">No Orders Yet !</div>
               : filteredResults.map((registration: any, index: number) => {
@@ -61,30 +61,30 @@ const page = () => {
                           : "cursor-pointer bg-red-100 text-red-500 font-semibold text-sm text-center hover:bg-red-200 hover:text-red-600"
                       }
                     >
-                      <td className="border  border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {index + 1}
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.product.name}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.quantity}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.price}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.status}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.vendor_approval
                           ? "Verified"
                           : "Not Verified"}
                       </td>
 
                       <td
-                        className="border border-gray-300 px-4 py-2"
+                        className="border text-lg border-gray-300 px-4 py-2"
                         onClick={() => {
                           setModalData(registration);
                           setIsOpen(true);
@@ -98,14 +98,16 @@ const page = () => {
                           </button>
                         )}
                       </td>
-                      <td className="border border-gray-300  py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-4">
                         {registration.customer.phone}
                       </td>
-                      <td className="border border-gray-300  py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-4">
                         {registration.payment_method}
                       </td>
-                      <td className="border border-gray-300  py-2">
-                        <button onClick={()=>setIsOpen(true)} className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
+                      <td className="border text-lg border-gray-300 px-4 py-4">
+                        <button onClick={()=>{setIsOpen(true)
+                          setModalData(registration)
+                        }} className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
                           View Details
                         </button>
                       </td>
@@ -207,7 +209,7 @@ const ApproveModal = ({
                 />
               )}
             </div>
-            <div className="mt-5 w-full flex flex-row items-center justify-center gap-5">
+            {data?.admin_approval == false && <div className="mt-5 w-full flex flex-row items-center justify-center gap-5">
               <button
                 className="w-full rounded-md bg-red-400 font-semibold px-4 py-2 text-white shadow-md hover:bg-red-600"
                 onClick={() => {
@@ -223,12 +225,15 @@ const ApproveModal = ({
                 onClick={handleApprove}
               >
                 {disabledButton ? (
-                  <PuffLoader size={20} color="white" />
+                  <div className="flex flex-col items-center w-full mx-auto">
+  <PuffLoader size={20} color="white" />
+                  </div>
+                
                 ) : (
                   "Accept"
                 )}
               </button>
-            </div>
+            </div>}
           </div>
         </div>
       )}

@@ -25,7 +25,7 @@ const page = () => {
     fetchOrders();
   }, [user]);
   return (
-    <div className="flex flex-col items-center w-full justify-center mx-auto gap-10">
+    <div className="flex flex-col items-center w-full justify-center mx-auto mt-5 gap-10">
       <h1 className="font-semibold text-3xl text-center">Registered Orders</h1>
       {loading ? (
         <div className="min-h-[60vh] flex flex-col justify-center items-center">
@@ -33,10 +33,10 @@ const page = () => {
         </div>
       ) : (
         <div className="overflow-x-auto px-3 w-full mx-auto">
-          <table className="w-full oveflow-x-auto table-auto border border-gray-300 rounded-xl">
-            <thead>
-              <tr className="text-center">
-                <th>Sl. No.</th>
+          <table className="w-full oveflow-x-auto py-4 table-auto border border-gray-300 rounded-xl">
+            <thead className="bg-red-600 text-white font-sans tracking-wider">
+              <tr className="text-center py-4 ">
+                <th className="py-4">Sl. No.</th>
 
                 <th>Product Name</th>
                 <th>Quantity</th>
@@ -50,10 +50,10 @@ const page = () => {
                 {/* <th>Registered at</th> */}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="font-sans tracking-wide">
               {!(filteredResults?.length > 0) ?  
-              <div className="min-h-[80vh] flex flex-col items-center justify-center w-full">
-                <h1 className="text-red-600 font-semibold text-xl w-full">No Orders Yet !</h1></div>
+              <div className="min-h-[80vh] flex flex-col items-center justify-center mx-auto w-full">
+                <h1 className="text-red-600 font-semibold text-xl w-full mx-auto ">No Orders Yet !</h1></div>
               : filteredResults.map((registration: any, index: number) => {
                 return (
                   <>
@@ -62,27 +62,27 @@ const page = () => {
                       className={
                         registration.admin_approval
                           ? "bg-green-100 text-green-500 font-semibold text-center text-sm"
-                          : "cursor-pointer bg-red-100 text-red-500 font-semibold text-sm text-center hover:bg-red-200 hover:text-red-600"
+                          : "cursor-pointer  bg-red-100 text-red-500 font-semibold text-sm text-center hover:bg-red-200 hover:text-red-600"
                       }
                     >
-                      <td className="border  border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-10">
                         {index + 1}
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.product.name}
                       </td>
-                      <td className="border border-gray-300 px-2 py-2">
+                      <td className="border text-lg border-gray-300 px-2 py-2">
                         {registration.quantity}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.price}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border text-lg border-gray-300 px-4 py-2">
                         {registration.status}
                       </td>
                       <td
-                        className="border border-gray-300 px-4 py-2"
+                        className="border text-lg border-gray-300 px-4 py-2"
                         onClick={() => {
                           console.log(registration)
                           setModalData(registration);
@@ -92,25 +92,25 @@ const page = () => {
                         {registration.vendor_approval ? (
                           "Verified"
                         ) : (
-                          <button className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
+                          <button className="font-semibold text-lg px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
                             Approve
                           </button>
                         )}
                       </td>
-                      <td className="border border-gray-300 px-4 py-2">
+                      <td className="border border-gray-300 text-lg px-4 py-2">
                         {registration.admin_approval
                           ? "Verified"
                           : "Not Verified"}
                       </td>
 
                    
-                      <td className="border border-gray-300  py-2">
+                      <td className="border border-gray-300 text-lg  py-2">
                         {registration && registration?.customer?.phone}
                       </td>
-                      <td className="border border-gray-300  py-2">
+                      <td className="border border-gray-300 text-lg  py-2">
                         {registration.payment_method}
                       </td>
-                      <td className="border border-gray-300  py-2">
+                      <td className="border border-gray-300  text-lg py-2">
                         <button onClick={()=>{
                           setIsOpen(true)
                           setModalData(registration);
@@ -217,7 +217,7 @@ const ApproveModal = ({
                 />
               )}
             </div>
-            <div className="mt-5 w-full flex flex-row items-center justify-center gap-5">
+            {data?.vendor_approval == false && <div className="mt-5 w-full flex flex-row items-center justify-center gap-5">
               <button
                 className="w-full rounded-md bg-red-400 font-semibold px-4 py-2 text-white shadow-md hover:bg-red-600"
                 onClick={() => {
@@ -233,12 +233,15 @@ const ApproveModal = ({
                 onClick={handleApprove}
               >
                 {disabledButton ? (
-                  <PuffLoader size={20} color="white" />
+                  <div className="flex flex-col items-center w-full mx-auto">
+  <PuffLoader size={20} color="white" />
+                  </div>
+                
                 ) : (
                   "Accept"
                 )}
               </button>
-            </div>
+            </div>}
           </div>
         </div>
       )}

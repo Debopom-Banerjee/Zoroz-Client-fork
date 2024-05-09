@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { FaProductHunt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoPerson } from "react-icons/io5";
-import { MdBrandingWatermark, MdCategory, MdDashboard } from "react-icons/md";
+import { MdBookmarkAdded, MdBrandingWatermark, MdCategory, MdDashboard } from "react-icons/md";
 import { RiProductHuntLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 
@@ -50,6 +50,11 @@ const sideBarRoutes = [
     title: "Orders",
     path: "/admin/orders",
     icon: <FiShoppingCart size={24} />,
+  },
+  {
+    title: "Coupons",
+    path: "/admin/coupons",
+    icon: <MdBookmarkAdded  size={24} />,
   },
 ];
 

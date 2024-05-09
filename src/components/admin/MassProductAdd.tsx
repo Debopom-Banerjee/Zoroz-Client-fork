@@ -35,7 +35,7 @@ const MassProductAdd = () => {
     }
    }
   return (
-    <div className="relative p-5 w-4/5 flex flex-col gap-2 items-start bg-white border-2 border-black rounded-xl mx-auto">
+    <div className="relative p-5 w-4/5 flex flex-col gap-2 items-start bg-white border-2 border-red-600 my-5 rounded-xl mx-auto">
       <h1 className="font-semibold text-2xl">Add Products</h1> 
       <CSVConverter csvData={csvData} setCsvData={setCsvData} handleSubmit={handleSubmit} />
       <Toaster position="bottom-right" />
