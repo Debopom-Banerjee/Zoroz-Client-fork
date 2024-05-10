@@ -14,20 +14,20 @@ const Brand = ({brand}:{brand:any}) => {
 };
 
 const ProductCard = ({product}:{product:any}) => {
-  const percentageOff = ((1 - (product[0].price / product[0].mrp)) * 100).toFixed(2);
+  const percentageOff = ((1 - (product.price / product.mrp)) * 100).toFixed(2);
   return (
     <div className="flex flex-col items-start gap-3 bg-white p-4  w-[150px] md:w-[250px] rounded-xl">
       <img
-        src={product[0].image}
+        src={product.image}
         className="mx-auto"
         width={200}
         height={80}
         alt=""
       />
-      <Link href={`/products/${product[0].category}/${product[0]._id}`} className="text-xs">{product[0].name}</Link>
-      <h1 className="font-semibold text-sm">₹{product[0].mrp}</h1>
+      <Link href={`/products/${product.category}/${product._id}`} className="text-xs">{product.name}</Link>
+      <h1 className="font-semibold text-sm">₹{product.mrp}</h1>
       <div className="flex flex-row items-center">
-        <s className="text-xs">₹{product[0].price}</s>
+        <s className="text-xs">₹{product.price}</s>
         <h1 className="text-xs ml-2 text-green-500">{percentageOff}% off</h1>
       </div>
     </div>
@@ -88,7 +88,7 @@ const SellingCategory = ({ product }: { product: any }) => {
         </div>
 
         <div className="px-2 md:px-4 pb-4 md:flex flex-row flex-wrap gap-10 items-center  justify-center">
-        {product.products.slice(0, 4).map((productData: any, index: number) => {
+        {product.products![0]!.slice(0, 4).map((productData: any, index: number) => {
   return(  
     <ProductCard product={productData} key={index} />
   );
