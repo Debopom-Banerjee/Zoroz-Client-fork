@@ -1,8 +1,14 @@
 "use client";
+import FormElement from '@/components/common/FormElement';
 import { getCoupons } from '@/utils/functions/getCoupons';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import 'react-calendar/dist/Calendar.css';
+import Calendar from 'react-calendar';
 import { IoBookmark } from 'react-icons/io5';
+import { PuffLoader } from 'react-spinners';
+import { addCoupon } from '@/utils/functions/addCoupon';
+import { CouponModal } from '@/components/admin/CouponModal';
 
 const CouponCard = ({coupon}:{coupon:any})=>{
   const convertIntoTime = (dateString:string)=>{
@@ -61,12 +67,12 @@ const page = () => {
           className="border border-slate-200 p-2 rounded-md w-[60%]"
         />
 
-        <Link
-        href={`/admin/coupons/add`}
+        <button
+        onClick={()=>setIsCouponModalOpen(true)}
           className="bg-black px-5 py-2 text-white border border-black hover:bg-white hover:text-black font-semibold text-sm"
         >
           Add Coupon
-        </Link>
+        </button>
 
       </div>
 
@@ -79,8 +85,16 @@ const page = () => {
             })
           }
       </div>
+      <CouponModal 
+      isOpen={isCouponModalOpen}
+      onClose={()=>setIsCouponModalOpen(false)}
+      onSubmit={()=>{}}
+      />
       </div>
   )
 }
 
 export default page
+
+
+

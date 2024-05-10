@@ -140,8 +140,9 @@ const page = () => {
           <InfoCard key={index} title={card.title} value={card.value} color={card.color} icon={card.icon} />
         ))
       }
+      <div className='flex flex-col w-full h-full justify-center'>
       <h1 className='font-semibold text-xl'>Analytics</h1>
-    <div className='flex flex-row flex-wrap items-center gap-5 w-full justify-evenly'>
+    <div className='flex flex-row flex-wrap items-start gap-5 w-full '>
     <div className='flex flex-col items-start h-full w-full lg:w-[40%]'>
       <Line data={data}
       // @ts-ignore
@@ -149,6 +150,8 @@ const page = () => {
       </div>
      
     </div>
+      </div>
+      
     </div>
   )
 }
