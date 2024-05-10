@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import { Line } from "react-chartjs-2";
+import { Doughnut, Line } from "react-chartjs-2";
 
 import {
   Chart as ChartJS,
@@ -11,9 +11,11 @@ import {
   Legend,
   Tooltip,
   Filler,
+  ArcElement,
 } from "chart.js";
 
 ChartJS.register(
+  ArcElement,
   LineElement,
   CategoryScale,
   LinearScale,
@@ -135,6 +137,41 @@ const page = () => {
       },
     },
   };
+  let data2= [
+    {
+      label: "Users",
+      value: 55,
+      color: "rgba(0, 43, 73, 1)",
+      cutout: "50%",
+    },
+    {
+      label: "Vendors",
+      value:15,
+      color: "rgba(0, 103, 160, 1)",
+      cutout: "50%",
+    },
+    
+  ]
+  
+    const pieOptions: any = {
+      plugins: {
+        responsive: true,
+      },
+      cutout: data2.map((item) => item.cutout),
+    };
+  
+    const finalData = {
+      labels: data2.map((item) => item.label),
+      datasets: [
+        {
+          data: data2.map((item) => Math.round(item.value)),
+          backgroundColor: data2.map((item) => item.color),
+          borderColor: data2.map((item) => item.color),
+          borderWidth: 1,
+          dataVisibility: new Array(data2.length).fill(true),
+        },
+      ],
+    };
   return (
     <div className='flex flex-col items-start gap-10 px-10'>
 <div className='my-5 flex flex-row flex-wrap w-full items-start gap-12 '>
@@ -145,13 +182,18 @@ const page = () => {
       }
     </div>
     
-    <h1 className='font-semibold text-lg'>Analytics</h1>
-      <div className='flex flex-col items-start h-full w-full lg:w-[50%]'>
+    <h1 className='font-semibold text-xl'>Analytics</h1>
+    <div className='flex flex-row flex-wrap items-center gap-5 w-full justify-evenly'>
+    <div className='flex flex-col items-start h-full w-full lg:w-[40%]'>
       <Line data={data}
       // @ts-ignore
       options={options}></Line>
       </div>
-  
+      <div className='flex flex-col items-start h-full w-full lg:w-[30%]'>
+      <Doughnut data={finalData} options={pieOptions} />
+      </div>
+    </div>
+    
      
       
     </div>
