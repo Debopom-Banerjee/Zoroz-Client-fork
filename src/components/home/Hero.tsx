@@ -17,7 +17,7 @@ const referralCardImages = [
 const SideChip = ({category,image,linkPrefix}:{category:any, image?:string,linkPrefix?:string}) => {
   return (
     <Link href={`/products${linkPrefix && linkPrefix}/${category}`} className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2">
-      {image && <img src={image} alt="" className="w-12 h-12" />}
+      {image && <img src={image} alt="" className="w-10" />}
       <h1 className="text-sm">{category}</h1>
     </Link>
   );
@@ -74,13 +74,13 @@ const Hero = () => {
        }
 <h1 className="font-semibold text-md">Brands</h1>
        {
-        brands?.map((brand:any,index:number)=>{
+        brands?.slice(0,5).map((brand:any,index:number)=>{
           return(
             <SideChip key={index} category={brand.name} image={brand.image} linkPrefix={"/brands"} />
           )
         })
        }
-
+      <h1 className="font-semibold hover:text-red-500 text-gray-500 duration-300 cursor-pointer">View All Brands</h1>
         
       </div>
 
