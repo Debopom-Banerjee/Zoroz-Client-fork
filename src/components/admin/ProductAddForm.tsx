@@ -50,6 +50,7 @@ const ProductAddForm = () => {
     brand: "",
     brandImage: "",
     warranty: "",
+    vendor_id:""
   });
   console.log(inputs)
   const handleQuillChange = (value: string, name: string) => {
@@ -125,14 +126,20 @@ const ProductAddForm = () => {
   };
 
   const router = useRouter();
+  useEffect(()=>{
+    console.log(user)
+    setInputs((prevInputs: any) => ({
+      ...prevInputs,
+      vendor_id: user?._id,
+    }));
+  },[user])
   const handleSubmit = async () => {
     try {
-      setInputs((prevInputs: any) => ({
-        ...prevInputs,
-        vendor_id: user?._id,
-      }));
+      console.log(user?._id)
+     
       await addProduct(inputs);
       toast.success("Product Added !");
+      router.push("/admin/products/")
     } catch (error) {
       console.log(error);
     }

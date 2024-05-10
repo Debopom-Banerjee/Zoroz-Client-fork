@@ -38,7 +38,7 @@ const sideBarRoutes = [
   },
   {
     title: "Edit Products",
-    path: "/admin/products/manage",
+    path: "/admin/products/",
     icon: <FaProductHunt size={24} />,
   },
   {
