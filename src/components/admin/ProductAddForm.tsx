@@ -48,7 +48,6 @@ const ProductAddForm = () => {
     reviews: [],
     benefits: [],
     brand: "",
-    brandImage: "",
     warranty: "",
     vendor_id:""
   });
@@ -166,14 +165,14 @@ const ProductAddForm = () => {
     setSubCategories(subs.map((sub: any) => sub.name));
   }, [inputs.category, categories]);
 
-  useEffect(() => {
-    setInputs((prevInputs: any) => ({
-      ...prevInputs,
-      brandImage:
-        brands.filter((brand: any) => brand.name === inputs.brand)[0]?.image ||
-        "",
-    }));
-  }, [inputs.brand]);
+  // useEffect(() => {
+  //   setInputs((prevInputs: any) => ({
+  //     ...prevInputs,
+  //     brandImage:
+  //       brands.filter((brand: any) => brand.name === inputs.brand)[0]?.image ||
+  //       "",
+  //   }));
+  // }, [inputs.brand]);
   console.log(inputs);
   return (
     <div className="p-5 w-4/5 flex flex-col gap-5 items-start bg-white border-2 border-red-600 rounded-xl mx-auto">
@@ -246,12 +245,12 @@ const ProductAddForm = () => {
           value={inputs.brand}
           onChange={(e) => {
             handleInputChange(e);
-            const brandImageData = brands.filter((brand:any)=> brand.name === e.target.value)[0]?.image;
+            // const brandImageData = brands.filter((brand:any)=> brand.name === e.target.value)[0]?.image;
 
-            setInputs((prevInputs: any) => ({
-              ...prevInputs,
-              brandImage: brandImageData,
-            }));
+            // setInputs((prevInputs: any) => ({
+            //   ...prevInputs,
+            //   brandImage: brandImageData,
+            // }));
           }}
           options={brands.map((cat: any) => cat.name)}
         />
