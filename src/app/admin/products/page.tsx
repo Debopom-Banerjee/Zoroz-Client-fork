@@ -44,11 +44,11 @@ const CategoryCard = ({ category }: { category: any }) => {
                   Sub-Category: {subCategory?.name}
                 </h1>
                 <div className="flex flex-row items-start justify-start flex-wrap gap-5">
-                  {category?.products?.map(
+                  {category?.products![0]!.map(
                     (productData: any, index: number) => (
                       <>
-                      {(productData[0].sub_category === subCategory?.name) && <ProductCard
-                        product={productData && (productData[0].sub_category === subCategory?.name) && productData[0]}
+                      {(productData.sub_category === subCategory?.name) && <ProductCard
+                        product={productData && (productData.sub_category === subCategory?.name) && productData}
                         key={index}
                       />}
                       </>
@@ -72,6 +72,7 @@ const ManageProductsPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       const data = await getProducts();
+      console.log(data)
       setProducts(data);
       setLoading(false);
     };
