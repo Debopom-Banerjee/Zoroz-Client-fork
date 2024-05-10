@@ -35,7 +35,7 @@ const InfoCard = ({ title, value, color,icon }: {
   icon?: React.ReactNode
 }) => {
   return (
-    <div className={`bg-${color}-400 p-3  w-[300px] h-[150px] justify-between  text-white flex flex-row items-start rounded-md shadow-md `}>
+    <div className={`bg-${color} p-3  w-[300px] h-[150px] justify-between  text-white flex flex-row items-start rounded-md shadow-md `}>
       <div className='flex  flex-col items-start gap-5'>
       <h1 className='text-2xl font-semibold'>{title}</h1>
       <p className='text-xl font-bold'>{value}</p>
@@ -46,12 +46,12 @@ const InfoCard = ({ title, value, color,icon }: {
 }
 
 const adminCards = [
-  { title: 'Total Users', value: '100', icon: <FaUser size={40} />, color: 'orange' },
-  { title: 'Total Orders', value: '100', icon: <FaShoppingCart size={40} />, color: 'green' },
-  { title: 'Total Products', value: '100', icon: <RiProductHuntFill size={40} />, color: 'yellow' },
-  { title: 'Total Categories', value: '100', icon: <MdOutlineCategory size={40} />, color: 'indigo' },
-  { title: 'Total Brands', value: '100', icon: <MdBrandingWatermark size={40} />, color: 'red' },
-  { title: 'Total Vendors', value: '100', icon: <FaBusinessTime size={40} />, color: 'violet' },
+  { title: 'Total Users', value: '100', icon: <FaUser size={40} />, color: 'yellow-400' },
+  { title: 'Total Orders', value: '100', icon: <FaShoppingCart size={40} />, color: 'green-400' },
+  { title: 'Total Products', value: '100', icon: <RiProductHuntFill size={40} />, color: 'yellow-600' },
+  { title: 'Total Categories', value: '100', icon: <MdOutlineCategory size={40} />, color: 'indigo-400' },
+  { title: 'Total Brands', value: '100', icon: <MdBrandingWatermark size={40} />, color: 'red-400' },
+  { title: 'Total Vendors', value: '100', icon: <FaBusinessTime size={40} />, color: 'indigo-600' },
 ]
 
 const salesData = [
