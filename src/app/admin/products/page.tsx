@@ -20,6 +20,12 @@ const ProductCard = ({ product }: { product: any }) => {
       >
         View More
       </Link>
+      <Link
+        href={`/admin/products/${product?._id}`}
+        className="px-5 py-1 bg-black text-sm rounded-md text-white "
+      >
+        Edit
+      </Link>
     </div>
   );
 };
@@ -73,7 +79,7 @@ const ManageProductsPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-start my-5 px-10 gap-5 w-full">
+    <div className="flex flex-col items-start my-5 lg:px-10 gap-5 w-full">
       <h1 className="font-semibold text-4xl">Manage Products</h1>
       <div className="flex flex-row items-center gap-2 flex-wrap w-full">
         <input
@@ -88,7 +94,7 @@ const ManageProductsPage = () => {
           Add Product
         </Link>
       </div>
-      <div className="bg-white flex flex-col w-full items-center rounded-lg gap-5  px-10 py-5">
+      <div className="bg-white flex flex-col w-full items-center rounded-lg gap-5 px-4 lg:px-10 py-5">
         {loading ? (
           <div className="flex flex-col items-center">
             <PuffLoader size={30} color="black" />

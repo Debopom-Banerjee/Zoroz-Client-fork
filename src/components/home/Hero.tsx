@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCategories } from "@/utils/functions/getCategories";
+import { getBrands } from "@/utils/functions/getBrands";
 
 const referralCardImages = [
   "https://i.postimg.cc/QNktmBST/banner5.jpg",
@@ -13,10 +14,10 @@ const referralCardImages = [
   "https://i.postimg.cc/bNyvBzFF/banner7.jpg"
 ]
 
-const SideChip = ({category}:{category:any}) => {
+const SideChip = ({category,image,linkPrefix}:{category:any, image?:string,linkPrefix?:string}) => {
   return (
-    <Link href={`/products/${category}`} className="flex font-semibold hover:text-red-500 duration-300 flex-row items-center gap-2">
-      
+    <Link href={`/products${linkPrefix && linkPrefix}/${category}`} className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2">
+      {image && <img src={image} alt="" className="w-12 h-12" />}
       <h1 className="text-sm">{category}</h1>
     </Link>
   );
@@ -24,7 +25,8 @@ const SideChip = ({category}:{category:any}) => {
 
 const MobileChip = ({ category }: { category: any }) => {
   return (
-    <Link href={`/products/${category}`} className="flex flex-col items-center font-semibold  px-5 py-3 bg-gray-300 rounded-xl">
+    <Link href={`/products/${category}`} className="flex flex-row items-center font-semibold  px-5 py-3 bg-gray-300 rounded-xl">
+      
       <h1 className="text-sm">{category}</h1>
     </Link>
   );
@@ -46,28 +48,40 @@ const ReferralCards = ({image}:{image:string}) => {
 
 const Hero = () => {
   const [categories, setCategories] = useState([]);
+  const [brands, setBrands ] = useState([])
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await getCategories();
+      const data = await getBrands();
       console.log(res);
       setCategories(res.map((category: any) => category.name));
+      setBrands(data)
+      console.log(data)
     };
     fetchCategories();
   }, []);
   return (
     <div className="w-full flex flex-col md:flex-row  items-start justify-center gap-5 my-5 ">
+       
       <div className="hidden md:flex flex-col h-full items-start gap-5 w-auto pl-3 pr-16 py-5  bg-white rounded-xl">
+      <h1 className="font-semibold text-md">Categories</h1>
        {
         categories?.map((category:any)=>{
           return(
-            <SideChip category={category} />
+            <SideChip category={category} linkPrefix="" />
           )
         })
        }
-        <div className="flex flex-row items-center gap-2">
+<h1 className="font-semibold text-md">Brands</h1>
+       {
+        brands?.map((brand:any,index:number)=>{
+          return(
+            <SideChip key={index} category={brand.name} image={brand.image} linkPrefix={"/brands"} />
+          )
+        })
+       }
+
         
-          <h1 className="text-red-500 text-sm">View All Categories</h1>
-        </div>
       </div>
 
       <div className="w-full lg:w-4/5  flex flex-col justify-center gap-2  mt-0">

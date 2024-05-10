@@ -21,6 +21,7 @@ const SelectInput = ({
         {name} :
       </label>
       <select
+        value={value}
         name={id}
         id={id}
         className={`py-1 px-4 w-[${

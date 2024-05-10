@@ -11,23 +11,25 @@ import Image from "next/image";
 import { useUser } from "@/lib/store/user";
 import { handleLogout } from "@/utils/functions/handleLogout";
 import { useCart } from "@/lib/store/cart";
+import { usePathname } from "next/navigation";
 
 const LowerDrawer = () => {
+  const pathname = usePathname()
   return (
     <div className="w-full pt-2 pb-1 border border-r-slate-400 border-black rounded-t-xl flex flex-row items-center justify-evenly">
       <Link
         href={"/"}
-        className="text-gray-700 flex flex-col  items-center hover:bg-slate-200 rounded-xl"
+        className={`${pathname==="/" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoMdHome size={25} />
         <h1 className="text-xs">Home</h1>
       </Link>
       <Link
-        href={"/"}
-        className="text-gray-700  flex flex-col  items-center hover:bg-slate-200 rounded-xl"
+        href={"/profile"}
+        className={`${pathname==="/profile" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoPerson size={25} />
-        <h1 className="text-xs">Login</h1>
+        <h1 className="text-xs">Profile</h1>
       </Link>
       <Link
         href={"/"}
@@ -36,15 +38,15 @@ const LowerDrawer = () => {
         <IoSearchOutline size={25} />
       </Link>
       <Link
-        href={"/"}
-        className="text-gray-700 flex flex-col  items-center hover:bg-slate-200 rounded-xl"
+        href={"/profile/orders"}
+        className={`${pathname==="/orders" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <FaBook size={25} />
         <h1 className="text-xs">Orders</h1>
       </Link>
       <Link
-        href={"/"}
-        className="text-gray-700 flex flex-col  items-center hover:bg-slate-200 rounded-xl"
+        href={"/profile/cart"}
+        className={`${pathname==="/profile/cart" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoMdCart size={25} />
         <h1 className="text-xs">My Cart</h1>
@@ -141,9 +143,10 @@ const Navbar = () => {
             <IoMdCart size={25} className="text-slate-600" />
             <p className="text-slate-600">Cart {cart && cart?.cart?.length}</p>
           </Link>
-          <div className="hidden md:block cursor-pointer hover:bg-slate-200 p-2  rounded-xl">
-            <BsThreeDotsVertical size={25} className="text-slate-600   " />
-          </div>
+          <Link href={"/profile/cart"} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
+            <IoPerson size={25} className="text-slate-600" />
+            <p className="text-slate-600">Profile</p>
+          </Link>
         </div>
         <div className="fixed md:hidden bg-white z-[100] left-0 bottom-0 w-full">
           <LowerDrawer />

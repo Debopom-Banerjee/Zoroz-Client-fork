@@ -12,9 +12,11 @@ import { useUser } from "@/lib/store/user";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/home/Footer";
 import Link from "next/link";
+import { PuffLoader } from "react-spinners";
 
 const page = () => {
   const productId = useParams().product.toLocaleString();
+  const [loading,setLoading] = useState(false);
   console.log(productId);
   const [product, setProduct] = useState<any>(null);
   const [productPercentage, setProductPercentage] = useState<string>("");
@@ -22,9 +24,11 @@ const page = () => {
   const cart = useCart((state) => state.cart);
   useEffect(() => {
     const fetchProductById = async () => {
+      setLoading(true)
       const data = await getProductById(productId);
       console.log(data);
       setProduct(data);
+      setLoading(false)
     };
     fetchProductById();
   }, [productId]);
@@ -74,7 +78,11 @@ const page = () => {
   return (
     <>
     <Navbar />
-    <div className="flex flex-col lg:flex-row my-10  lg:w-[90%] items-start justify-center gap-2">
+    {loading ? 
+    <div className="flex flex-col items-center justify-center mx-auto bg-white min-h-[60vh]">
+        <PuffLoader size={30} color="black" />
+    </div>
+    : <div className="flex flex-col lg:flex-row my-10  lg:w-[90%] items-start justify-center gap-2">
       <div className="w-full flex flex-row items-start gap-3 bg-white rounded-xl p-8 lg:w-[80%] 2xl:w-[60%]">
         <img
           src={product?.image}
@@ -84,10 +92,10 @@ const page = () => {
         <div className="w-full flex flex-col items-start gap-3">
           <h1 className="font-semibold text-xl">{product?.name}</h1>
           <h1 className=" text-lg font-bold tracking-wider">
-            ${product?.mrp}{" "}
+          ₹{product?.mrp}{" "}
           </h1>
           <h1 className="font-semibold">
-            <s>${product?.price}</s>{" "}
+            <s>₹{product?.price}</s>{" "}
             <span className="ml-2 text-green-500">
               {productPercentage}% off
             </span>
@@ -157,10 +165,10 @@ const page = () => {
 
       <div className="flex flex-col items-start px-8 py-3 gap-4 bg-white rounded-xl">
         <h1 className="text-black  font-bold tracking-wider text-2xl">
-          {Number(product?.price * quantity).toFixed(2)}
+        ₹{Number(product?.price * quantity).toFixed(2)}
         </h1>
         <h1 className="text-slate-500  font-semibold tracking-wider text-md">
-          <s>MRP ${Number(product?.mrp * quantity).toFixed(2)}</s>{" "}
+          <s>MRP ₹{Number(product?.mrp * quantity).toFixed(2)}</s>{" "}
           <span className="ml-2 text-green-500">{productPercentage}% off</span>
         </h1>
         <div className="flex flex-row items-center justify-between gap-3 w-full">
@@ -196,7 +204,7 @@ const page = () => {
           </>
         )}
       </div>
-    </div>
+    </div>}
     <Footer />
     </>
     

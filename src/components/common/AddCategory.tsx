@@ -3,6 +3,8 @@ import CategoryModal from "@/components/admin/CategoryModal";
 import FormElement from "@/components/common/FormElement";
 import { addCategory } from "@/utils/functions/addCategory";
 import { getCategories } from "@/utils/functions/getCategories";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -20,22 +22,37 @@ const CategoryTab = ({
   sub_categories: any;
   total_products: number;
 }) => {
+  const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
+  console.log(sub_categories)
+
   return (
     <div className="bg-slate-200 border flex flex-col items-center w-[300px] h-[300px] gap-5 justify-center border-slate-200 rounded-md p-4">
       <h1 className="font-semibold text-xl">{name}</h1>
-      <div className="flex flex-row items-center gap-2">
-        {sub_categories.map((sub_category: any, index: number) => {
+      <div className="flex flex-row flex-wrap items-center gap-2">
+        {sub_categories.slice(0,6).map((sub_category: any, index: number) => {
           return (
             <div
               key={index}
-              className="bg-gray-600 text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
+              className="bg-gray-600 text-sm text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
             >
               {sub_category.name}
             </div>
           );
         })}
+       {sub_categories?.length > 6 && <div
+       onClick={()=>setIsSubCategoryModalOpen(true)}
+              className="bg-black mx-auto text-sm text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
+            >
+              View All
+            </div>}
       </div>
       <h1>Total Products : {total_products}</h1>
+      <SubCategoryModal
+      isOpen={isSubCategoryModalOpen}
+      onClose={()=>setIsSubCategoryModalOpen(false)}
+      subCategories={sub_categories}
+
+      />
     </div>
   );
 };
@@ -260,3 +277,64 @@ const AddCategoryBody = ({
 };
 
 export default AddCategory;
+
+const SubCategoryModal = ({
+  isOpen,
+  onClose,
+
+  subCategories,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+
+  subCategories:any[];
+}) => {
+  console.log(subCategories)
+  return (
+    <>
+      {isOpen && (
+        <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
+          <div
+            className={`bg-gray-100 pb-2 px-2 pt-2 rounded-lg max-h-[80vh] md:max-h-[80vh]  min-h-auto w-[90%] flex flex-col items-start md:w-[50%] lg:w-[35%] `}
+          >
+            <div className="w-full flex flex-row mb-2 items-center justify-between ">
+              <h2 className="text-lg font-semibold">Add Category</h2>
+
+              <h2
+                onClick={onClose}
+                className="bg-black md:py-2 md:px-3 px-2 py-1 hover:bg-white hover:text-black border-2 border-black  text-white text-sm font-semibold rounded-full cursor-pointer"
+              >
+                X
+              </h2>
+            </div>
+            
+          <div className="flex flex-col items-center gap-5  pt-[470px] justify-center mx-auto overflow-y-scroll w-full ">
+            {
+              subCategories?.map((subCategory:any,index:number)=>{
+                return(
+                  <Link
+                  href={`/products/categories/${subCategory.name}`}
+              key={index}
+              className="bg-gray-600 text-sm flex flex-row items-center gap-2 text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
+            >
+              <Image src={subCategory.image} alt='' height={20} width={20} />
+              <h1>{subCategory?.name}</h1>
+            </Link> 
+                )
+              })
+            }
+          </div>
+
+            <button
+              className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+
+            >
+             Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
