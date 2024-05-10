@@ -80,7 +80,7 @@ const Hero = () => {
           )
         })
        }
-      <h1 className="font-semibold hover:text-red-500 text-gray-500 duration-300 cursor-pointer">View All Brands</h1>
+      <Link href={"/products/brands"} className="font-semibold hover:text-red-500 text-gray-500 duration-300 cursor-pointer">View All Brands</Link>
         
       </div>
 
