@@ -79,11 +79,11 @@ const MassProductAdd = () => {
       <button onClick={()=>setShowTable(true)} className="bg-red-600 text-white px-5 py-2 rounded-xl font-semibold border-2 border-red-600 hover:bg-white hover:text-red-600 hover:border-2">
             Show
           </button>
-      <table className="table overflow-x-scroll table-auto w-full border border-gray-300 text-black rounded-xl">
+      <table className="table overflow-x-scroll table-auto w-4/5 border border-gray-300 text-black rounded-xl">
       { showTable &&
         csvData && csvData.length > 0 && (
           <>
-            <thead className="bg-gray-350 font-semibold">
+            <thead className="bg-gray-350 font-semibold w-full ">
               <tr>
                 {Object.keys(csvData[0] || {}).map((header: string, index: number) => (
                   <th key={index} className="px-4 py-2">
@@ -94,9 +94,9 @@ const MassProductAdd = () => {
             </thead>
             <tbody>
               {csvData.map((item: any, index: number) => (
-                <tr key={index} className="bg-white border">
+                <tr key={index} className="bg-white border ">
                   {Object.keys(csvData[0] || {}).map((header: string, subIndex: number) => (
-                    <td key={subIndex} className="px-4 py-2">
+                    <td key={subIndex} className="px-4 py-2 w-10">
                       {item[header]}
                     </td>
                   ))}

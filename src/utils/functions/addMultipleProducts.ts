@@ -6,7 +6,7 @@ export const addMultipleProducts = async (inputs: any) => {
       localStorage.getItem("token")
       
     const response = await axios.post(
-      `https://zoroz-ecommerce-backend.onrender.com/products/addProducts`,
+      `http://localhost:5000/products/addProducts`,
       inputs,
       {
         headers: {
