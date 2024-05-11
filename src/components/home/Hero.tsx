@@ -74,7 +74,7 @@ const Hero = () => {
        }
 <h1 className="font-semibold text-md">Brands</h1>
        {
-        brands?.slice(0,5).map((brand:any,index:number)=>{
+        brands?.slice(0,8).map((brand:any,index:number)=>{
           return(
             <SideChip key={index} category={brand.name} image={brand.image} linkPrefix={"/brands"} />
           )
