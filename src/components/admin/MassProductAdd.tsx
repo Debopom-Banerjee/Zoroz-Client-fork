@@ -96,7 +96,7 @@ const MassProductAdd = () => {
               {csvData.map((item: any, index: number) => (
                 <tr key={index} className="bg-white border ">
                   {Object.keys(csvData[0] || {}).map((header: string, subIndex: number) => (
-                    <td key={subIndex} className="px-4 py-2 w-10">
+                    <td key={subIndex} className="px-4 py-2 ">
                       {item[header]}
                     </td>
                   ))}

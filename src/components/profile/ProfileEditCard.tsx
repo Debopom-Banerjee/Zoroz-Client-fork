@@ -4,6 +4,8 @@ import FormElement from "../common/FormElement";
 import { useUser } from "@/lib/store/user";
 import { updateUser } from "@/utils/functions/updateUser";
 import toast, { Toaster } from "react-hot-toast";
+import { useUserType } from "@/lib/store/userType";
+import { updateVendor } from "@/utils/functions/updateVendor";
 
 const ProfileEditCard = () => {
   const [inputs, setInputs] = useState({
@@ -36,12 +38,20 @@ const ProfileEditCard = () => {
       pincode: parseInt(user?.pincode!),
     }));
   }, [user != undefined]);
-
+const userType = useUserType((state) => state.userType);
   const handleUpdateUser = async () => {
     try {
-      const data = await updateUser(inputs, user?._id!);
-      console.log(data);
-      toast.success("Profile Updated Successfully !");
+      if(userType === "vendor"){
+        const data = await updateVendor(inputs, user?._id!);
+        console.log(data);
+        toast.success("Profile Updated Successfully !");
+      }
+      else{
+        const data = await updateUser(inputs, user?._id!);
+        console.log(data);
+        toast.success("Profile Updated Successfully !");
+      }
+   
     } catch (error) {
       toast.error("Something wrong happened !");
     }

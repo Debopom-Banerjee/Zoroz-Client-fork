@@ -1,6 +1,9 @@
 "use client";
 import { useUser } from "@/lib/store/user";
+import { useUserType } from "@/lib/store/userType";
 import { phoneLogin } from "@/utils/functions/phoneLogin";
+import { vendorLogin } from "@/utils/functions/vendorLogin";
+import { vendorVerifyOtp } from "@/utils/functions/vendorVerifyOtp";
 import { verifyOtp } from "@/utils/functions/verifyOtp";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
@@ -11,6 +14,8 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
+
+
 const AuthModal = ({
   isOpen,
   onClose,
@@ -19,6 +24,8 @@ const AuthModal = ({
   onClose: () => void;
 }) => {
   const [phone, setPhone] = useState("");
+  const setGlobalUserType = useUserType((state) => state.setUserType);
+  const [userType, setUserType] = useState<"customer"| "vendor">("customer"); // ["customer", "seller"
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [sendingOTPloading, setSendingOTPLoading] = useState(false)
@@ -79,13 +86,30 @@ const AuthModal = ({
               />
               <button
                 onClick={async () => {
-                  const data = await verifyOtp(phone, otp);
-                  if (data) {
-                    toast.success("Login Successful");
-                    onClose();
-                  } else {
-                    toast.error("Login Failed");
+               
+                  if(userType === "vendor"){
+                    console.log(userType)
+                    // await vendorLogin(phone);
+                    const data = await vendorVerifyOtp(phone, otp);
+                    if (data) {
+                      toast.success("Login Successful");
+                      onClose();
+                    } else {
+                      toast.error("Login Failed");
+                    }
                   }
+                  else{
+                    console.log(userType)
+                    // await phoneLogin(phone);
+                    const data = await verifyOtp(phone, otp);
+                    if (data) {
+                      toast.success("Login Successful");
+                      onClose();
+                    } else {
+                      toast.error("Login Failed");
+                    }
+                  }
+                 
                 }}
                 className="font-semibold text-white hover:text-red-600 hover:bg-white hover:border-red-600 border border-red-600 bg-red-600 rounded-xl text-md py-2 w-full">
                   Verify OTP
@@ -95,6 +119,18 @@ const AuthModal = ({
             <div className="  bg-white flex flex-col border border-red-600 rounded-md text-black px-4 py-3 items-center justify-center gap-4 ">
                 <Image src={"/assets/logo.jpg"} height={40} width={250} alt="" />
               <h1 className="font-semibold text-lg">Login or Sign Up</h1>
+              <div className="flex flex-row items-center gap-4 justify-center mx-auto">
+                <div onClick={()=>{
+                  setGlobalUserType("customer");
+                  setUserType("customer")}} className={` border border-red-600 cursor-pointer px-5 py-2 font-semibold text-sm rounded-lg ${userType === "customer" ? "bg-red-600 text-white" : "bg-white text-red-600 hover:bg-red-600 hover:text-white hover:border-red-600"} `}>
+                  Customer
+                </div>
+                <div onClick={()=>{
+                  setGlobalUserType("vendor");
+                  setUserType("vendor")}}  className={` border border-red-600 cursor-pointer px-5 py-2 font-semibold text-sm rounded-lg ${userType === "vendor" ? "bg-red-600 text-white" : "bg-white text-red-600 hover:bg-red-600 hover:text-white hover:border-red-600"} `}>
+                  Vendor
+                </div>
+              </div>
               <div className="flex flex-col items-start gap-2">
                 <label className="text-sm font-semibold">Phone</label>
                 <input
@@ -110,7 +146,16 @@ const AuthModal = ({
               <button
                 onClick={async () => {
                   setSendingOTPLoading(true)
-                  await phoneLogin(phone);
+
+                  if(userType === "vendor"){
+                    console.log(userType)
+                    await vendorLogin(phone);
+                  }
+                  else{
+                    console.log(userType)
+                    await phoneLogin(phone);
+                  }
+                
                   setShowOtp(true);
                   setSendingOTPLoading(false)
                 }}
