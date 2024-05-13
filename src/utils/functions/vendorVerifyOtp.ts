@@ -6,7 +6,7 @@ export const vendorVerifyOtp = async (phone: any,otp:any) => {
         console.log(data)
      
         if(data.data.statusCode == 200){
-            localStorage.setItem("user", JSON.stringify(data.data.user))
+            localStorage.setItem("user", JSON.stringify(data.data.vendor))
             localStorage.setItem("token", data.data.token)
             
             return true;

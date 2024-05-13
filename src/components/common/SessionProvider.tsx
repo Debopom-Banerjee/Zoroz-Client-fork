@@ -14,7 +14,7 @@ const SessionProvider = () => {
   const setCart = useCart((state) => state.setCart);
   const userType = useUserType((state) => state.userType);
   const setUserType = useUserType((state) => state.setUserType);
-  const userId: any = localStorage.getItem("user");
+  const userId: any = typeof window !== "undefined" && window.localStorage && localStorage.getItem("user");
   const readUserSession = async () => {
     try {
      
@@ -50,14 +50,17 @@ const SessionProvider = () => {
   }, [userType]);
 
   useEffect(() => {
-    if (userId !== undefined && userId !== null) {
-      try {
-        setUserType(JSON.parse(userId).role === "customer" ? "customer" : "vendor");
-      } catch (error) {
-        console.error("Error parsing userId:", error);
+    if(userType == undefined){
+      if (userId !== undefined && userId !== null) {
+        try {
+          setUserType(JSON.parse(userId).role === "customer" ? "customer" : "vendor");
+        } catch (error) {
+          console.error("Error parsing userId:", error);
+        }
       }
     }
-  }, [userId, setUserType]);
+   
+  }, [userId]);
   
 
   return <></>;
