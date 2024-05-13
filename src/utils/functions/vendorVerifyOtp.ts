@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const vendorVerifyOtp = async (phone: any,otp:any) => {
     try{
-        const data = await axios.post(`http://localhost:5000/vendor/verifyOtp`, {phone:phone,loginOtp:otp})
+        const data = await axios.post(`https://zoroz-ecommerce-backend.onrender.com/vendor/verifyOtp`, {phone:phone,loginOtp:otp})
         console.log(data)
      
         if(data.data.statusCode == 200){

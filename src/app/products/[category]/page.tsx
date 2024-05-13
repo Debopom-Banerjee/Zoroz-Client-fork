@@ -9,11 +9,14 @@ import { PuffLoader } from "react-spinners";
 
 const page = () => {
   const [productData, setProductData] = useState<any>([]);
-  const category = useParams().category.toLocaleString();
+  const categoryString = (useParams().category.toLocaleString());
+  console.log(categoryString)
+  const category = decodeURIComponent(categoryString);
+  console.log(category)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getProductsByCategory(category);
+      const data = await getProductsByCategory(categoryString);
       setProductData(data);
       console.log(data);
       setLoading(false)

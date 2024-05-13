@@ -29,7 +29,7 @@ const page = () => {
     <Navbar />
     <div className="w-full mx-auto my-10">
       <div className="flex flex-col bg-white items-start gap-5 mx-auto justify-center rounded-xl w-full px-5 py-5 lg:w-4/5 ">
-        <h1 className="font-semibold text-2xl">{subCategory}</h1>
+        <h1 className="font-semibold text-2xl">{decodeURIComponent(subCategory)}</h1>
         <div className="flex flex-row flex-wrap gap-5 md:gap-10 lg:gap-20 items-center self-center justify-center mx-auto w-full">
           {loading ? 
 

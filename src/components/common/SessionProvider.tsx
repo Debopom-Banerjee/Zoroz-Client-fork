@@ -22,7 +22,9 @@ const SessionProvider = () => {
         const data = await getVendorInfo();
         console.log(data)
         setUser(data);
+        
         if (data) {
+          localStorage.setItem("user", JSON.stringify(data));
           const cart = await fetchCart(data._id);
           console.log(cart)
           setCart(cart.cart);

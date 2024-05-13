@@ -1,5 +1,6 @@
 "use client";
 import { useUser } from '@/lib/store/user';
+import { useUserType } from '@/lib/store/userType';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -26,6 +27,7 @@ const profileSideItems = [
 const ProfileSideBar = () => {
     const pathname = usePathname()
     const user = useUser(state=>state.user)
+    const userType = useUserType(state=>state.userType)
 
     return (
         <>
@@ -46,7 +48,7 @@ const ProfileSideBar = () => {
             <IoPersonCircleSharp size={40} color='white' />
                 <div className='flex flex-col items-start '>
                     <h1 className='text-gray-200'>Name</h1>
-                    <h1 className='font-semibold'>{user ? user?.name : "User"}</h1>
+                    <h1 className='font-semibold'>{user ? ( user?.name !=="" ? user?.name  : (userType === "customer" ? "User" : "Vendor") ) : (userType === "customer" ? "User" : "Vendor")}</h1>
                 </div>
             </div>
             
