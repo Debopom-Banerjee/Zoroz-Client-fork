@@ -13,7 +13,7 @@ const ProductView = ({ product }: { product: any }) => {
       />
       <div className="flex flex-col items-start">
       <Link href={`/products/${product.category}/${product._id}`} className="font-normal text-md hover:text-blue-500 cursor-pointer">{product.name}</Link>
-      <h1 className="font-semibold text-md">${product.mrp} <span className="ml-2"><s>${product.price}</s></span>
+      <h1 className="font-semibold text-md">${product.price} <span className="ml-2"><s>${product.mrp}</s></span>
       <span className="ml-2 text-green-500">{percentageOff}% off</span>
       </h1>
       </div>
