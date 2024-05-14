@@ -12,7 +12,7 @@ const ProductCard = ({ product }: { product: any }) => {
       <h1 className="text-sm">Stock : <span className="font-semibold">{product?.stock_count}</span></h1>
       <h1 className="text-sm">Brand : <span className="font-semibold">{product?.brand}</span></h1>
       <h1 className="font-semibold text-sm">
-      ₹{product?.price} <s className="text-red-500">₹{product?.mrp}</s>
+      ₹{product?.mrp} <s className="text-red-500">₹{product?.price}</s>
       </h1>
       <Link
         href={`/products/${product?.category}/${product?._id}`}
