@@ -49,7 +49,8 @@ const ProductAddForm = () => {
     benefits: [],
     brand: "",
     warranty: "",
-    vendor_id:""
+    vendor_id:"",
+    admin_approval: true,
   });
   console.log(inputs)
   const handleQuillChange = (value: string, name: string) => {
