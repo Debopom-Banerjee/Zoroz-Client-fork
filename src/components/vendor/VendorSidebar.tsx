@@ -36,7 +36,11 @@ const sideBarRoutes = [
   //   path: "/vendor/brands",
   //   icon: <MdBrandingWatermark size={24} />,
   // },
-
+  {
+    title: "All Products",
+    path: "/vendor/products/all",
+    icon: <FaProductHunt size={24} />,
+  },
   {
     title: "Edit Products",
     path: "/vendor/products",
