@@ -37,6 +37,11 @@ const sideBarRoutes = [
     icon: <MdBrandingWatermark size={24} />,
   },
   {
+    title: "Approve Products",
+    path: "/admin/products/approve",
+    icon: <FiShoppingCart size={24} />,
+  },
+  {
     title: "Edit Products",
     path: "/admin/products/",
     icon: <FaProductHunt size={24} />,

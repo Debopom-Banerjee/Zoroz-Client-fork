@@ -26,16 +26,17 @@ const sideBarRoutes = [
     path: "/vendor/products/add-multiple",
     icon: <RiProductHuntLine size={24} />,
   },
-  {
-    title: "Add Category",
-    path: "/vendor/categories",
-    icon: <MdCategory size={24} />,
-  },
-  {
-    title: "Add Brands",
-    path: "/vendor/brands",
-    icon: <MdBrandingWatermark size={24} />,
-  },
+  // {
+  //   title: "Add Category",
+  //   path: "/vendor/categories",
+  //   icon: <MdCategory size={24} />,
+  // },
+  // {
+  //   title: "Add Brands",
+  //   path: "/vendor/brands",
+  //   icon: <MdBrandingWatermark size={24} />,
+  // },
+
   {
     title: "Edit Products",
     path: "/vendor/products",

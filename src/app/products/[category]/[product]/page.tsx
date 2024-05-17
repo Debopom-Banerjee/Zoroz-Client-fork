@@ -165,10 +165,10 @@ const page = () => {
 
       <div className="flex flex-col items-start px-8 py-3 gap-4 bg-white rounded-xl">
         <h1 className="text-black  font-bold tracking-wider text-2xl">
-        ₹{Number(product?.price * quantity).toFixed(2)}
+        ₹{Number(product?.mrp * quantity).toFixed(2)}
         </h1>
         <h1 className="text-slate-500  font-semibold tracking-wider text-md">
-          <s>MRP ₹{Number(product?.mrp * quantity).toFixed(2)}</s>{" "}
+          <s>MRP ₹{Number(product?.price * quantity).toFixed(2)}</s>{" "}
           <span className="ml-2 text-green-500">{productPercentage}% off</span>
         </h1>
         <div className="flex flex-row items-center justify-between gap-3 w-full">
@@ -203,6 +203,8 @@ const page = () => {
             </Link>
           </>
         )}
+        
+
       </div>
     </div>}
     <Footer />
