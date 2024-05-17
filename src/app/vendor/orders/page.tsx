@@ -110,11 +110,11 @@ const page = () => {
                       <td className="border border-gray-300 text-lg  py-2">
                         {registration.payment_method}
                       </td>
-                      <td className="border border-gray-300  text-lg py-2">
+                      <td className="border border-gray-300  text-base py-2">
                         <button onClick={()=>{
                           setIsOpen(true)
                           setModalData(registration);
-                          }} className="font-semibold px-5 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
+                          }} className="font-semibold px-3 py-1 bg-black text-white rounded-lg hover:bg-white hover:text-black border border-black hover:border-black">
                           View Details
                         </button>
                       </td>
@@ -154,6 +154,7 @@ const ApproveModal = ({
   setFilteredResults: any;
 }) => {
   console.log(data)
+  const user = useUser((state) => state.user);
   const [imageUrl, setImageUrl] = useState<any>("");
   const [loaded, setLoaded] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
@@ -167,7 +168,7 @@ const ApproveModal = ({
     const details = await approveOrderByVendor(data._id);
     console.log(details);
     setDisabledButton(false);
-    const orderData = await getOrders();
+    const orderData = await getOrdersForVendor(user?._id!);
     setFilteredResults(orderData);
     setImageUrl("");
     onClose();

@@ -10,7 +10,7 @@ import { PuffLoader } from 'react-spinners';
 const OrderCard = ({orderData}:{orderData:any})=>{
     console.log(orderData)
     return(
-        <div className='flex flex-row justify-between items-center  gap-3 w-full bg-white px-10 py-5 rounded-lg border border-slate-300'>
+        <div className='flex flex-row flex-wrap justify-between items-center  gap-3 w-full bg-white px-10 py-5 rounded-lg border border-slate-300'>
             <div className='flex flex-row items-center gap-5 justify-center'>
             <div className='w-20 h-20 bg-gray-200 rounded-lg'>
                 <img src={orderData?.product?.image} alt={orderData?.product?.name} width={100} height={100} />

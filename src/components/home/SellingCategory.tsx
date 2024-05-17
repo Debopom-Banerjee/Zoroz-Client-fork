@@ -87,8 +87,8 @@ const SellingCategory = ({ product }: { product: any }) => {
           <CategoriesAssemble categories={product.sub_categories} />
         </div>
 
-        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-10 items-center  justify-center">
-        {product.products![0]!.slice(0, 4).map((productData: any, index: number) => {
+        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-6 items-center  justify-center">
+        {product.products![0]!.slice(0, 6).map((productData: any, index: number) => {
   return(  
     <ProductCard product={productData} key={index} />
   );
