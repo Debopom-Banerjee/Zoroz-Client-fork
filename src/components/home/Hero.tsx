@@ -76,7 +76,7 @@ const Hero = () => {
        {
         brands?.slice(0,4).map((brand:any,index:number)=>{
           return(
-            <SideChip key={index} category={brand.name} image={brand.image} linkPrefix={"/brands"} />
+            <SideChip key={index} category={brand.name} image={brand.image} linkPrefix={"/brands"} linkSuffix="" />
           )
         })
        }
