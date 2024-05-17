@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaBook, FaSearch } from "react-icons/fa";
 import { IoMdCart, IoMdHome } from "react-icons/io";
@@ -58,6 +58,7 @@ const LowerDrawer = () => {
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setAuthOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const user = useUser((state) => state.user);
   const cart:any = useCart((state) => state.cart);
   // console.log(cart)
@@ -66,11 +67,19 @@ const Navbar = () => {
   const logout = async () => {
     try {
       handleLogout();
+      setLoggedIn(false);
       setUser(undefined);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const userId: any = typeof window !== "undefined" && window.localStorage && localStorage.getItem("user");
+  useEffect(() => {
+    if (userId!==null || userId!==undefined) {
+      setLoggedIn(true);
+    }
+  }, [userId]);
   return (
     <div className="relative w-full">
       <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-between px-2 md:justify-center md:gap-20 py-3">
@@ -123,7 +132,7 @@ const Navbar = () => {
             }}
             className="text-white md:hidden px-2 text-sm py-1 rounded-xl font-semibold bg-red-600"
           >
-            {user ? "Logout" : "Login"}
+            {(user || loggedIn) ? "Logout" : "Login"}
           </button>
           <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
          { <div

@@ -14,9 +14,9 @@ const referralCardImages = [
   "https://i.postimg.cc/bNyvBzFF/banner7.jpg"
 ]
 
-const SideChip = ({category,image,linkPrefix}:{category:any, image?:string,linkPrefix?:string}) => {
+const SideChip = ({category,image,linkPrefix,linkSuffix}:{category:any, image?:string,linkPrefix?:string,linkSuffix?:string}) => {
   return (
-    <Link href={`/products${linkPrefix && linkPrefix}/${category}`} className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2">
+    <Link href={`/products${linkPrefix && linkPrefix}/${category}${linkSuffix && linkSuffix}`} className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2">
       {image && <img src={image} alt="" className="w-10" />}
       <h1 className="text-sm">{category}</h1>
     </Link>
@@ -68,7 +68,7 @@ const Hero = () => {
        {
         categories?.map((category:any)=>{
           return(
-            <SideChip category={category} linkPrefix="" />
+            <SideChip category={category} linkPrefix="" linkSuffix="/subCategories" />
           )
         })
        }

@@ -37,9 +37,9 @@ const page = () => {
    <PuffLoader size={35} color="black" />
           </div>
        
-          : productData.map((product: any, index: number) => {
+          : productData.length > 0 ? productData.map((product: any, index: number) => {
             return <ProductView product={product} key={index} />;
-          })}
+          }) : <h1 className="font-semibold text-lg text-red-600 min-h-[60vh] mt-20">No Products Found</h1>}
         </div>
       </div>
     </div>
