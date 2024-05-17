@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBusinessTime, FaShoppingCart, FaUser } from 'react-icons/fa'
 import { MdBrandingWatermark, MdOutlineCategory } from 'react-icons/md'
 import { RiProductHuntFill } from 'react-icons/ri'
@@ -16,6 +16,8 @@ import {
   Filler,
   ArcElement,
 } from "chart.js";
+import { getCountsForVendor } from '@/utils/functions/getCountsForVendor'
+import { useUser } from '@/lib/store/user'
 
 ChartJS.register(
   ArcElement,
@@ -46,13 +48,23 @@ const InfoCard = ({ title, value, color,icon }: {
 
 const adminCards = [
  
-  { title: 'Total Orders', value: '100', icon: <FaShoppingCart size={40} />, color: 'green' },
-  { title: 'Total Products', value: '100', icon: <RiProductHuntFill size={40} />, color: 'yellow' },
-  { title: 'Total Categories', value: '100', icon: <MdOutlineCategory size={40} />, color: 'indigo' },
-  { title: 'Total Brands', value: '100', icon: <MdBrandingWatermark size={40} />, color: 'red' },
+  { title: 'Total Orders', value: 'orderCount', icon: <FaShoppingCart size={40} />, color: 'green' },
+  { title: 'Total Products', value: 'productCount', icon: <RiProductHuntFill size={40} />, color: 'yellow' },
+  { title: 'Total Categories', value: 'categoriesCount', icon: <MdOutlineCategory size={40} />, color: 'indigo' },
+  { title: 'Total Brands', value: 'brandsCount', icon: <MdBrandingWatermark size={40} />, color: 'red' },
 ]
 
 const page = () => {
+
+  const [counts, setCounts] = useState<any>({})
+  const user = useUser((state:any) => state.user)
+  useEffect(() => {
+    const fetchCounts = async()=>{
+     const data = await getCountsForVendor(user?._id)
+     setCounts(data)
+    }
+     fetchCounts()
+ }, [user]);
   const salesData = [
     { month: "January", sales: 100 },
     { month: "February", sales: 150 },
@@ -135,11 +147,9 @@ const page = () => {
   };
   return (
     <div className='my-5 flex flex-row flex-wrap w-full items-center gap-20 px-10'>
-      {
-        adminCards.map((card, index) => (
-          <InfoCard key={index} title={card.title} value={card.value} color={card.color} icon={card.icon} />
-        ))
-      }
+     {adminCards.map((card, index) => (
+          <InfoCard key={index} title={card.title} value={counts[card.value]} color={card.color} icon={card.icon} />
+        ))}
       <div className='flex flex-col w-full h-full justify-center'>
       <h1 className='font-semibold text-xl'>Analytics</h1>
     <div className='flex flex-row flex-wrap items-start gap-5 w-full '>

@@ -21,11 +21,11 @@ const sideBarRoutes = [
     path: "/vendor/products/add",
     icon: <FaProductHunt size={24} />,
   },
-  {
-    title: "Add Multiple Products",
-    path: "/vendor/products/add-multiple",
-    icon: <RiProductHuntLine size={24} />,
-  },
+  // {
+  //   title: "Add Multiple Products",
+  //   path: "/vendor/products/add-multiple",
+  //   icon: <RiProductHuntLine size={24} />,
+  // },
   // {
   //   title: "Add Category",
   //   path: "/vendor/categories",

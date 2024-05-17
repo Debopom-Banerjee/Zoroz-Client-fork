@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Doughnut, Line } from "react-chartjs-2";
 
 import {
@@ -27,6 +27,7 @@ ChartJS.register(
 import { FaBusinessTime, FaShoppingCart, FaUser } from 'react-icons/fa'
 import { MdBrandingWatermark, MdOutlineCategory } from 'react-icons/md'
 import { RiProductHuntFill } from 'react-icons/ri'
+import { getCounts } from '@/utils/functions/getCounts';
 
 const InfoCard = ({ title, value, color,icon }: { 
   title: string, 
@@ -45,14 +46,16 @@ const InfoCard = ({ title, value, color,icon }: {
   )
 }
 
+
+
 const adminCards = [
-  { title: 'Total Users', value: '100', icon: <FaUser size={40} />, color: 'yellow-400' },
-  { title: 'Total Orders', value: '100', icon: <FaShoppingCart size={40} />, color: 'green-400' },
-  { title: 'Total Products', value: '100', icon: <RiProductHuntFill size={40} />, color: 'yellow-600' },
-  { title: 'Total Categories', value: '100', icon: <MdOutlineCategory size={40} />, color: 'indigo-400' },
-  { title: 'Total Brands', value: '100', icon: <MdBrandingWatermark size={40} />, color: 'red-400' },
-  { title: 'Total Vendors', value: '100', icon: <FaBusinessTime size={40} />, color: 'indigo-600' },
-]
+  { title: 'Total Users', value: 'userCount', icon: <FaUser size={40} />, color: 'yellow-400' },
+  { title: 'Total Orders', value: 'orderCount', icon: <FaShoppingCart size={40} />, color: 'green-400' },
+  { title: 'Total Products', value: 'productCount', icon: <RiProductHuntFill size={40} />, color: 'yellow-600' },
+  { title: 'Total Categories', value: 'categoriesCount', icon: <MdOutlineCategory size={40} />, color: 'indigo-400' },
+  { title: 'Total Brands', value: 'brandsCount', icon: <MdBrandingWatermark size={40} />, color: 'red-400' },
+  { title: 'Total Vendors', value: 'vendorsCount', icon: <FaBusinessTime size={40} />, color: 'indigo-600' },
+];
 
 const salesData = [
   { month: "January", sales: 100 },
@@ -65,6 +68,14 @@ const salesData = [
 
 
 const page = () => {
+  const [counts, setCounts] = useState<any>({})
+  useEffect(() => {
+    const fetchCounts = async()=>{
+     const data = await getCounts()
+     setCounts(data)
+    }
+     fetchCounts()
+ }, []);
   const data = {
     labels: salesData.map((data) => data.month),
     datasets: [
@@ -175,11 +186,9 @@ const page = () => {
   return (
     <div className='flex flex-col items-start gap-10 px-10'>
 <div className='my-5 flex flex-row flex-wrap w-full items-start gap-12 '>
-      {
-        adminCards.map((card, index) => (
-          <InfoCard key={index} title={card.title} value={card.value} color={card.color} icon={card.icon} />
-        ))
-      }
+{adminCards.map((card, index) => (
+          <InfoCard key={index} title={card.title} value={counts[card.value]} color={card.color} icon={card.icon} />
+        ))}
     </div>
     
     <h1 className='font-semibold text-xl'>Analytics</h1>
