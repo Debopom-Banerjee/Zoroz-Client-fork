@@ -29,7 +29,7 @@ export default function Home() {
     <main className="w-[90%] mx-auto h-full gap-10 mb-20 max-md:mb-28  flex flex-col items-center justify-center max-md:gap-20">
 
         <Hero />
-        <div className="flex flex-col items-center gap-5">
+        <div className="w-full flex flex-col items-center gap-5">
         { loading ? 
           <PuffLoader size={20} color="#000" />
         :

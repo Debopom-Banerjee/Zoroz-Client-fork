@@ -16,7 +16,7 @@ const Brand = ({brand}:{brand:any}) => {
 const ProductCard = ({product}:{product:any}) => {
   const percentageOff = ((1 - (product.price / product.mrp)) * 100).toFixed(2);
   return (
-    <div className="flex flex-col items-start gap-3 bg-white p-4  w-[150px] md:w-[250px] rounded-xl">
+    <div className="flex flex-col items-start gap-3 bg-white p-4  w-[140px] md:w-[250px] rounded-xl">
       <img
         src={product.image}
         className="mx-auto"
@@ -70,7 +70,7 @@ const TopBrands = ({ brands }: { brands: any }) => {
 };
 const SellingCategory = ({ product }: { product: any }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-5 p-4 bg-white ">
+    <div className="flex flex-col items-center justify-center w-full gap-5 p-4 bg-white ">
       <div className="flex flex-row items-center justify-between w-full">
         <h1 className="font-semibold text-lg">{product.category}</h1>
         <Link
@@ -81,13 +81,13 @@ const SellingCategory = ({ product }: { product: any }) => {
         </Link>
       </div>
 
-      <div className="flex bg-[#efeff4] flex-col items-start justify-center gap-5 ">
+      <div className="flex bg-[#efeff4] w-full flex-col items-start justify-center gap-5 ">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-2 px-4 py-4">
           <TopBrands brands={product.brands} />
           <CategoriesAssemble categories={product.sub_categories} />
         </div>
 
-        <div className="px-2 md:px-4 pb-4 md:flex flex-row flex-wrap gap-10 items-center  justify-center">
+        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-10 items-center  justify-center">
         {product.products![0]!.slice(0, 4).map((productData: any, index: number) => {
   return(  
     <ProductCard product={productData} key={index} />
