@@ -85,7 +85,7 @@ const page = () => {
   const createOrderId = async () => {
     try {
       const response = await fetch(
-        "https://226d-103-240-99-2.ngrok-free.app/orders/add",
+        "https://74e5-103-240-99-2.ngrok-free.app/orders/add",
         {
           method: "POST",
           headers: {
@@ -93,7 +93,7 @@ const page = () => {
           },
           body: JSON.stringify({
             payment_method: "Online Payment",
-            price: total * 100,
+           price:total*100
           }),
         }
       );
@@ -103,7 +103,7 @@ const page = () => {
       }
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       return data.order_id;
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
@@ -121,16 +121,33 @@ const page = () => {
         description: "description",
         order_id: orderId,
         handler: async function (response: any) {
-          console.log(response)
+          console.log(response);
           const data = {
             orderCreationId: orderId,
             razorpayPaymentId: response.razorpay_payment_id,
             razorpayOrderId: response.razorpay_order_id,
             razorpaySignature: response.razorpay_signature,
+            payment_method:"Online Payment",
+            product_id: productId,
+            quantity: quantity,
+            customer_id: userId,
+            vendor_id: vendorId,
+            shipping_address:
+              inputs.address +
+              ", " +
+              inputs.city +
+              ", " +
+              inputs.state +
+              ", " +
+              inputs.pincode,
+            price: total * 100,
+            status: "pending",
+            vendor_approval: false,
+            admin_approval: false,
           };
 
           const result = await fetch(
-            "https://226d-103-240-99-2.ngrok-free.app/orders/paymentCapture",
+            "https://74e5-103-240-99-2.ngrok-free.app/orders/paymentCapture",
             {
               method: "POST",
               body: JSON.stringify(data),
@@ -161,7 +178,7 @@ const page = () => {
       console.log(error);
     }
   };
-  const handleAddOrder = async (e:any) => {
+  const handleAddOrder = async (e: any) => {
     const orderDetails = {
       product_id: productId,
       quantity: quantity,
@@ -183,31 +200,13 @@ const page = () => {
     };
 
     if (inputs.payment_method === "Online Payment") {
-        await processPayment(e);
+      await processPayment(e);
     } else {
       const data = await addOrder(orderDetails);
       if (data?.status === 201) {
         toast.success("Order Placed Successfully");
         router.push("/profile/orders");
       }
-    }
-  };
-
-  const handleCreateOrder = async (amount: any, currency: any) => {
-    const data: any = await axios.post("https://3965-103-240-99-2.ngrok-free.app/orders/add", {
-      amount: amount * 100, //convert amount into lowest unit. here, Dollar->Cents
-      currency: "INR",
-      keyId: process.env.RAZORPAY_KEY_ID,
-      KeySecret: process.env.RAZORPAY_KEY_SECRET,
-    });
-
-    if (data && data.order_id) {
-      setOrderDetails({
-        orderId: data.order_id,
-        currency: data.currency,
-        amount: data.amount,
-      });
-      setDisplayRazorpay(true);
     }
   };
   return (
