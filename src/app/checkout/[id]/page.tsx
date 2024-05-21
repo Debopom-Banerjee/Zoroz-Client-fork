@@ -6,7 +6,9 @@ import Footer from "@/components/home/Footer";
 import { useUser } from "@/lib/store/user";
 import { addOrder } from "@/utils/functions/addOrder";
 import { getProductById } from "@/utils/functions/getProductById";
+import axios from "axios";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BiMinus, BiPlus } from "react-icons/bi";
@@ -28,6 +30,13 @@ const page = () => {
   ) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+  const [displayRazorpay, setDisplayRazorpay] = useState(false);
+  console.log(displayRazorpay);
+  const [orderDetails, setOrderDetails] = useState({
+    orderId: null,
+    currency: null,
+    amount: null,
+  });
   const user = useUser((state) => state.user);
   const [cartData, setCartData] = useState<any>([]);
   const [productData, setProductData] = useState<any>(null);
@@ -72,8 +81,87 @@ const page = () => {
     }
   }, [user, productData, productQuantity]);
 
-  const router =useRouter();
-  const handleAddOrder = async () => {
+  const router = useRouter();
+  const createOrderId = async () => {
+    try {
+      const response = await fetch(
+        "https://226d-103-240-99-2.ngrok-free.app/orders/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            payment_method: "Online Payment",
+            price: total * 100,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log(data)
+      return data.order_id;
+    } catch (error) {
+      console.error("There was a problem with your fetch operation:", error);
+    }
+  };
+  const processPayment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const orderId: string = await createOrderId();
+      const options = {
+        key: "rzp_test_fq5x5RVk096MtS",
+        amount: total * 100,
+        currency: "INR",
+        name: "name",
+        description: "description",
+        order_id: orderId,
+        handler: async function (response: any) {
+          console.log(response)
+          const data = {
+            orderCreationId: orderId,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+          };
+
+          const result = await fetch(
+            "https://226d-103-240-99-2.ngrok-free.app/orders/paymentCapture",
+            {
+              method: "POST",
+              body: JSON.stringify(data),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const res = await result.json();
+          if (res.isOk) alert("payment succeed");
+          else {
+            alert(res.message);
+          }
+        },
+        prefill: {
+          name: "Soumyaraj Bag",
+          email: "soumyarajbag@gmail.com",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const paymentObject =
+        typeof window !== "undefined" && new (window as any).Razorpay(options);
+      paymentObject.on("payment.failed", function (response: any) {
+        alert(response.error.description);
+      });
+      paymentObject.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleAddOrder = async (e:any) => {
     const orderDetails = {
       product_id: productId,
       quantity: quantity,
@@ -93,16 +181,44 @@ const page = () => {
       admin_approval: false,
       payment_method: inputs.payment_method,
     };
-    const data = await addOrder(orderDetails);
-    if (data?.status === 201) {
-      toast.success("Order Placed Successfully");
-      router.push("/profile/orders");
+
+    if (inputs.payment_method === "Online Payment") {
+        await processPayment(e);
+    } else {
+      const data = await addOrder(orderDetails);
+      if (data?.status === 201) {
+        toast.success("Order Placed Successfully");
+        router.push("/profile/orders");
+      }
+    }
+  };
+
+  const handleCreateOrder = async (amount: any, currency: any) => {
+    const data: any = await axios.post("https://3965-103-240-99-2.ngrok-free.app/orders/add", {
+      amount: amount * 100, //convert amount into lowest unit. here, Dollar->Cents
+      currency: "INR",
+      keyId: process.env.RAZORPAY_KEY_ID,
+      KeySecret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
+    if (data && data.order_id) {
+      setOrderDetails({
+        orderId: data.order_id,
+        currency: data.currency,
+        amount: data.amount,
+      });
+      setDisplayRazorpay(true);
     }
   };
   return (
     <>
       <Navbar />
-    <Toaster position="bottom-right" />
+
+      <Script
+        id="razorpay-checkout-js"
+        src="https://checkout.razorpay.com/v1/checkout.js"
+      />
+      <Toaster position="bottom-right" />
       <div className="min-h-[80vh]">
         {loading ? (
           <div className="flex items-center justify-center h-screen">
