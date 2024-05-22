@@ -221,6 +221,7 @@ const page = () => {
           
        
       })
+      console.log("Hi")
       console.log(orderDetails)
       if(orderDetails[0].payment_method==="Online Payment"){
         await processPayment(e)
