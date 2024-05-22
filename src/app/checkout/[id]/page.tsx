@@ -85,7 +85,7 @@ const page = () => {
   const createOrderId = async () => {
     try {
       const response = await fetch(
-        "https://74e5-103-240-99-2.ngrok-free.app/orders/add",
+        "https://zoroz-ecommerce-backend.onrender.com/orders/add",
         {
           method: "POST",
           headers: {
@@ -127,7 +127,9 @@ const page = () => {
             razorpayPaymentId: response.razorpay_payment_id,
             razorpayOrderId: response.razorpay_order_id,
             razorpaySignature: response.razorpay_signature,
-            payment_method:"Online Payment",
+            ordersData:[
+              {
+                payment_method:"Online Payment",
             product_id: productId,
             quantity: quantity,
             customer_id: userId,
@@ -144,10 +146,12 @@ const page = () => {
             status: "pending",
             vendor_approval: false,
             admin_approval: false,
+              }
+            ]
           };
 
           const result = await fetch(
-            "https://74e5-103-240-99-2.ngrok-free.app/orders/paymentCapture",
+            "https://zoroz-ecommerce-backend.onrender.com/orders/paymentCapture",
             {
               method: "POST",
               body: JSON.stringify(data),
