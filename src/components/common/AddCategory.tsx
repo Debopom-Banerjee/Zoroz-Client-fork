@@ -23,13 +23,13 @@ const CategoryTab = ({
   total_products: number;
 }) => {
   const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
-  console.log(sub_categories)
+  console.log(sub_categories);
 
   return (
     <div className="bg-slate-200 border flex flex-col items-center w-[300px] h-[300px] gap-5 justify-center border-slate-200 rounded-md p-4">
       <h1 className="font-semibold text-xl">{name}</h1>
       <div className="flex flex-row flex-wrap items-center gap-2">
-        {sub_categories.slice(0,6).map((sub_category: any, index: number) => {
+        {sub_categories.slice(0, 6).map((sub_category: any, index: number) => {
           return (
             <div
               key={index}
@@ -39,32 +39,34 @@ const CategoryTab = ({
             </div>
           );
         })}
-       {sub_categories?.length > 6 && <div
-       onClick={()=>setIsSubCategoryModalOpen(true)}
-              className="bg-black mx-auto text-sm text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
-            >
-              View All
-            </div>}
+        {sub_categories?.length > 6 && (
+          <div
+            onClick={() => setIsSubCategoryModalOpen(true)}
+            className="bg-black mx-auto text-sm text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
+          >
+            View All
+          </div>
+        )}
       </div>
       <h1>Total Products : {total_products}</h1>
       <SubCategoryModal
-      isOpen={isSubCategoryModalOpen}
-      onClose={()=>setIsSubCategoryModalOpen(false)}
-      subCategories={sub_categories}
-
+        isOpen={isSubCategoryModalOpen}
+        onClose={() => setIsSubCategoryModalOpen(false)}
+        subCategories={sub_categories}
       />
     </div>
   );
 };
 
 const AddCategory = () => {
-    const [inputs, setInputs] = useState({
-        name: "",
-        sub_categories: [],
-      });
-      
-      
+  const [inputs, setInputs] = useState({
+    name: "",
+    sub_categories: [],
+  });
+
+  const [categoryName, setCategoryName] = useState("");
   const [categories, setCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -72,6 +74,7 @@ const AddCategory = () => {
     const fetchCategories = async () => {
       const data = await getCategories();
       setCategories(data);
+      setFilteredCategories(data);
       console.log(data);
       setLoading(false);
     };
@@ -86,11 +89,19 @@ const AddCategory = () => {
     toast.success("Category Added Successfully");
     setIsCategoryModalOpen(false);
   };
+  useEffect(() => {
+    const filteredResults = categories.filter((category: any) =>
+      category.name.toLowerCase().includes(categoryName.toLowerCase())
+    );
+    setFilteredCategories(filteredResults);
+  }, [categoryName, categories]);
   return (
     <div className="w-full flex flex-col gap-3 px-5 py-5">
       <h1 className="font-semibold  text-xl ">All Categories</h1>
       <div className="flex flex-row items-center gap-10">
         <input
+          value={categoryName}
+          onChange={(e: any) => setCategoryName(e.target.value)}
           type="text"
           placeholder="Search Category"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
@@ -107,7 +118,7 @@ const AddCategory = () => {
         {loading ? (
           <PuffLoader color="red" size={40} />
         ) : (
-          categories.map((category: any, index: number) => {
+          filteredCategories.map((category: any, index: number) => {
             return (
               <CategoryTab
                 key={index}
@@ -138,54 +149,56 @@ const AddCategoryBody = ({
 
   setInputs: any;
 }) => {
-    const handleAddSubCategory = () => {
-        setInputs((prevInputs: any) => ({
-          ...prevInputs,
-          sub_categories: [
-            ...prevInputs.sub_categories,
-            { name: "", image: "" },
-          ],
-        }));
-      };
-      
-      
-      const handleRemoveSubCategory = (index: number) => {
-        setInputs((prevInputs: any) => ({
-          ...prevInputs,
-          sub_categories: prevInputs.sub_categories.filter((_:any, idx: number) => idx !== index),
-        }));
-      };
-      
-      const handleImageChange = (index: number, value: string) => {
-        setInputs((prevInputs: any) => ({
-          ...prevInputs,
-          sub_categories: prevInputs.sub_categories.map((sub_category: any, idx: number) => {
-            if (idx === index) {
-              return {
-                ...sub_category,
-                image: value
-              };
-            }
-            return sub_category;
-          })
-        }));
-      };
-      
-      const handleNameChange = (index: number, value: string) => {
-        setInputs((prevInputs: any) => ({
-          ...prevInputs,
-          sub_categories: prevInputs.sub_categories.map((sub_category: any, idx: number) => {
-            if (idx === index) {
-              return {
-                ...sub_category,
-                name: value
-              };
-            }
-            return sub_category;
-          })
-        }));
-      };
-      
+  const handleAddSubCategory = () => {
+    setInputs((prevInputs: any) => ({
+      ...prevInputs,
+      sub_categories: [...prevInputs.sub_categories, { name: "", image: "" }],
+    }));
+  };
+
+  const handleRemoveSubCategory = (index: number) => {
+    setInputs((prevInputs: any) => ({
+      ...prevInputs,
+      sub_categories: prevInputs.sub_categories.filter(
+        (_: any, idx: number) => idx !== index
+      ),
+    }));
+  };
+
+  const handleImageChange = (index: number, value: string) => {
+    setInputs((prevInputs: any) => ({
+      ...prevInputs,
+      sub_categories: prevInputs.sub_categories.map(
+        (sub_category: any, idx: number) => {
+          if (idx === index) {
+            return {
+              ...sub_category,
+              image: value,
+            };
+          }
+          return sub_category;
+        }
+      ),
+    }));
+  };
+
+  const handleNameChange = (index: number, value: string) => {
+    setInputs((prevInputs: any) => ({
+      ...prevInputs,
+      sub_categories: prevInputs.sub_categories.map(
+        (sub_category: any, idx: number) => {
+          if (idx === index) {
+            return {
+              ...sub_category,
+              name: value,
+            };
+          }
+          return sub_category;
+        }
+      ),
+    }));
+  };
+
   console.log(inputs);
   return (
     <div className="flex flex-col items-start w-full gap-5">
@@ -206,63 +219,68 @@ const AddCategoryBody = ({
           >
             Sub Categories :
           </label>
-          {Array.isArray(inputs.sub_categories) && inputs.sub_categories.map((sub_category: any, index: number) => (
-            <div
-              key={index}
-              className="flex flex-row   flex-wrap items-center gap-10 rounded-lg border-2  border-regalia px-10 py-2 pb-5 text-sm"
-            >
-              <div className="flex flex-col  items-start gap-2">
-                <label
-                  htmlFor=""
-                  className="font-hollirood font-semibold tracking-widest"
-                >
-                  {`Sub Category ${index + 1}`}
-                </label>
+          {Array.isArray(inputs.sub_categories) &&
+            inputs.sub_categories.map((sub_category: any, index: number) => (
+              <div
+                key={index}
+                className="flex flex-row   flex-wrap items-center gap-10 rounded-lg border-2  border-regalia px-10 py-2 pb-5 text-sm"
+              >
+                <div className="flex flex-col  items-start gap-2">
+                  <label
+                    htmlFor=""
+                    className="font-hollirood font-semibold tracking-widest"
+                  >
+                    {`Sub Category ${index + 1}`}
+                  </label>
 
-                <div className="flex flex-col items-start gap-3">
-                  <div className="flex flex-row flex-wrap gap-2 font-semibold">
-                    <label
-                      htmlFor="name"
-                      className="font-retrolight tracking-widest"
-                    >
-                      Name :
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={sub_category.name}
-                      onChange={(e) => handleNameChange(index, e.target.value)}
-                      className={`w-full rounded-xl border-b border-regalia bg-transparent px-2 py-1 focus:border-b max-md:w-full `}
-                    />
-                  </div>
+                  <div className="flex flex-col items-start gap-3">
+                    <div className="flex flex-row flex-wrap gap-2 font-semibold">
+                      <label
+                        htmlFor="name"
+                        className="font-retrolight tracking-widest"
+                      >
+                        Name :
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={sub_category.name}
+                        onChange={(e) =>
+                          handleNameChange(index, e.target.value)
+                        }
+                        className={`w-full rounded-xl border-b border-regalia bg-transparent px-2 py-1 focus:border-b max-md:w-full `}
+                      />
+                    </div>
 
-                  <div className="flex flex-row flex-wrap gap-2 font-semibold">
-                    <label
-                      htmlFor="image"
-                      className="font-retrolight tracking-widest"
-                    >
-                      Image :
-                    </label>
-                    <input
-                      type="text"
-                      value={sub_category.image}
-                      onChange={(e) => handleImageChange(index, e.target.value)}
-                      className={`w-full rounded-xl border-b border-regalia bg-transparent px-2 py-1 focus:border-b max-md:w-full `}
-                    />
+                    <div className="flex flex-row flex-wrap gap-2 font-semibold">
+                      <label
+                        htmlFor="image"
+                        className="font-retrolight tracking-widest"
+                      >
+                        Image :
+                      </label>
+                      <input
+                        type="text"
+                        value={sub_category.image}
+                        onChange={(e) =>
+                          handleImageChange(index, e.target.value)
+                        }
+                        className={`w-full rounded-xl border-b border-regalia bg-transparent px-2 py-1 focus:border-b max-md:w-full `}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {inputs?.sub_categories.length > 1 && (
-                <button
-                  onClick={() => handleRemoveSubCategory(index)}
-                  className="rounded-full border-2 border-regalia px-2 py-1 text-xs font-semibold text-regalia lg:text-sm"
-                >
-                  Remove
-                </button>
-              )}
-            </div>
-          ))}
+                {inputs?.sub_categories.length > 1 && (
+                  <button
+                    onClick={() => handleRemoveSubCategory(index)}
+                    className="rounded-full border-2 border-regalia px-2 py-1 text-xs font-semibold text-regalia lg:text-sm"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
 
           <button
             onClick={handleAddSubCategory}
@@ -287,9 +305,9 @@ const SubCategoryModal = ({
   isOpen: boolean;
   onClose: () => void;
 
-  subCategories:any[];
+  subCategories: any[];
 }) => {
-  console.log(subCategories)
+  console.log(subCategories);
   return (
     <>
       {isOpen && (
@@ -307,29 +325,29 @@ const SubCategoryModal = ({
                 X
               </h2>
             </div>
-            
-          <div className="flex flex-col items-center gap-5  pt-[470px] justify-center mx-auto overflow-y-scroll w-full ">
-            {
-              subCategories?.map((subCategory:any,index:number)=>{
-                return(
+
+            <div className="flex flex-row flex-wrap items-center gap-5   justify-center mx-auto overflow-y-scroll w-full ">
+              {subCategories?.map((subCategory: any, index: number) => {
+                return (
                   <Link
-                  href={`/products/categories/${subCategory.name}`}
-              key={index}
-              className="bg-gray-600 text-sm flex flex-row items-center gap-2 text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
-            >
-              <Image src={subCategory.image} alt='' height={20} width={20} />
-              <h1>{subCategory?.name}</h1>
-            </Link> 
-                )
-              })
-            }
-          </div>
+                    href={`/products/categories/${subCategory.name}`}
+                    key={index}
+                    className="bg-gray-600 text-sm flex flex-row items-center gap-2 text-white px-2 py-1 hover:bg-gray-800 cursor-pointer rounded-md"
+                  >
+                    <Image
+                      src={subCategory.image}
+                      alt=""
+                      height={20}
+                      width={20}
+                    />
+                    <h1>{subCategory?.name}</h1>
+                  </Link>
+                );
+              })}
+            </div>
 
-            <button
-              className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-
-            >
-             Close
+            <button className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black">
+              Close
             </button>
           </div>
         </div>
@@ -337,4 +355,3 @@ const SubCategoryModal = ({
     </>
   );
 };
-

@@ -44,6 +44,8 @@ const AddBrand = () => {
     sub_categories: [],
   });
   const [brands, setBrands] = useState([]);
+  const [brandName, setBrandName] = useState("");
+  const [filteredBrands, setFilteredBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -51,6 +53,7 @@ const AddBrand = () => {
     const fetchBrands = async () => {
       const data = await getBrands();
       setBrands(data);
+      setFilteredBrands(data);
       console.log(data);
       setLoading(false);
     };
@@ -70,11 +73,18 @@ const AddBrand = () => {
     }
     setIsBrandModalOpen(false);
   };
+
+  useEffect(()=>{
+    const filteredResults = brands.filter((brand:any)=>brand.name.toLowerCase().includes(brandName.toLowerCase()));
+    setFilteredBrands(filteredResults)
+  },[brandName])
   return (
     <div className="w-full flex flex-col gap-3 px-5 py-5">
       <h1 className="font-semibold  text-xl ">All Categories</h1>
       <div className="flex flex-row items-center gap-10">
         <input
+        value={brandName}
+        onChange={(e:any)=>setBrandName(e.target.value)}
           type="text"
           placeholder="Search Category"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
@@ -91,7 +101,7 @@ const AddBrand = () => {
         {loading ? (
           <PuffLoader color="red" size={40} />
         ) : (
-          brands.map((brand: any, index: number) => {
+          filteredBrands.map((brand: any, index: number) => {
             return (
               <BrandTab
                 key={index}

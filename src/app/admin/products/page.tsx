@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { getProducts } from "@/utils/functions/getProducts";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -9,10 +9,14 @@ const ProductCard = ({ product }: { product: any }) => {
     <div className="flex flex-col items-center w-[300px] bg-slate-200 p-5 gap-4 rounded-md">
       <img src={product?.image} alt="" />
       <h1 className="font-semibold text-md">{product.name}</h1>
-      <h1 className="text-sm">Stock : <span className="font-semibold">{product?.stock_count}</span></h1>
-      <h1 className="text-sm">Brand : <span className="font-semibold">{product?.brand}</span></h1>
+      <h1 className="text-sm">
+        Stock : <span className="font-semibold">{product?.stock_count}</span>
+      </h1>
+      <h1 className="text-sm">
+        Brand : <span className="font-semibold">{product?.brand}</span>
+      </h1>
       <h1 className="font-semibold text-sm">
-      ₹{product?.mrp} <s className="text-red-500">₹{product?.price}</s>
+        ₹{product?.mrp} <s className="text-red-500">₹{product?.price}</s>
       </h1>
       <Link
         href={`/products/${product?.category}/${product?._id}`}
@@ -31,33 +35,80 @@ const ProductCard = ({ product }: { product: any }) => {
 };
 
 const CategoryCard = ({ category }: { category: any }) => {
+  const [products, setProducts] = useState(category?.products!);
+  const [filteredProducts, setFilteredProducts] = useState(category?.products!);
+  const [productName, setProductName] = useState("");
+  useEffect(() => {
+  
+    if (productName === "") {
+      setFilteredProducts(category?.products!);
+    } else {
+      const filteredResults = products.filter((product: any) =>(
+        product?.filter((productData:any)=>{
+          
+          return(
+            productData.name.toLowerCase().includes(productName.toLowerCase())
+        )
+      })
+      )
+       
+      );
+     
+       setFilteredProducts(filteredResults);
+    }
+  }, [productName,products]);
   return (
     <div className="flex flex-col items-start gap-5 w-full border border-slate-500 px-10 py-5">
-      <h1 className="font-semibold text-lg">Category: {category?.category}</h1>
+      <div className="flex flex-row items-center justify-between flex-wrap w-full">
+        <h1 className="font-semibold text-lg">
+          Category: {category?.category}
+        </h1>
+        <input
+          type="text"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          placeholder="Search Products"
+          className="border border-slate-200 p-2 rounded-md w-[60%]"
+        />
+      </div>
+
       <div className="flex flex-col items-start gap-5 w-full">
         {category &&
           category?.sub_categories &&
           category?.sub_categories?.map(
-            (subCategory: any, subIndex: number) => (
-              <div key={subIndex} className="flex flex-col items-start gap-3">
-                <h1 className="font-semibold text-md">
-                  Sub-Category: {subCategory?.name}
-                </h1>
-                <div className="flex flex-row items-start justify-start flex-wrap gap-5">
-                  {category?.products![0]!.map(
-                    (productData: any, index: number) => (
-                      <>
-                      {(productData.sub_category === subCategory?.name) && <ProductCard
-                        product={productData && (productData.sub_category === subCategory?.name) && productData}
-                        key={index}
-                      />}
-                      </>
-                      
-                    )
-                  )}
+            (subCategory: any, subIndex: number) => {
+              return (
+                <div key={subIndex} className="flex flex-col items-start gap-3">
+                  <h1 className="font-semibold text-md">
+                    Sub-Category: {subCategory?.name}
+                  </h1>
+
+                  {filteredProducts.map((productData: any, index: number) => {
+                    return (
+                      <div key={index} className="flex flex-row items-start justify-start flex-wrap gap-5">
+                        {productData?.map((product: any, subIndex: number) => {
+                          return (
+                            <>
+                              {product.sub_category === subCategory?.name && (
+                                <ProductCard
+                                  product={
+                                    product &&
+                                    product.sub_category ===
+                                      subCategory?.name &&
+                                    product
+                                  }
+                                  key={subIndex}
+                                />
+                              )}
+                            </>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            )
+              );
+            }
           )}
       </div>
     </div>
@@ -67,17 +118,31 @@ const CategoryCard = ({ category }: { category: any }) => {
 const ManageProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [productSearch, setProductSearch] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       const data = await getProducts();
-      console.log(data)
+     
       setProducts(data);
+      setFilteredProducts(data);
       setLoading(false);
     };
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (productSearch === "") {
+      setFilteredProducts(products);
+    } else {
+      const filteredResults = products?.filter((product: any) =>
+        product?.category.toLowerCase().includes(productSearch.toLowerCase())
+      );
+      setFilteredProducts(filteredResults);
+    }
+  }, [productSearch, products]);
 
   return (
     <div className="flex flex-col items-start my-5 lg:px-10 gap-5 w-full">
@@ -85,6 +150,8 @@ const ManageProductsPage = () => {
       <div className="flex flex-row items-center gap-2 flex-wrap w-full">
         <input
           type="text"
+          value={productSearch}
+          onChange={(e) => setProductSearch(e.target.value)}
           placeholder="Search Category"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
         />
@@ -101,7 +168,7 @@ const ManageProductsPage = () => {
             <PuffLoader size={30} color="black" />
           </div>
         ) : (
-          products?.map((category: any, index: number) => (
+          filteredProducts?.map((category: any, index: number) => (
             <CategoryCard category={category} key={index} />
           ))
         )}
