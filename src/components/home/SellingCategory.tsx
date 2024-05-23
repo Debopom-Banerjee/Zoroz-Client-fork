@@ -5,7 +5,7 @@ import React from "react";
 const Brand = ({brand}:{brand:any}) => {
   return (
     <Link href={`/products/brands/${brand.name}`} className="flex flex-col items-center gap-2">
-      <div className=" bg-white rounded-full border border-slate-300 p-4 py-6">
+      <div className=" bg-white rounded-full border hover:bg-slate-100 border-slate-300 p-4 py-6">
         <img src={brand.image} width={80} height={80} alt="" />
       </div>
       <h1 className="text-xs">{brand.name}</h1>
@@ -47,7 +47,7 @@ const SpecialCategory = ({ category }: { category: any }) => {
 const CategoriesAssemble = ({ categories }: { categories: any }) => {
   return (
     <div className="grid grid-cols-2 md:flex flex-row flex-wrap items-center gap-5">
-      {categories.map((category: any, index: number) => {
+      {categories.slice(0,4).map((category: any, index: number) => {
         return <SpecialCategory category={category} key={index} />;
       })}
     </div>
@@ -55,15 +55,23 @@ const CategoriesAssemble = ({ categories }: { categories: any }) => {
 };
 
 const TopBrands = ({ brands }: { brands: any }) => {
+  const slicedBrands = brands.slice(0,3);
+  const moreBrands = brands.length - slicedBrands?.length;
   return (
     <div className="flex flex-col items-start rounded-xl border gap-2 bg-white px-5 py-3">
       <h1 className="font-semibold text-start text-sm">
         Top Brands & Related Categories
       </h1>
       <div className="grid grid-cols-2 md:flex flex-row flex-wrap w-full items-center gap-3">
-        {brands.map((brand: any, index: number) => {
+        {slicedBrands.map((brand: any, index: number) => {
           return <Brand brand={brand} />;
         })}
+        {moreBrands>0 && <Link href={`/products/brands`} className="flex flex-col  items-center gap-2">
+      <div className=" bg-white font-semibold rounded-full hover:bg-slate-100 text-center border text-xl flex self-start border-slate-300 px-8 py-10">
+        {moreBrands}+ <br /> more
+      </div>
+     
+    </Link>}
       </div>
     </div>
   );
@@ -87,7 +95,7 @@ const SellingCategory = ({ product }: { product: any }) => {
           <CategoriesAssemble categories={product.sub_categories} />
         </div>
 
-        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-6 items-center  justify-center">
+        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-3 items-center  justify-center">
         {product.products![0]!.slice(0, 6).map((productData: any, index: number) => {
   return(  
     <ProductCard product={productData} key={index} />
