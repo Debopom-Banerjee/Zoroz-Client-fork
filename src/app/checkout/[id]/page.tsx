@@ -205,6 +205,7 @@ const page = () => {
 
     if (inputs.payment_method === "Online Payment") {
       await processPayment(e);
+      router.push("/profile/orders")
     } else {
       const data = await addOrder(orderDetails);
       if (data?.status === 201) {

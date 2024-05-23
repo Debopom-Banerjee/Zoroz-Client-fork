@@ -8,7 +8,8 @@ const FormElement = ({
     onChange,
     width,
     disabled,
-    placeholder
+    placeholder,
+    required=false,
   }: {
     name: string;
     value: string;
@@ -20,6 +21,7 @@ const FormElement = ({
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
     placeholder?: string;
+    required?:boolean
   }) => {
   return (
     <div className={`flex w-full lg:w-[${width}] flex-col  px-3  items-start gap-1 md:gap-2 flex-wrap justify-start`}>
@@ -27,6 +29,7 @@ const FormElement = ({
       {name} :
     </label>
     <input
+      required={required}
       type={type}
       value={value}
       onChange={onChange}
