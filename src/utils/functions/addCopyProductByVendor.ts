@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const addCopyProductByVendor = async (inputs: any) => {
     try {
+      console.log(inputs)
         const token:any =
           localStorage.getItem("token")
           

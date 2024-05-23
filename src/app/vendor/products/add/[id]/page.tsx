@@ -49,7 +49,8 @@ export interface FeaturesType {
       benefits: [],
       brand: "",
       warranty: "",
-      vendor_id:""
+      vendor_id:"",
+      admin_approval:false,
     });
     console.log(inputs)
 
@@ -165,10 +166,10 @@ export interface FeaturesType {
     const handleSubmit = async () => {
       try {
         console.log(user?._id)
-       
+        
         await addCopyProductByVendor(inputs);
         toast.success("Product Added !");
-        router.push("/vendor/products/all")
+        // router.push("/vendor/products/all")
       } catch (error) {
         console.log(error);
       }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCategories } from "@/utils/functions/getCategories";
 import { getBrands } from "@/utils/functions/getBrands";
+import { BiSolidCategory } from "react-icons/bi";
 
 const referralCardImages = [
   "https://i.postimg.cc/QNktmBST/banner5.jpg",
@@ -21,7 +22,7 @@ const SideChip = ({
   linkSuffix,
 }: {
   category: any;
-  image?: string;
+  image?: string | React.ReactNode;
   linkPrefix?: string;
   linkSuffix?: string;
 }) => {
@@ -32,7 +33,12 @@ const SideChip = ({
       }`}
       className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2"
     >
-      {image && <img src={image} alt="" className="w-7" />}
+      {typeof image === "string" ? (
+        image && <img src={image} alt="" className="w-7" />
+      ) : (
+        <BiSolidCategory color="#F44336" size={12} />
+      )}
+
       <h1 className="text-sm">{category}</h1>
     </Link>
   );
