@@ -69,24 +69,35 @@ const ProductCard = ({ product }: { product: any }) => {
   };
 
 const page = () => {
+  const [categoryName, setCategoryName] = useState("");
     const user = useUser(state => state.user)
     const [products, setProducts] = useState<any>([])
+    const [filteredProducts,setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
             const productsData = await getProductsByVendor(user?._id!)
+            console.log(productsData)
             setProducts(productsData)
+            setFilteredProducts(productsData)
             setLoading(false)
         }
         fetchProducts()
     }, [user])
+    useEffect(()=>{
+      const filteredResults = products.filter((category:any)=>category?.category.toLowerCase().includes(categoryName.toLowerCase()))
+      setFilteredProducts(filteredResults)
+    },[categoryName,products])
+  
   return (
     <div>
          <div className="flex flex-col items-start my-5 lg:px-10 gap-5 w-full">
       <h1 className="font-semibold text-4xl">All Products in Market</h1>
       <div className="flex flex-row items-center gap-2 flex-wrap w-full">
         <input
+        value={categoryName}
+        onChange={(e:any)=>setCategoryName(e.target.value)}
           type="text"
           placeholder="Search Category"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
@@ -104,7 +115,7 @@ const page = () => {
             <PuffLoader size={30} color="black" />
           </div>
         ) : (
-          products?.map((category: any, index: number) => (
+          filteredProducts?.map((category: any, index: number) => (
             <CategoryCard category={category} key={index} />
           ))
         )}

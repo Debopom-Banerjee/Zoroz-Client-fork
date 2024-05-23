@@ -63,13 +63,13 @@ const CategoryCard = ({ category }: { category: any }) => {
         <h1 className="font-semibold text-lg">
           Category: {category?.category}
         </h1>
-        <input
+        {/* <input
           type="text"
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
           placeholder="Search Products"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
-        />
+        /> */}
       </div>
 
       <div className="flex flex-col items-start gap-5 w-full">
