@@ -91,7 +91,7 @@ const Hero = () => {
           );
         })}
         <h1 className="font-semibold text-md">Brands</h1>
-        {brands?.slice(0, 4).map((brand: any, index: number) => {
+        {brands?.slice(0, 5).map((brand: any, index: number) => {
           return (
             <SideChip
               key={index}
