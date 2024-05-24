@@ -86,13 +86,14 @@ const page = () => {
         <PuffLoader size={30} color="black" />
     </div>
     : <div className="flex flex-col lg:flex-row my-10  lg:w-[90%] items-start justify-center gap-2">
-      <div className="w-full flex flex-row items-start gap-3 bg-white rounded-xl p-8 lg:w-[80%] 2xl:w-[60%]">
+      <div className="w-full flex flex-col lg:flex-row  items-center lg:items-start gap-3 bg-white rounded-xl p-8 lg:w-[80%] 2xl:w-[60%]">
         <img
           src={product?.image}
           alt={product?.name}
-          className="w-80  object-cover rounded-xl"
+          className="w-96  object-cover rounded-xl"
         />
         <div className="w-full flex flex-col items-start gap-3">
+          <div className="hidden lg:block">
           <h1 className="font-semibold text-xl">{product?.name}</h1>
           <h1 className=" text-lg font-bold tracking-wider">
           ₹{product?.price}{" "}
@@ -103,6 +104,51 @@ const page = () => {
               {productPercentage}% off
             </span>
           </h1>
+          </div>
+         
+          <div className="flex lg:hidden flex-col w-full mx-auto items-start px-8 py-3 gap-4 bg-white rounded-xl">
+        <h1 className="text-black  font-bold tracking-wider text-2xl">
+        ₹{Number(product?.price * quantity).toFixed(2)}
+        </h1>
+        <h1 className="text-slate-500  font-semibold tracking-wider text-md">
+          <s>MRP ₹{Number(product?.mrp * quantity).toFixed(2)}</s>{" "}
+          <span className="ml-2 text-green-500">{productPercentage}% off</span>
+        </h1>
+        <div className="flex flex-row items-center justify-between gap-3 w-full">
+          <h1 className="text-black font-semibold text-md">Update Qty</h1>
+          <div className="flex flex-row items-center gap-2">
+            {quantity > 1 && <BiMinus
+              onClick={() => setQuantity(quantity - 1)}
+              className="text-2xl text-slate-500 bg-slate-200 rounded-xl"
+              size={25}
+            />}
+            <h1 className="text-black font-semibold text-md border border-black px-4 rounded-xl py-1">
+              {quantity}
+            </h1>
+            <BiPlus
+              onClick={() => setQuantity(quantity + 1)}
+              className="text-2xl text-slate-500 bg-slate-200 rounded-xl"
+              size={25}
+            />
+          </div>
+        </div>
+        {quantity > 0 && (
+          <>
+            <button
+              onClick={handleAddToCart}
+              className="bg-sky-500 mx-auto rounded-xl flex flex-row text-center items-center gap-2 text-white px-10 py-2 font-semibold text-xl"
+            >
+              <IoMdCart size={25} className="text-white" />
+              Add to Cart
+            </button>
+            <Link href={`/checkout/${productId}?quantity=${quantity}`} className="bg-red-600 mx-auto w-1/2 text-center rounded-xl  text-white px-10 py-2 font-semibold text-xl">
+              Checkout
+            </Link>
+          </>
+        )}
+        
+
+      </div>
           <div className="flex flex-col items-start gap-1">
             <h1 className="font-semibold text-lg">Product Description :</h1>
             <h1 className="font-normal text-md">
@@ -166,7 +212,7 @@ const page = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-start px-8 py-3 gap-4 bg-white rounded-xl">
+      <div className="hidden lg:flex flex-col items-start px-8 py-3 gap-4 bg-white rounded-xl">
         <h1 className="text-black  font-bold tracking-wider text-2xl">
         ₹{Number(product?.price * quantity).toFixed(2)}
         </h1>
