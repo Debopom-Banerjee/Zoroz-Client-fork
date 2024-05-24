@@ -47,17 +47,22 @@ const footerQuickLinks = [
     {
         title:"Products",
         quickLinks:[
-            {
-                title:"Solar & Lighting",
-                link:"/products/Solar%20&%20Lighting/subCategories"
-            },
-            {
+            
+           {
                 title:"Mobile Accessories",
                 link:"/products/Mobile%20Accessories/subCategories"
             },
             {
                 title:"Mobile Spare Parts",
                 link:"/products/Mobile%20Spare%20Parts/subCategories"
+            },
+            {
+                title:"Mobile Tool Kits",
+                link:"/products/Mobile%20Tool%20Kits/subCategories"
+            },
+            {
+                title:"Solar & Lighting",
+                link:"/products/Solar%20&%20Lighting/subCategories"
             },
             {
                 title:"View All Brands",
