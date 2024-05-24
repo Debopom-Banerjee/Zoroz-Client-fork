@@ -2,6 +2,7 @@
 import CheckoutCard from "@/components/cart/CheckoutCard";
 import FormElement from "@/components/common/FormElement";
 import Navbar from "@/components/common/Navbar";
+import ThankYouModal from "@/components/common/ThankYouModal";
 import Footer from "@/components/home/Footer";
 import { useUser } from "@/lib/store/user";
 import { addMultipleOrder } from "@/utils/functions/addMultipleOrders";
@@ -32,6 +33,7 @@ const page = () => {
   const router = useRouter();
   const [cartData, setCartData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showThankYou, setShowThankYou] = useState(true);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [totalGST, setTotalGST] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
@@ -353,6 +355,14 @@ const page = () => {
        <CheckoutCard totalAmount={totalAmount} totalGST={totalGST} total={total} />
       </div>
     </div>
+    {
+      showThankYou && 
+      <ThankYouModal
+      isOpen={showThankYou}
+      onClose={()=>setShowThankYou(false)}
+      onSubmit={()=>{}}
+      />
+    }
     <Footer />
     </>
   );

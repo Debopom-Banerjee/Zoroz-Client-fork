@@ -47,11 +47,6 @@ const sideBarRoutes = [
     icon: <FaProductHunt size={24} />,
   },
   {
-    title: "Vendor Management",
-    path: "/admin/vendors",
-    icon: <IoPerson size={24} />,
-  },
-  {
     title: "Orders",
     path: "/admin/orders",
     icon: <FiShoppingCart size={24} />,

@@ -2,6 +2,7 @@
 import CheckoutCard from "@/components/cart/CheckoutCard";
 import FormElement from "@/components/common/FormElement";
 import Navbar from "@/components/common/Navbar";
+import ThankYouModal from "@/components/common/ThankYouModal";
 import Footer from "@/components/home/Footer";
 import { useUser } from "@/lib/store/user";
 import { addOrder } from "@/utils/functions/addOrder";
@@ -38,6 +39,7 @@ const page = () => {
     amount: null,
   });
   const user = useUser((state) => state.user);
+  const [showThankYou, setShowThankYou] = useState(true);
   const [cartData, setCartData] = useState<any>([]);
   const [productData, setProductData] = useState<any>(null);
   const [productQuantity, setProductQuantity] = useState<number>(1);
@@ -363,6 +365,14 @@ const page = () => {
           </div>
         )}
       </div>
+      {
+      showThankYou && 
+      <ThankYouModal
+      isOpen={showThankYou}
+      onClose={()=>setShowThankYou(false)}
+      onSubmit={()=>{}}
+      />
+    }
       <Footer />
     </>
   );
