@@ -180,7 +180,7 @@ const Footer = () => {
        {
         footerQuickLinks?.map((quickLink:any,index:number)=>{
             return(
-                <ListChip list={quickLink} title={quickLink?.title} />
+                <ListChip key={index} list={quickLink} title={quickLink?.title} />
             )
         })
        }
