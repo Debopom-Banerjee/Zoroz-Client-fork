@@ -144,12 +144,12 @@ const Foot = () => {
     <div className="flex flex-row items-center  py-2 justify-between bg-[#efeff4] w-full px-10">
       <div className="flex flex-row items-center gap-2">
         <FootChip title="Terms of Use" link="/terms-and-conditions" />
-        <FootChip title="Copyright" link="/terms-of" />
+        <FootChip title="Copyright" link="/copyright" />
         <FootChip title="Privacy Policy" link="/privacy-policy" />
-        <FootChip title="Compliance" link="/terms-of-use" />
+        <FootChip title="Compliance" link="/compliance" />
       </div>
       <h1 className="text-sm">
-        Zoroz India Private Limited © 2024 Zoroz.com All Rights Reserved
+        Zoroz India Private Limited © 2024 Zoroz.com All Rights Reserved | Designed and developed by <a href="https://detech.co.in/" target=”_blank”>DeTech</a>
       </h1>
     </div>
   );
