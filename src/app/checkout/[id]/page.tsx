@@ -93,7 +93,7 @@ const page = () => {
   const createOrderId = async () => {
     try {
       const response = await fetch(
-        "https://zoroz-ecommerce-backend.onrender.com/orders/add",
+        "https://6014-103-87-142-35.ngrok-free.app/orders/add",
         {
           method: "POST",
           headers: {
@@ -159,7 +159,7 @@ const page = () => {
           };
 
           const result = await fetch(
-            "https://zoroz-ecommerce-backend.onrender.com/orders/paymentCapture",
+            "https://6014-103-87-142-35.ngrok-free.app/orders/paymentCapture",
             {
               method: "POST",
               body: JSON.stringify(data),
@@ -167,7 +167,9 @@ const page = () => {
             }
           );
           const res = await result.json();
-          if (res.isOk) alert("payment succeed");
+          if (res.isOk){ alert("payment succeed");
+          router.push("/profile/orders?success=true");
+          }
           else {
             alert(res.message);
           }
@@ -430,13 +432,13 @@ const page = () => {
           </div>
         )}
       </div>
-      {showThankYou && (
+      {/* {showThankYou && (
         <ThankYouModal
           isOpen={showThankYou}
           onClose={() => setShowThankYou(false)}
           onSubmit={() => {}}
         />
-      )}
+      )} */}
       <Footer />
     </>
   );

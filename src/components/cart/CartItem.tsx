@@ -1,6 +1,7 @@
 import { useUser } from "@/lib/store/user";
 import { addToCart } from "@/utils/functions/addToCart";
 import { manageQuantity } from "@/utils/functions/manageQuantity";
+import parse from "html-react-parser";
 import React, { useEffect, useMemo, useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
@@ -63,7 +64,7 @@ const CartItem = ({ product, setCartData }: { product: any; setCartData: any }) 
       <img src={product?.image} className="w-20 rounded-xl" />
       <div className="flex flex-col items-start gap-2">
         <h1 className="font-semibold tracking-wide">{product?.name}</h1>
-        <p className="text-gray-500">{product?.description}</p>
+        <p className="text-gray-500">{parse(product?.description)}</p>
       </div>
       <div className="flex flex-col items-center gap-2 ml-auto">
         <h1 className="font-semibold tracking-wide">${subtotal}</h1>

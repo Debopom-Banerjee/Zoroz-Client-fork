@@ -176,7 +176,7 @@ const page = () => {
 
           if (res.isOk) {
             alert("payment succeed");
-            router.push("/profile/orders");
+            router.push("/profile/orders?success=true");
           } else {
             alert(res.message);
           }

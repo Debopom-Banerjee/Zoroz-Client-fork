@@ -4,6 +4,7 @@ import ThankYouModal from '@/components/common/ThankYouModal';
 import { useUser } from '@/lib/store/user';
 import { getOrdersByUser } from '@/utils/functions/getOrdersByUser';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { PuffLoader } from 'react-spinners';
 
@@ -31,7 +32,9 @@ const OrderCard = ({orderData}:{orderData:any})=>{
     )
 }
 const page = () => {
-    const [showThankYou,setShowThankYou] = useState(false);
+    const searchParams = useSearchParams();
+    const success:any =  searchParams?.get('success');
+    const [showThankYou,setShowThankYou] = useState<boolean>(success || false);
     const [loading, setLoading] = useState(true)
     const user = useUser((state)=>state.user)
     const [ordersData, setOrdersData] = useState([])
