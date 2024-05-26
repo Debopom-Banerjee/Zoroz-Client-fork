@@ -51,6 +51,7 @@ const MassProductAdd = () => {
           newData.specifications = featuresArray;
         }
        
+        console.log("Before Parsing")
   
         // Parsing other properties if they need to be converted
         newData.mrp = parseInt(newData.mrp);
@@ -59,6 +60,7 @@ const MassProductAdd = () => {
         newData.vendor_id = user?._id;
         return newData;
       });
+      console.log("After Parsing")
       updatedCsvData.filter((data:any) => Object.values(data).some(val => val !== '' && val !== undefined && val !== null ));
       console.log(updatedCsvData);
     

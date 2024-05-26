@@ -149,9 +149,10 @@ const Foot = () => {
         <FootChip title="Compliance" link="/compliance" />
       </div>
       <h1 className="text-sm">
-        Zoroz India Private Limited © 2024 Zoroz.com All Rights Reserved | Designed and developed by <a href="https://detech.co.in/" target=”_blank”>DeTech</a>
+        Zoroz India Private Limited © 2024 Zoroz.com All Rights Reserved | Designed and developed by <Link target="_blank" href="https://detech.co.in/" >DeTech</Link>
       </h1>
     </div>
+  
   );
 };
 
