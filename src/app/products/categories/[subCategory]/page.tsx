@@ -65,8 +65,8 @@ const page = () => {
   return (
     <>
       <Navbar />
-      <div className="w-5/6 flex flex-col md:flex-row gap-5 items-start mx-auto my-10">
-        <div className="bg-white px-10 py-5 max-md:w-full mx-auto flex flex-col items-center justify-center  rounded-lg">
+      <div className="w-full flex flex-col md:flex-row gap-5 items-start mx-auto my-10">
+        <div className="bg-white px-10 py-5 max-md:w-full mx-auto flex flex-col items-center justify-center md:w-1/6 rounded-lg">
           <h1 className="font-semibold text-lg">Filters</h1>
           <div className="flex flex-col items-start gap-3">
             <h1 className="font-semibold">Price:</h1>

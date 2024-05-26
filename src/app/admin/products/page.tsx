@@ -36,28 +36,6 @@ const ProductCard = ({ product }: { product: any }) => {
 };
 
 const CategoryCard = ({ category }: { category: any }) => {
-  const [products, setProducts] = useState(category?.products!);
-  const [filteredProducts, setFilteredProducts] = useState(category?.products!);
-  const [productName, setProductName] = useState("");
-  useEffect(() => {
-  
-    if (productName === "") {
-      setFilteredProducts(category?.products!);
-    } else {
-      const filteredResults = products.filter((product: any) =>(
-        product?.filter((productData:any)=>{
-          
-          return(
-            productData.name.toLowerCase().includes(productName.toLowerCase())
-        )
-      })
-      )
-       
-      );
-     
-       setFilteredProducts(filteredResults);
-    }
-  }, [productName,products]);
   return (
     <div className="flex flex-col items-start gap-5 w-full border border-slate-500 px-10 py-5">
       <div className="flex flex-row items-center justify-between flex-wrap w-full">
@@ -77,39 +55,33 @@ const CategoryCard = ({ category }: { category: any }) => {
         {category &&
           category?.sub_categories &&
           category?.sub_categories?.map(
-            (subCategory: any, subIndex: number) => {
-              return (
+            (subCategory: any, subIndex: number) =>
+              category?.products![subIndex]!.length > 0 && (
                 <div key={subIndex} className="flex flex-col items-start gap-3">
                   <h1 className="font-semibold text-md">
                     Sub-Category: {subCategory?.name}
                   </h1>
-
-                  {filteredProducts.map((productData: any, index: number) => {
-                    return (
-                      <div key={index} className="flex flex-row items-start justify-start flex-wrap gap-3">
-                        {productData?.map((product: any, subIndex: number) => {
-                          return (
-                            <>
-                              {product.sub_category === subCategory?.name && (
-                                <ProductCard
-                                  product={
-                                    product &&
-                                    product.sub_category ===
-                                      subCategory?.name &&
-                                    product
-                                  }
-                                  key={subIndex}
-                                />
-                              )}
-                            </>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
+                  <div className="flex flex-row items-start justify-start flex-wrap gap-5">
+                    {category?.products![subIndex]!.map(
+                      (productData: any, index: number) => (
+                        <>
+                          {productData.sub_category === subCategory?.name && (
+                            <ProductCard
+                              product={
+                                productData &&
+                                productData.sub_category ===
+                                  subCategory?.name &&
+                                productData
+                              }
+                              key={index}
+                            />
+                          )}
+                        </>
+                      )
+                    )}
+                  </div>
                 </div>
-              );
-            }
+              )
           )}
       </div>
     </div>
@@ -126,7 +98,7 @@ const ManageProductsPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       const data = await getProductsForAdminAll();
-     console.log(data);
+      console.log(data);
       setProducts(data);
       setFilteredProducts(data);
       setLoading(false);
@@ -135,14 +107,10 @@ const ManageProductsPage = () => {
   }, []);
 
   useEffect(() => {
-    if (productSearch === "") {
-      setFilteredProducts(products);
-    } else {
-      const filteredResults = products?.filter((product: any) =>
-        product?.category.toLowerCase().includes(productSearch.toLowerCase())
-      );
-      setFilteredProducts(filteredResults);
-    }
+    const filteredResults = products?.filter((product: any) =>
+      product?.category.toLowerCase().includes(productSearch.toLowerCase())
+    );
+    setFilteredProducts(filteredResults);
   }, [productSearch, products]);
 
   return (

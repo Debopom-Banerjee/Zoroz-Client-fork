@@ -32,7 +32,7 @@ const Reviews = ({reviews,productName,productId}:{reviews:any,productName:string
   },[reviews,productId])
   const [openReviewModal , setOpenReviewModal] = useState(false);
   return (
-    <div className="w-full bg-white py-2  px-2 rounded-xl">
+    <div className="w-full bg-white py-2  px-10 rounded-xl">
       <div className="flex flex-col md:flex-row items-center justify-between flex-wrap   gap-3">
         <h1 className="font-semibold text-xl">Reviews & Ratings</h1>
         <button onClick={()=>setOpenReviewModal(true)} className="bg-red-300 text-red-600 text-sm md:text-base px-5 py-2 rounded-xl font-semibold hover:bg-opacity-30 hover:border-red-600 hover:border">
@@ -41,8 +41,8 @@ const Reviews = ({reviews,productName,productId}:{reviews:any,productName:string
       </div>
 
       <h1 className="text-base mt-2 font-semibold">{productName}</h1>
-      <div className="flex flex-row flex-wrap justify-center mx-auto items-start gap-5 py-2">
-        <div className="flex flex-col items-center gap-2 w-72 mx-auto md:w-60">
+      <div className="flex flex-row flex-wrap justify-center  items-start gap-5 py-2">
+        <div className="flex flex-col items-center gap-2 w-72 md:w-60">
           <h1 className="font-semibold flex flex-row items-center text-4xl text-green-500">
             {averageRating}{" "}
             <svg

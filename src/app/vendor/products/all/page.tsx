@@ -67,17 +67,24 @@ const CategoryCard = ({ category }: { category: any }) => {
 const ManageProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [categoryName, setCategoryName] = useState("");
+  const [filteredData,setFilteredData] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       const data = await getProducts();
       console.log(data)
       setProducts(data);
+      setFilteredData(data);
       setLoading(false);
     };
     fetchProducts();
   }, []);
+
+  useEffect(()=>{
+    const filteredResults:any = products.filter((product:any)=>product?.category.toLowerCase().includes(categoryName.toLowerCase()))
+    setFilteredData(filteredResults)
+  },[categoryName,products])
 
   return (
     <div className="flex flex-col items-start my-5 lg:px-10 gap-5 w-full">
@@ -85,6 +92,8 @@ const ManageProductsPage = () => {
       <div className="flex flex-row items-center gap-2 flex-wrap w-full">
         <input
           type="text"
+          value={categoryName}
+          onChange={(e)=>setCategoryName(e.target.value)}
           placeholder="Search Category"
           className="border border-slate-200 p-2 rounded-md w-[60%]"
         />
@@ -101,7 +110,7 @@ const ManageProductsPage = () => {
             <PuffLoader size={30} color="black" />
           </div>
         ) : (
-          products?.map((category: any, index: number) => (
+          filteredData?.map((category: any, index: number) => (
             <CategoryCard category={category} key={index} />
           ))
         )}

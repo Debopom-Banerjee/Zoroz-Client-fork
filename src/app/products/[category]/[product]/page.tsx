@@ -90,10 +90,10 @@ const page = () => {
           <PuffLoader size={30} color="black" />
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row my-10 lg:w-[90%] items-start justify-center gap-2">
+        <div className="flex flex-col lg:flex-row my-10 lg:w-full items-start justify-center gap-2">
        
-          <div className="w-full flex flex-col items-start gap-10 lg:w-[80%] 2xl:w-[60%] justify-center py-4 ">
-            <div className=" flex flex-col lg:flex-row items-center p-2 lg:items-start py-5 rounded-xl bg-white ">
+          <div className="w-full flex flex-col items-start gap-10 lg:w-[80%] 2xl:w-[80%] justify-center py-4 ">
+            <div className=" flex flex-col lg:flex-row items-center p-2 lg:items-start py-5 rounded-xl bg-white w-full mx-auto ">
               <img
                 src={product?.image}
                 alt={product?.name}
