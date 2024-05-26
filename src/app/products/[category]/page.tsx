@@ -5,6 +5,7 @@ import ProductView from "@/components/products/ProductView";
 import { getProductsByCategory } from "@/utils/functions/getProductsByCategory";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { PuffLoader } from "react-spinners";
 
 const page = () => {
@@ -15,6 +16,7 @@ const page = () => {
   const category = decodeURIComponent(categoryString);
   const [filterProducts, setFilteredProducts] = useState<any>([]);
   const [priceOptions, setPriceOptions] = useState<number[]>([0]);
+  const [productName,setProductName] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchProducts = async () => {
@@ -58,11 +60,16 @@ const page = () => {
 
     filteredData();
   }, [minPriceFilter, maxPriceFilter, productData]);
+
+  useEffect(()=>{
+    const filteredResults = productData.filter((product:any)=>product?.name.toLowerCase().includes(productName.toLowerCase()))
+    setFilteredProducts(filteredResults)
+  },[productName, productData])
   return (
     <>
       <Navbar />
-      <div className="w-5/6 flex flex-col md:flex-row gap-5 items-start mx-auto my-10">
-        <div className="bg-white px-10 py-5 max-md:w-full mx-auto flex flex-col items-center justify-center  rounded-lg">
+      <div className="w-full flex flex-col md:flex-row gap-5 items-start mx-auto my-10">
+        <div className="bg-white px-10 py-5 max-md:w-full w-1/6 mx-auto flex flex-col items-center justify-center  rounded-lg">
           <h1 className="font-semibold text-lg">Filters</h1>
           <div className="flex flex-col items-start gap-3">
             <h1 className="font-semibold">Price:</h1>
@@ -100,10 +107,27 @@ const page = () => {
                 </option>
               ))}
             </select>
+
+            
           </div>
         </div>
         <div className="flex flex-col bg-white items-start gap-5 mx-auto justify-center rounded-xl w-full px-5 py-5  ">
+        <div className="flex flex-row w-full items-center justify-between flex-wrap-reverse">
           <h1 className="font-semibold text-2xl">{category}</h1>
+
+ <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
+          <input
+            type="text"
+            value={productName}
+            onChange={(e)=>setProductName(e.target.value)}
+            placeholder="Search for products, brands and more"
+            className="w-full p-2 border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          />
+          <div className="bg-red-500 h-full absolute rounded-tr-md cursor-pointer hover:bg-opacity-80 rounded-br-md right-0 top-0 w-10 mx-auto ">
+            <FaSearch size={25} className="text-white w-full h-full p-2 " />
+          </div>
+        </div>
+          </div>
           <div className="flex flex-row flex-wrap gap-5 md:gap-3 items-center self-center justify-center mx-auto w-full">
             {loading ? (
               <div className="min-h-[80vh] flex flex-col items-center justify-center ">

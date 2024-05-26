@@ -6,6 +6,7 @@ import { getProductsByBrand } from "@/utils/functions/getProductsByBand";
 import { getProductsBySubCategory } from "@/utils/functions/getProductsBySubCategory";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { PuffLoader } from "react-spinners";
 
 const page = () => {
@@ -13,6 +14,7 @@ const page = () => {
   const [maxPriceFilter, setMaxPriceFilter] = useState<number>(0);
   const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
   const [filterProducts, setFilteredProducts] = useState<any>([]);
+  const [productName, setProductName] = useState("");
   const [priceOptions, setPriceOptions] = useState<number[]>([0]);
 
   const subCategory = useParams().subCategory.toLocaleString();
@@ -23,6 +25,7 @@ const page = () => {
       const data = await getProductsBySubCategory(subCategory);
       console.log(data);
       setProductData(data);
+      setFilteredProducts(data)
       if (data.length > 0) {
         const prices = data.map((product: any) => product.price);
         const minPrice = Math.floor(Math.min(...prices) / 100) * 100;
@@ -55,6 +58,10 @@ const page = () => {
 
     filteredData();
   }, [minPriceFilter, maxPriceFilter, productData]);
+  useEffect(()=>{
+    const filteredResults = productData.filter((product:any)=>product?.name.toLowerCase().includes(productName.toLowerCase()))
+    setFilteredProducts(filteredResults)
+  },[productName, productData])
   return (
     <>
       <Navbar />
@@ -100,22 +107,35 @@ const page = () => {
           </div>
         </div>
         <div className="flex flex-col bg-white items-start gap-5 mx-auto justify-center rounded-xl w-full px-5 py-5 lg:w-full ">
-          <h1 className="font-semibold text-2xl">
-            {decodeURIComponent(subCategory)}
-          </h1>
+        <div className="flex flex-row w-full items-center justify-between flex-wrap-reverse">
+          <h1 className="font-semibold text-2xl">{decodeURIComponent(subCategory)}</h1>
+
+ <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
+          <input
+            type="text"
+            value={productName}
+            onChange={(e)=>setProductName(e.target.value)}
+            placeholder="Search for products, brands and more"
+            className="w-full p-2 border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          />
+          <div className="bg-red-500 h-full absolute rounded-tr-md cursor-pointer hover:bg-opacity-80 rounded-br-md right-0 top-0 w-10 mx-auto ">
+            <FaSearch size={25} className="text-white w-full h-full p-2 " />
+          </div>
+        </div>
+          </div>
           <div className="flex flex-row flex-wrap gap-5 md:gap-10 lg:gap-3 items-center self-center justify-center mx-auto w-full">
             {loading ? (
               <div className="min-h-[80vh] flex flex-col items-center justify-center ">
                 <PuffLoader size={35} color="black" />
               </div>
-            ) : productData.length > 0 ? (
-              productData.map((product: any, index: number) => {
+            ) : filterProducts.length > 0 ? (
+              filterProducts.map((product: any, index: number) => {
                 return <ProductView product={product} key={index} />;
               })
             ) : (
-              <h1 className="font-semibold text-lg text-red-600 min-h-[60vh] mt-20">
-                No Products Found
-              </h1>
+              <div className="flex flex-col items-center justify-center mx-auto">
+              <h1 className="font-semibold text-red-600 text-lg my-20">No Products Found !</h1>
+           </div>
             )}
           </div>
         </div>
