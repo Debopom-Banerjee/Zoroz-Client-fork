@@ -1,5 +1,6 @@
 "use client";
 import { getProducts } from "@/utils/functions/getProducts";
+import { getProductsForAdminAll } from "@/utils/functions/getProductsForAdminAll";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
@@ -124,8 +125,8 @@ const ManageProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      const data = await getProducts();
-     
+      const data = await getProductsForAdminAll();
+     console.log(data);
       setProducts(data);
       setFilteredProducts(data);
       setLoading(false);
