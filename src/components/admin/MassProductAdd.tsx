@@ -6,7 +6,7 @@ import { addMultipleProducts } from "@/utils/functions/addMultipleProducts";
 import toast, { Toaster } from "react-hot-toast";
 import { useUser } from "@/lib/store/user";
 
-const MassProductAdd = ({role}:{role:string}) => {
+const MassProductAdd = ({ role }: { role: string }) => {
   const user = useUser((state) => state.user);
   const [csvData, setCsvData] = useState<any>(null);
   const [showTable, setShowTable] = useState(false);
@@ -36,7 +36,7 @@ const MassProductAdd = ({role}:{role:string}) => {
       console.log(csvData);
       let updatedCsvData = csvData?.map((data: any) => {
         const newData = { ...data };
-        newData.admin_approval = role==='admin' ? true : false;
+        newData.admin_approval = role === "admin" ? true : false;
         // Parsing "benefits" property if it exists and is not empty
         if (newData.benefits && newData.benefits.trim() !== "") {
           try {
@@ -71,7 +71,10 @@ const MassProductAdd = ({role}:{role:string}) => {
         try {
           newData.specifications = JSON.parse(newData.specifications);
         } catch (e) {
-          if (newData.specifications === "") {
+          if (
+            newData.specifications === "" ||
+            typeof newData.specifications === "undefined"
+          ) {
             newData.specifications = [];
           } else {
             newData.specifications = newData.specifications.split(".");

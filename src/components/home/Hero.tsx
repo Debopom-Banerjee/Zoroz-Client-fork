@@ -79,7 +79,7 @@ const Hero = () => {
   }, []);
   return (
     <div className="w-full flex flex-col md:flex-row  items-start justify-center gap-5 my-5 ">
-      <div className="hidden md:flex flex-col h-full items-start gap-3 w-auto pl-3 pr-16 py-2  bg-white rounded-xl">
+      <div className="hidden md:flex flex-col h-full items-start gap-3 w-auto pl-3 pr-16 py-2 pb-4  bg-white rounded-xl">
         <h1 className="font-semibold text-md">Categories</h1>
         {categories?.map((category: any) => {
           return (
@@ -91,7 +91,7 @@ const Hero = () => {
           );
         })}
         <h1 className="font-semibold text-md">Brands</h1>
-        {brands?.slice(0, 5).map((brand: any, index: number) => {
+        {brands?.slice(0, 6).map((brand: any, index: number) => {
           return (
             <SideChip
               key={index}
