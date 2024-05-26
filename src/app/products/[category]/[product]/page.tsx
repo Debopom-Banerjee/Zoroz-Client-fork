@@ -21,6 +21,7 @@ const page = () => {
   const [loading, setLoading] = useState(false);
   console.log(productId);
   const [product, setProduct] = useState<any>(null);
+  const [reviews,setReviews] = useState<any>([]);
   const [productPercentage, setProductPercentage] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const cart = useCart((state) => state.cart);
@@ -31,6 +32,7 @@ const page = () => {
       const data = await getProductById(productId);
       console.log(data);
       setProduct(data);
+      setReviews(data?.reviews)
       setLoading(false);
     };
     fetchProductById();
@@ -89,7 +91,7 @@ const page = () => {
         </div>
       ) : (
         <div className="flex flex-col lg:flex-row my-10 lg:w-[90%] items-start justify-center gap-2">
-          <div className="w-full flex flex-col items-start gap-10 lg:w-[80%] 2xl:w-[60%]    justify-center py-4 px-8">
+          <div className="w-full flex flex-col items-start gap-10 lg:w-[80%] 2xl:w-[60%]    justify-center py-4 ">
             <div className=" flex flex-col lg:flex-row items-center p-2 lg:items-start py-5 rounded-xl bg-white ">
               <img
                 src={product?.image}
@@ -229,7 +231,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <Reviews />
+            <Reviews reviews = {reviews} productName={product?.name} productId={product?._id} />
           </div>
 
           <div className="hidden lg:flex flex-col items-start px-8 py-3 gap-4 bg-white rounded-xl">

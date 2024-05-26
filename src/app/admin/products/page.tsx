@@ -6,7 +6,7 @@ import { PuffLoader } from "react-spinners";
 
 const ProductCard = ({ product }: { product: any }) => {
   return (
-    <div className="flex flex-col items-center w-[300px] bg-slate-200 p-5 gap-4 rounded-md">
+    <div className="flex flex-col items-center w-[250px] bg-slate-200 p-5 gap-4 rounded-md">
       <img src={product?.image} alt="" />
       <h1 className="font-semibold text-md">{product.name}</h1>
       <h1 className="text-sm">
@@ -85,7 +85,7 @@ const CategoryCard = ({ category }: { category: any }) => {
 
                   {filteredProducts.map((productData: any, index: number) => {
                     return (
-                      <div key={index} className="flex flex-row items-start justify-start flex-wrap gap-5">
+                      <div key={index} className="flex flex-row items-start justify-start flex-wrap gap-3">
                         {productData?.map((product: any, subIndex: number) => {
                           return (
                             <>
