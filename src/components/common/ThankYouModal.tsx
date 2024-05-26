@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
@@ -13,7 +14,9 @@ export const ThankYouModal = ({
   
   }) => {
     const router = useRouter();
-  
+    setTimeout(()=>{
+      router.push('/profile/orders');
+    },3000)
     return (
       <>
         {isOpen && (
@@ -29,8 +32,9 @@ export const ThankYouModal = ({
                   X
                 </h2>
               </div>
-              <div>
-
+              <div className='flex flex-col items-center gap-2 justify-center mx-auto w-full'>
+                <Image src={'/assets/home/thankyou.avif'} width={320} height={100} alt='' />
+                <h1 className='font-semibold text-2xl'>For Ordering</h1>
               </div>
               
               <button

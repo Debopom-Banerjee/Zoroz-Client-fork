@@ -33,7 +33,7 @@ const page = () => {
   const router = useRouter();
   const [cartData, setCartData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showThankYou, setShowThankYou] = useState(true);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [totalGST, setTotalGST] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
@@ -227,12 +227,13 @@ const page = () => {
       console.log(orderDetails)
       if(orderDetails[0].payment_method==="Online Payment"){
         await processPayment(e)
-        router.push("/profile/orders")
+        toast.success("Order Placed Successfully")
+        setShowThankYou(true);
       }else{
         const data = await addMultipleOrder(orderDetails)
         if(data?.status==201){
           toast.success("Order Placed Successfully")
-          router.push("/profile/orders")
+          setShowThankYou(true);
         }
       }
       
