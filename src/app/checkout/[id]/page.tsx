@@ -1,11 +1,13 @@
 "use client";
 import CheckoutCard from "@/components/cart/CheckoutCard";
+import { CouponCard } from "@/components/cart/CouponCard";
 import FormElement from "@/components/common/FormElement";
 import Navbar from "@/components/common/Navbar";
 import ThankYouModal from "@/components/common/ThankYouModal";
 import Footer from "@/components/home/Footer";
 import { useUser } from "@/lib/store/user";
 import { addOrder } from "@/utils/functions/addOrder";
+import { getCoupons } from "@/utils/functions/getCoupons";
 import { getProductById } from "@/utils/functions/getProductById";
 import axios from "axios";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -39,7 +41,7 @@ const page = () => {
     amount: null,
   });
   const user = useUser((state) => state.user);
-  const [showThankYou, setShowThankYou] = useState(true);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [cartData, setCartData] = useState<any>([]);
   const [productData, setProductData] = useState<any>(null);
   const [productQuantity, setProductQuantity] = useState<number>(1);
@@ -48,8 +50,11 @@ const page = () => {
   const [totalGST, setTotalGST] = useState<number>(0);
   const [userId, setUserId] = useState<string>("");
   const [vendorId, setVendorId] = useState<string>("");
+  const [constTotal, setConstTotal] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+  const [discount,setDiscount] = useState<number>(0);
   const [orderPrice, setOrderPrice] = useState<number>(0);
+  const [discountApplied,setDiscountApplied] = useState<boolean>(false);
   const params = useParams();
   const searchParams = useSearchParams();
   const productId = useParams().id.toLocaleString();
@@ -79,6 +84,7 @@ const page = () => {
 
       const calculatedTotal: number =
         calculatedTotalAmount + calculatedTotalGST;
+        setConstTotal(calculatedTotal)
       setTotal(calculatedTotal);
     }
   }, [user, productData, productQuantity]);
@@ -198,7 +204,7 @@ const page = () => {
         inputs.state +
         ", " +
         inputs.pincode,
-      price: orderPrice,
+      price: total,
       status: "pending",
       vendor_approval: false,
       admin_approval: false,
@@ -212,11 +218,21 @@ const page = () => {
     } else {
       const data = await addOrder(orderDetails);
       if (data?.status === 201) {
-        toast.success("Order Placed Successfully");
-        router.push("/profile/orders");
+        toast.success("Order Placed Successfully")
+        setShowThankYou(true);
       }
     }
   };
+  const [coupons, setCoupons] = useState([]);
+  const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      const data = await getCoupons();
+      console.log(data);
+      setCoupons(data);
+    };
+    fetchCoupons();
+  }, []);
   return (
     <>
       <Navbar />
@@ -358,22 +374,69 @@ const page = () => {
                 </button>
               </div>
             </div>
+            <div className="flex flex-col items-start gap-5">
             <CheckoutCard
+            discount={discount}
               totalAmount={totalAmount}
               totalGST={totalGST}
               total={total}
             />
+             <div className="bg-white p-3">
+              <h1 className="font-semibold text-center text-xl py-2">
+                Apply Coupons
+              </h1>
+              <div className="flex flex-col  rounded-lg items-start gap-2">
+                {coupons.map((coupon: any, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`${
+                        selectedCoupon && selectedCoupon?._id! === coupon?._id
+                          ? "bg-green-500 text-white"
+                          : "bg-white text-black"
+                      } w-full border-y hover:bg-gray-200 duration-500 cursor-pointer rounded-lg  py-2 px-3 border-gray-500`}
+                      onClick={() => {
+                        setDiscountApplied(false);
+                        setTotal(constTotal);
+                        setDiscount(0);
+                        setSelectedCoupon(coupon);
+                        console.log(coupon);
+                      }}
+                    >
+                      <CouponCard coupon={coupon} />
+                    </div>
+                  );
+                })}
+                {!discountApplied && selectedCoupon != null && (
+                  <button
+                    onClick={() => {
+                      setDiscountApplied(true);
+                      const discountedTotal =
+                        total * (selectedCoupon?.discount / 100);
+                      setDiscount(parseFloat(discountedTotal.toFixed(2)));
+                      const discountedAmount =
+                        total - total * (selectedCoupon?.discount / 100);
+                      setTotal(parseFloat(discountedAmount.toFixed(2)));
+                      setDiscountApplied(true);
+                    }}
+                    className="bg-green-400 rounded-xl mx-auto text-center flex text-white px-5 font-semibold py-2"
+                  >
+                    Apply
+                  </button>
+                )}
+              </div>
+            </div>
+            </div>
           </div>
         )}
       </div>
-      {
-      showThankYou && 
-      <ThankYouModal
-      isOpen={showThankYou}
-      onClose={()=>setShowThankYou(false)}
-      onSubmit={()=>{}}
-      />
-    }
+      {showThankYou && (
+        <ThankYouModal
+          isOpen={showThankYou}
+          onClose={() => setShowThankYou(false)}
+          onSubmit={() => {}}
+        />
+      )}
       <Footer />
     </>
   );

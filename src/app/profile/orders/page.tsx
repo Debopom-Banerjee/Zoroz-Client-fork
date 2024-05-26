@@ -1,5 +1,6 @@
 "use client";
 
+import ThankYouModal from '@/components/common/ThankYouModal';
 import { useUser } from '@/lib/store/user';
 import { getOrdersByUser } from '@/utils/functions/getOrdersByUser';
 import Image from 'next/image';
@@ -30,6 +31,7 @@ const OrderCard = ({orderData}:{orderData:any})=>{
     )
 }
 const page = () => {
+    const [showThankYou,setShowThankYou] = useState(false);
     const [loading, setLoading] = useState(true)
     const user = useUser((state)=>state.user)
     const [ordersData, setOrdersData] = useState([])
@@ -63,6 +65,13 @@ const page = () => {
             <div className='flex flex-col items-center justify-center mx-auto my-auto  w-full mt-20 font-semibold text-lg text-red-600'>No Orders</div>)
            }
         </div>
+        {showThankYou && (
+        <ThankYouModal
+          isOpen={showThankYou}
+          onClose={() => setShowThankYou(false)}
+          onSubmit={() => {}}
+        />
+      )}
     </div>
   )
 }
