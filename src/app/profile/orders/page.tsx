@@ -9,17 +9,36 @@ import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
 
+
+
+const ThankYouSection = ()=>{
+    const searchParams = useSearchParams();
+    const success: any = searchParams?.get("success");
+    const [showThankYou, setShowThankYou] = useState<boolean>(false);
+    useEffect(()=>{
+        setShowThankYou(success)
+      },[success])
+    return(
+         <>
+         {showThankYou && (
+        <ThankYouModal
+          isOpen={showThankYou}
+          onClose={() => setShowThankYou(false)}
+          onSubmit={() => {}}
+        />
+      )}
+         </>
+    )
+}
+
 const Page = () => {
-  const searchParams = useSearchParams();
-  const success: any = searchParams?.get("success");
-  const [showThankYou, setShowThankYou] = useState<boolean>(false);
+
+
   const [loading, setLoading] = useState(true);
   const user = useUser((state) => state.user);
   const [ordersData, setOrdersData] = useState([]);
 
-  useEffect(()=>{
-    setShowThankYou(success)
-  },[success])
+
   useEffect(() => {
     const fetchOrders = async () => {
       const data = await getOrdersByUser(user?._id!);
@@ -50,13 +69,7 @@ const Page = () => {
         )}
       </div>
       <Suspense>
-      {showThankYou && (
-        <ThankYouModal
-          isOpen={showThankYou}
-          onClose={() => setShowThankYou(false)}
-          onSubmit={() => {}}
-        />
-      )}
+        <ThankYouSection />
       </Suspense>
     </div>
   );
