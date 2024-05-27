@@ -6,7 +6,7 @@ import { useUser } from "@/lib/store/user";
 import { getOrdersByUser } from "@/utils/functions/getOrdersByUser";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
 
 const Page = () => {
@@ -49,6 +49,7 @@ const Page = () => {
           </div>
         )}
       </div>
+      <Suspense>
       {showThankYou && (
         <ThankYouModal
           isOpen={showThankYou}
@@ -56,6 +57,7 @@ const Page = () => {
           onSubmit={() => {}}
         />
       )}
+      </Suspense>
     </div>
   );
 };
