@@ -99,18 +99,22 @@ const page = () => {
                 alt={product?.name}
                 className="w-96 object-cover rounded-xl"
               />
-              <div className="w-full flex flex-col items-start gap-3">
-                <div className="hidden lg:block">
-                  <h1 className="font-semibold text-xl">{product?.name}</h1>
+              <div className="w-full flex flex-col items-start gap-3 px-10">
+                <div className="hidden lg:block space-y-2">
+                  <h1 className="font-semibold text-3xl">{product?.name}</h1>
+                  <div className="flex flex-col items-start gap-2">
                   <h1 className="text-2xl font-bold tracking-wider">
                     ₹{product?.price}
                   </h1>
                   <h1 className="font-semibold text-xl">
                     <s>₹{product?.mrp}</s>
-                    <span className="ml-2 text-green-500">
+                    <br />
+                    <span className=" text-green-500">
                       {productPercentage}% off
                     </span>
                   </h1>
+                  </div>
+                 
                 </div>
                 <div className="flex lg:hidden flex-col w-full mx-auto items-start px-8 py-3 gap-4 bg-white rounded-xl">
                   <h1 className="text-black font-bold tracking-wider text-2xl">

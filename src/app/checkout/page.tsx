@@ -362,15 +362,15 @@ const page = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col items-start justify-center mx-auto gap-5 w-full lg:w-1/4">
+          <div className="flex flex-col items-start justify-center mx-auto gap-5 w-full lg:w-2/5">
             <CheckoutCard
               totalAmount={totalAmount}
               totalGST={totalGST}
               total={total}
               discount={discount}
             />
-            <div className="bg-white p-3">
-              <h1 className="font-semibold text-center text-xl py-2">
+            <div className="bg-white p-3 w-full">
+              <h1 className="font-semibold text-center text-xl py-2 w-full">
                 Apply Coupons
               </h1>
               <div className="flex flex-col  rounded-lg items-start gap-2">

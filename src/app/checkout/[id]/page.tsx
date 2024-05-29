@@ -252,10 +252,10 @@ const page = () => {
         ) : (
           <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start lg:px-10 justify-center mx-auto w-full">
             <div className="bg-white w-full flex flex-col items-center gap-3 lg:w-full rounded-xl p-4">
-              <h1 className="font-semibold text-lg">
+              <h1 className="font-semibold text-2xl">
                 Product : {productData?.name}
               </h1>
-              <div className="flex flex-row items-center justify-between gap-3 w-full">
+              <div className="flex flex-row items-center justify-start gap-10 w-full">
                 <h1 className="text-black font-semibold text-md">Update Qty</h1>
                 <div className="flex flex-row items-center gap-2">
                   {productQuantity > 1 && (
@@ -275,7 +275,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <h1 className="font-semibold text-lg">Add Delivery Details</h1>
+              <h1 className="font-semibold text-2xl">Add Delivery Details</h1>
               <div className="flex flex-row flex-wrap   items-center gap-2 w-full">
                 <FormElement
                   id="name"
@@ -335,7 +335,7 @@ const page = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="flex flex-row flex-wrap items-center px-3 font-semibold  md:gap-2">
+              <div className="flex flex-row text-lg flex-wrap items-center px-3 font-semibold  md:gap-2">
                 <label htmlFor="payment_method">Payment Method : </label>
                 <div className="flex w-full flex-row flex-wrap items-center gap-10  max-md:justify-between  md:items-center md:gap-16 ">
                   <label className="flex flex-row items-center gap-1">
@@ -343,7 +343,7 @@ const page = () => {
                       name="payment_method"
                       type="radio"
                       value="Online Payment"
-                      className="bg-white text-regalia"
+                      className="bg-white text-regalia text-lg"
                       checked={inputs.payment_method === "Online Payment"}
                       onChange={handleInputChange}
                       required={true}
@@ -376,15 +376,15 @@ const page = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col items-start w-full lg:w-1/4 mx-auto justify-center gap-5">
+            <div className="flex flex-col items-start w-full lg:w-2/5 mx-auto justify-center gap-5">
             <CheckoutCard
             discount={discount}
               totalAmount={totalAmount}
               totalGST={totalGST}
               total={total}
             />
-             <div className="bg-white p-3">
-              <h1 className="font-semibold text-center text-xl py-2">
+             <div className="bg-white p-3 w-full">
+              <h1 className="font-semibold text-center text-2xl py-2">
                 Apply Coupons
               </h1>
               <div className="flex flex-col  rounded-lg items-start gap-2">
