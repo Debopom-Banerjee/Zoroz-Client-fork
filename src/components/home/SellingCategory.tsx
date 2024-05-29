@@ -26,9 +26,9 @@ const ProductCard = ({product}:{product:any}) => {
       />
       <Link href={`/products/${product.category}/${product._id}`} className="text-xs">{product.name}</Link>
       <h1 className="font-semibold text-sm">₹{product.mrp}</h1>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-col items-start gap-1">
         <s className="text-xs">₹{product.price}</s>
-        <h1 className="text-xs ml-2 text-green-500">{percentageOff}% off</h1>
+        <h1 className="text-xs  text-green-500">{percentageOff}% off</h1>
       </div>
     </div>
   );

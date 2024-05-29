@@ -256,9 +256,9 @@ const page = () => {
         src="https://checkout.razorpay.com/v1/checkout.js"
       />
       <Toaster position="bottom-right" />
-      <div className="min-h-[80vh]">
-        <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start justify-center mx-auto w-full">
-          <div className="bg-white w-full flex flex-col items-center gap-3 lg:w-[40%] rounded-xl p-4">
+      <div className="min-h-[80vh] w-full mx-auto flex flex-col items-center lg:px-10">
+        <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start justify-between mx-auto w-full">
+          <div className="bg-white w-full flex flex-col items-center gap-3 rounded-xl p-4">
             <h1 className="font-semibold text-lg">Add Delivery Details</h1>
             <div className="flex flex-row flex-wrap   items-center gap-2 w-full">
               <FormElement
@@ -362,7 +362,7 @@ const page = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col items-start gap-5">
+          <div className="flex flex-col items-start justify-center mx-auto gap-5 w-full lg:w-1/4">
             <CheckoutCard
               totalAmount={totalAmount}
               totalGST={totalGST}

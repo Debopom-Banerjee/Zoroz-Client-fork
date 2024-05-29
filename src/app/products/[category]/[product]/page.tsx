@@ -102,10 +102,10 @@ const page = () => {
               <div className="w-full flex flex-col items-start gap-3">
                 <div className="hidden lg:block">
                   <h1 className="font-semibold text-xl">{product?.name}</h1>
-                  <h1 className="text-lg font-bold tracking-wider">
+                  <h1 className="text-2xl font-bold tracking-wider">
                     ₹{product?.price}
                   </h1>
-                  <h1 className="font-semibold">
+                  <h1 className="font-semibold text-xl">
                     <s>₹{product?.mrp}</s>
                     <span className="ml-2 text-green-500">
                       {productPercentage}% off

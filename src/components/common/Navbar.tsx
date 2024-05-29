@@ -14,19 +14,23 @@ import { useCart } from "@/lib/store/cart";
 import { usePathname } from "next/navigation";
 
 const LowerDrawer = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <div className="w-full pt-2 pb-1 border border-r-slate-400 border-black rounded-t-xl flex flex-row items-center justify-evenly">
       <Link
         href={"/"}
-        className={`${pathname==="/" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
+        className={`${
+          pathname === "/" ? "text-red-600" : "text-gray-700"
+        }  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoMdHome size={25} />
         <h1 className="text-xs">Home</h1>
       </Link>
       <Link
         href={"/profile"}
-        className={`${pathname==="/profile" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
+        className={`${
+          pathname === "/profile" ? "text-red-600" : "text-gray-700"
+        }  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoPerson size={25} />
         <h1 className="text-xs">Profile</h1>
@@ -39,14 +43,18 @@ const LowerDrawer = () => {
       </Link>
       <Link
         href={"/profile/orders"}
-        className={`${pathname==="/orders" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
+        className={`${
+          pathname === "/orders" ? "text-red-600" : "text-gray-700"
+        }  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <FaBook size={25} />
         <h1 className="text-xs">Orders</h1>
       </Link>
       <Link
         href={"/profile/cart"}
-        className={`${pathname==="/profile/cart" ? "text-red-600" : "text-gray-700"}  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
+        className={`${
+          pathname === "/profile/cart" ? "text-red-600" : "text-gray-700"
+        }  flex flex-col  items-center hover:bg-slate-200 rounded-xl`}
       >
         <IoMdCart size={25} />
         <h1 className="text-xs">My Cart</h1>
@@ -60,9 +68,9 @@ const Navbar = () => {
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const user = useUser((state) => state.user);
-  const cart:any = useCart((state) => state.cart);
+  const cart: any = useCart((state) => state.cart);
   // console.log(cart)
-  
+
   const setUser = useUser((state) => state.setUser);
   const logout = async () => {
     try {
@@ -74,15 +82,18 @@ const Navbar = () => {
     }
   };
 
-  const userId: any = typeof window !== "undefined" && window.localStorage && localStorage.getItem("user");
+  const userId: any =
+    typeof window !== "undefined" &&
+    window.localStorage &&
+    localStorage.getItem("user");
   useEffect(() => {
-    if (userId!==null || userId!==undefined) {
+    if (userId !== null || userId !== undefined) {
       setLoggedIn(true);
     }
   }, [userId]);
   return (
-    <div className="relative w-full">
-      <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-around px-2   md:gap-20 py-3">
+    <div className="relative w-full bg-white">
+      <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-between lg:px-12   md:gap-20 py-3">
         <div className="flex flex-row items-center gap-3">
           <div
             className="flex h-full w-8 cursor-pointer flex-col items-center justify-center gap-[6px]
@@ -132,27 +143,38 @@ const Navbar = () => {
             }}
             className="text-white md:hidden px-2 text-sm py-1 rounded-xl font-semibold bg-red-600"
           >
-            {(user || loggedIn) ? "Logout" : "Login"}
+            {user || loggedIn ? "Logout" : "Login"}
           </button>
           <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
-         { <div
-            onClick={() => {
-              user ? logout() : setAuthOpen(true);
-            }}
+          {
+            <div
+              onClick={() => {
+                user ? logout() : setAuthOpen(true);
+              }}
+              className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
+            >
+              <IoPerson size={25} className="text-slate-600" />
+              <p className="text-slate-600 ">{user ? "Logout" : "Login Now"}</p>
+            </div>
+          }
+          <Link
+            href={`/profile/orders`}
             className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
           >
-            <IoPerson size={25} className="text-slate-600" />
-            <p className="text-slate-600 ">{user ?  "Logout" : "Login Now"}</p>
-          </div>}
-          <Link href={`/profile/orders`} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
             <RiGpsFill size={25} className="text-slate-600" />
             <p className="text-slate-600">Track Order</p>
           </Link>
-          <Link href={"/profile/cart"} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
+          <Link
+            href={"/profile/cart"}
+            className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
+          >
             <IoMdCart size={25} className="text-slate-600" />
             <p className="text-slate-600">Cart {cart && cart?.cart?.length}</p>
           </Link>
-          <Link href={"/profile/cart"} className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2">
+          <Link
+            href={"/profile/cart"}
+            className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
+          >
             <IoPerson size={25} className="text-slate-600" />
             <p className="text-slate-600">Profile</p>
           </Link>

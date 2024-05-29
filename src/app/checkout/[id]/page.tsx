@@ -250,8 +250,8 @@ const page = () => {
             <PuffLoader color="#000" size={70} />
           </div>
         ) : (
-          <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start justify-center mx-auto w-full">
-            <div className="bg-white w-full flex flex-col items-center gap-3 lg:w-[40%] rounded-xl p-4">
+          <div className="flex flex-col-reverse my-10 lg:flex-row items-center gap-5 lg:items-start lg:px-10 justify-center mx-auto w-full">
+            <div className="bg-white w-full flex flex-col items-center gap-3 lg:w-full rounded-xl p-4">
               <h1 className="font-semibold text-lg">
                 Product : {productData?.name}
               </h1>
@@ -376,7 +376,7 @@ const page = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-5">
+            <div className="flex flex-col items-start w-full lg:w-1/4 mx-auto justify-center gap-5">
             <CheckoutCard
             discount={discount}
               totalAmount={totalAmount}
