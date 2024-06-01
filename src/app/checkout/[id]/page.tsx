@@ -168,7 +168,6 @@ const page = () => {
           );
           const res = await result.json();
           if (res.isOk){ alert("payment succeed");
-          router.push("/profile/orders?success=true");
           }
           else {
             alert(res.message);
@@ -217,6 +216,7 @@ const page = () => {
       await processPayment(e);
       toast.success("Order Placed Successfully")
       setShowThankYou(true);
+      router.push(`/order-success?price=${total}&method=${inputs.payment_method}`)
     } else {
       const data = await addOrder(orderDetails);
       if (data?.status === 201) {

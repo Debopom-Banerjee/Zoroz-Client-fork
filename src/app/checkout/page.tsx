@@ -355,6 +355,7 @@ const page = () => {
               <button
                 onClick={async (e: any) => {
                   await handleAddOrder(e);
+                  router.push(`/order-success?price=${total}&method=${inputs.payment_method}`)
                 }}
                 className="bg-black text-white p-2 rounded-xl md:w-1/3"
               >
