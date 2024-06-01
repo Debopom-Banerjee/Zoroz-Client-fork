@@ -12,6 +12,8 @@ import { useUser } from "@/lib/store/user";
 import { handleLogout } from "@/utils/functions/handleLogout";
 import { useCart } from "@/lib/store/cart";
 import { usePathname } from "next/navigation";
+import { useCookies } from "next-client-cookies";
+import { MdSecurity } from "react-icons/md";
 
 const LowerDrawer = () => {
   const pathname = usePathname();
@@ -64,6 +66,8 @@ const LowerDrawer = () => {
 };
 
 const Navbar = () => {
+  const cookies = useCookies();
+  const role = cookies.get("role");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -82,12 +86,11 @@ const Navbar = () => {
     }
   };
 
- 
   useEffect(() => {
     const userId: any =
-    typeof window !== "undefined" &&
-    window.localStorage &&
-    localStorage.getItem("token");
+      typeof window !== "undefined" &&
+      window.localStorage &&
+      localStorage.getItem("token");
     if (userId !== null || userId !== undefined) {
       setLoggedIn(true);
     }
@@ -146,7 +149,11 @@ const Navbar = () => {
           >
             {user || loggedIn ? "Logout" : "Login"}
           </button>
-          <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} setLoggedIn={setLoggedIn} />
+          <AuthModal
+            isOpen={isAuthOpen}
+            onClose={() => setAuthOpen(false)}
+            setLoggedIn={setLoggedIn}
+          />
           {
             <div
               onClick={() => {
@@ -173,12 +180,30 @@ const Navbar = () => {
             <p className="text-slate-600">Cart {cart && cart?.cart?.length}</p>
           </Link>
           <Link
-            href={"/profile/cart"}
+            href={"/profile"}
             className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
           >
             <IoPerson size={25} className="text-slate-600" />
             <p className="text-slate-600">Profile</p>
           </Link>
+          {role === "admin" && (
+            <Link
+              href={"/admin"}
+              className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
+            >
+              <MdSecurity size={25} className="text-slate-600" />
+              <p className="text-slate-600">Admin</p>
+            </Link>
+          )}
+          {role === "vendor" && (
+            <Link
+              href={"/vendor"}
+              className="hidden md:flex flex-row items-center justify-center cursor-pointer hover:bg-slate-200 p-2 px-5 rounded-xl gap-2"
+            >
+              <MdSecurity size={25} className="text-slate-600" />
+              <p className="text-slate-600">Vendor</p>
+            </Link>
+          )}
         </div>
         <div className="fixed md:hidden bg-white z-[100] left-0 bottom-0 w-full">
           <LowerDrawer />
