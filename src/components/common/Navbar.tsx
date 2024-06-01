@@ -82,15 +82,16 @@ const Navbar = () => {
     }
   };
 
-  const userId: any =
+ 
+  useEffect(() => {
+    const userId: any =
     typeof window !== "undefined" &&
     window.localStorage &&
-    localStorage.getItem("user");
-  useEffect(() => {
+    localStorage.getItem("token");
     if (userId !== null || userId !== undefined) {
       setLoggedIn(true);
     }
-  }, [userId]);
+  }, []);
   return (
     <div className="relative w-full bg-white">
       <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-between lg:px-12   md:gap-20 py-3">
@@ -121,7 +122,7 @@ const Navbar = () => {
             href={"/"}
             className="font-bold tracking-wide text-2xl  text-red-500 border rounded-xl"
           >
-            <Image src={"/assets/logo.jpg"} height={40} width={180} alt="" />
+            <Image src={"/assets/logo.webp"} height={40} width={180} alt="" />
           </Link>
         </div>
 
@@ -145,7 +146,7 @@ const Navbar = () => {
           >
             {user || loggedIn ? "Logout" : "Login"}
           </button>
-          <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
+          <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} setLoggedIn={setLoggedIn} />
           {
             <div
               onClick={() => {

@@ -6,41 +6,47 @@ import { useUserType } from "@/lib/store/userType";
 import { fetchCart } from "@/utils/functions/fetchCart";
 import { getUserInfo } from "@/utils/functions/getUserInfo";
 import { getVendorInfo } from "@/utils/functions/getVendorInfo";
+import { useCookies } from "next-client-cookies";
 import { useEffect } from "react";
 
 const SessionProvider = () => {
   const setUser = useUser((state) => state.setUser);
   const user = useUser((state) => state.user);
+  const cookies = useCookies();
   const setCart = useCart((state) => state.setCart);
   const userType = useUserType((state) => state.userType);
   const setUserType = useUserType((state) => state.setUserType);
-  const userId: any = typeof window !== "undefined" && window.localStorage && localStorage.getItem("user");
+  const userId: any =
+    typeof window !== "undefined" &&
+    window.localStorage &&
+    localStorage.getItem("user");
   const readUserSession = async () => {
     try {
-     
-      if(userType === "vendor"){
+      if (userType === "vendor") {
         const data = await getVendorInfo();
-        console.log(data)
+        console.log(data);
         setUser(data);
-        
+
         if (data) {
+          cookies.set("user", data?._id);
+          cookies.set("role", data?.role);
           localStorage.setItem("user", JSON.stringify(data));
           const cart = await fetchCart(data._id);
-          console.log(cart)
+          console.log(cart);
           setCart(cart.cart);
         }
-      }
-      else{
+      } else {
         const data = await getUserInfo();
-        console.log(data)
+        console.log(data);
         setUser(data);
         if (data) {
           const cart = await fetchCart(data._id);
-          console.log(cart)
+          cookies.set("user", data?._id);
+          cookies.set("role", data?.role);
+          console.log(cart);
           setCart(cart.cart);
         }
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -52,18 +58,18 @@ const SessionProvider = () => {
   }, [userType]);
 
   useEffect(() => {
-    if(userType == undefined){
+    if (userType == undefined) {
       if (userId !== undefined && userId !== null) {
         try {
-          setUserType(JSON.parse(userId).role === "customer" ? "customer" : "vendor");
+          setUserType(
+            JSON.parse(userId).role === "customer" ? "customer" : "vendor"
+          );
         } catch (error) {
           console.error("Error parsing userId:", error);
         }
       }
     }
-   
   }, [userId]);
-  
 
   return <></>;
 };

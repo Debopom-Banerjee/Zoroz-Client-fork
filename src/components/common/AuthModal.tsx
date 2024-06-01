@@ -8,6 +8,7 @@ import { verifyOtp } from "@/utils/functions/verifyOtp";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import { Modal } from "flowbite-react";
+import { useCookies } from "next-client-cookies";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,9 +20,11 @@ import { BeatLoader } from "react-spinners";
 const AuthModal = ({
   isOpen,
   onClose,
+  setLoggedIn
 }: {
   isOpen: boolean;
   onClose: () => void;
+  setLoggedIn: any
 }) => {
   const [phone, setPhone] = useState("");
   const setGlobalUserType = useUserType((state) => state.setUserType);
@@ -29,33 +32,8 @@ const AuthModal = ({
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [sendingOTPloading, setSendingOTPLoading] = useState(false)
-  const clientID =
-    process.env.GOOGLE_CLIENT_ID ||
-    "809204834816-f3stqre8cdau2vhaq8rjgnb047pm2q64.apps.googleusercontent.com";
-  const handleGoogleLogin = async (credentialResponse: any) => {
-    try {
-      // Send the received credential to your server for verification
-      const response = await axios.post("https://zoroz-ecommerce-backend.onrender.com/auth/google", {
-        credential: credentialResponse.tokenId,
-        client_id:
-          "809204834816-f3stqre8cdau2vhaq8rjgnb047pm2q64.apps.googleusercontent.com",
-      });
-      console.log(response);
-      // Handle the response from the server
-      if (response.data.success) {
-        // If login is successful, perform necessary actions like setting user info, redirecting, etc.
-        // For example:
-        console.log("Login successful");
-        onClose(); // Close the modal or perform any other action
-      } else {
-        // If login fails, display an error message or handle it accordingly
-        console.error("Login failed:", response.data.msg);
-      }
-    } catch (error) {
-      // Handle any errors that occur during the login process
-      console.error("Error during Google login:", error);
-    }
-  };
+  const cookies = useCookies();
+
   return (
     <Modal show={isOpen} onClose={onClose}>
       <Toaster position="bottom-right" />
@@ -104,6 +82,7 @@ const AuthModal = ({
                     const data = await verifyOtp(phone, otp);
                     if (data) {
                       toast.success("Login Successful");
+                      setLoggedIn(true);
                       onClose();
                     } else {
                       toast.error("Login Failed");

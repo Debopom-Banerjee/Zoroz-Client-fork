@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/home/Footer";
 import SessionProvider from "@/components/common/SessionProvider";
+import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      
-        {children}
-       
-        <SessionProvider />
-        </body>
+        <CookiesProvider>
+          {children}
+
+          <SessionProvider />
+        </CookiesProvider>
+      </body>
     </html>
   );
 }
