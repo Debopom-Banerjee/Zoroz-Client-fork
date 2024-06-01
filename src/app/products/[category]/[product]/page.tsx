@@ -10,11 +10,35 @@ import { ICart } from "@/lib/types/cart";
 import { addToCart } from "@/utils/functions/addToCart";
 import { useUser } from "@/lib/store/user";
 import Navbar from "@/components/common/Navbar";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import Footer from "@/components/home/Footer";
 import Link from "next/link";
 import { PuffLoader } from "react-spinners";
 import toast, { Toaster } from "react-hot-toast";
 import Reviews from "@/components/products/Reviews";
+import { getProductsByCategory } from "@/utils/functions/getProductsByCategory";
+import ProductView from "@/components/products/ProductView";
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 12
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 8
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 12
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 2
+  }
+};
 
 const page = () => {
   const productId = useParams().product.toLocaleString();
@@ -80,6 +104,18 @@ const page = () => {
     toast.success("Product added to cart!");
     console.log(data);
   };
+  const [similarProducts, setSimilarProducts] = useState([]);
+  useEffect(()=>{
+      const getSameProducts = async()=>{
+        const data = await getProductsByCategory(product?.category);
+        setSimilarProducts(data);
+      }
+      getSameProducts();
+  },[product])
+
+  useEffect(()=>{
+    console.log(similarProducts)
+  },[similarProducts])
 
   return (
     <>
@@ -90,7 +126,10 @@ const page = () => {
           <PuffLoader size={30} color="black" />
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row my-10 lg:w-full items-start justify-center gap-2">
+        <div className="flex flex-col h-full  justify-center mx-auto items-center w-full ">
+
+   
+        <div className="flex flex-col lg:flex-row  lg:w-full items-start justify-center gap-2">
        
           <div className="w-full flex flex-col items-start gap-10 lg:w-[80%] 2xl:w-[80%] justify-center py-4 ">
             <div className=" flex flex-col lg:flex-row items-center p-2 lg:items-start py-5 rounded-xl bg-white w-full mx-auto ">
@@ -291,7 +330,25 @@ const page = () => {
               </>
             )}
           </div>
+
+
+          
         </div>
+        <div className="w-full lg:px-10 h-full py-2 ">
+          <h1  className="font-semibold text-2xl my-2 ">Similar Products</h1>
+        <Carousel responsive={responsive} className="flex h-full w-full space-x-10">
+        {
+          similarProducts?.map((product:any,index:number)=>{
+            console.log(product)
+            return(
+              <ProductView product={product} key={index} width="200px" height="400px" />
+            )
+          })
+        }
+    </Carousel>
+        </div>
+      
+    </div>
       )}
       <Footer />
     </>

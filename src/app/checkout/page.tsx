@@ -370,7 +370,7 @@ const page = () => {
               discount={discount}
             />
             <div className="bg-white p-3 w-full">
-              <h1 className="font-semibold text-center text-xl py-2 w-full">
+              <h1 className="font-semibold text-center text-xl py-2">
                 Apply Coupons
               </h1>
               <div className="flex flex-col  rounded-lg items-start gap-2">
