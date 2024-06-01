@@ -221,6 +221,7 @@ const page = () => {
       const data = await addOrder(orderDetails);
       if (data?.status === 201) {
         toast.success("Order Placed Successfully")
+        router.push(`/order-success?price=${total}&method=${inputs.payment_method}`)
         setShowThankYou(true);
       }
     }
