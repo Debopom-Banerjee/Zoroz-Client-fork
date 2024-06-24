@@ -123,13 +123,13 @@ const Navbar = () => {
           </div>
           <Link
             href={"/"}
-            className="font-bold tracking-wide text-2xl  text-red-500 border rounded-xl"
+            className="font-bold tracking-wide text-2xl  text-red-500 rounded-xl"
           >
             <Image src={"/assets/logo.webp"} height={40} width={180} alt="" />
           </Link>
         </div>
 
-        {/* <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
+        <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
           <input
             type="text"
             placeholder="Search for products, brands and more"
@@ -138,7 +138,7 @@ const Navbar = () => {
           <div className="bg-red-500 h-full absolute rounded-tr-md cursor-pointer hover:bg-opacity-80 rounded-br-md right-0 top-0 w-10 mx-auto ">
             <FaSearch size={25} className="text-white w-full h-full p-2 " />
           </div>
-        </div> */}
+        </div>
 
         <div className="flex flex-row items-center md:gap-3">
           <button

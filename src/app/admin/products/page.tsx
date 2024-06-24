@@ -128,7 +128,7 @@ const ManageProductsPage = () => {
           href={"/admin/products/add"}
           className="bg-black px-5 py-2 text-white border border-black hover:bg-white hover:text-black font-semibold text-sm lg:text-lg"
         >
-          Add Product
+          Search Product
         </Link>
       </div>
       <div className="bg-white flex flex-col w-full items-center rounded-lg gap-5 px-4 lg:px-10 py-5">
