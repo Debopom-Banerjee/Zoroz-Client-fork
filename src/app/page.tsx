@@ -108,15 +108,6 @@ export default function Home() {
       <Navbar />
       <main className="w-[90%] mx-auto h-full gap-10 mb-20 max-md:mb-28  flex flex-col items-center justify-center max-md:gap-20">
         <Hero />
-        <div className="flex flex-col md:flex-row gap-4 items-center h-full justify-between">
-          {referralCardImages?.map((image: string, index: number) => {
-            return (
-              <div key={index} className="rounded-lg shadow-md">
-                <ReferralCards image={image} />
-              </div>
-            );
-          })}
-        </div>
 
         <div className="w-full lg:px-10 h-full py-2 ">
           <h1 className="font-semibold text-2xl my-2 ">New Arrivals</h1>
@@ -136,6 +127,15 @@ export default function Home() {
               );
             })}
           </Carousel>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 items-center h-full justify-between">
+          {referralCardImages?.map((image: string, index: number) => {
+            return (
+              <div key={index} className="rounded-lg shadow-md">
+                <ReferralCards image={image} />
+              </div>
+            );
+          })}
         </div>
 
         <div className="w-full flex flex-col items-center gap-5">
