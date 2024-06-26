@@ -23,7 +23,7 @@ const Brand = ({ brand }: { brand: any }) => {
 };
 
 const ProductCard = ({ product }: { product: any }) => {
-  console.log(product)
+  console.log(product);
   const user = useUser((state) => state.user);
   const setCart: any = useCart((state) => state.setCart);
   const handleAddToCart = async () => {

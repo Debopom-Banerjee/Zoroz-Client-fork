@@ -31,7 +31,7 @@ const SideChip = ({
       href={`/products${linkPrefix && linkPrefix}/${category}${
         linkSuffix && linkSuffix
       }`}
-      className="flex font-semibold hover:text-red-500 text-gray-500 duration-300 flex-row items-center gap-2"
+      className="flex font-normal hover:text-red-500 text-black duration-300 flex-row items-center gap-2"
     >
       {typeof image === "string" ? (
         image && <img src={image} alt="" className="w-7" />
@@ -104,7 +104,7 @@ const Hero = () => {
         })}
         <Link
           href={"/products/brands"}
-          className="font-semibold hover:text-red-500 text-gray-500 duration-300 cursor-pointer text-sm"
+          className="font-semibold hover:text-red-500 text-black duration-300 cursor-pointer text-sm"
         >
           View All Brands
         </Link>
