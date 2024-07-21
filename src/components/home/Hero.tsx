@@ -82,13 +82,16 @@ const Hero = () => {
     <div className="w-full flex flex-col md:flex-row  items-start justify-center gap-5 my-5 ">
       <div className="hidden md:flex flex-col h-full items-start gap-3 w-auto pl-3 pr-16 py-2 pb-4  bg-white rounded-xl">
         <h1 className="font-semibold text-md">Categories</h1>
-        {categories?.map((category: any) => {
+        {categories?.map((category: any, index: number) => {
           return (
-            <SideChip
-              category={category}
-              linkPrefix=""
-              linkSuffix="/subCategories"
-            />
+            <div key={index}>
+              {" "}
+              <SideChip
+                category={category}
+                linkPrefix=""
+                linkSuffix="/subCategories"
+              />
+            </div>
           );
         })}
         <h1 className="font-semibold text-md">Brands</h1>
@@ -117,7 +120,9 @@ const Hero = () => {
         </div>
         <div className="flex flex-col md:flex-row gap-1 items-center  h-full justify-between">
           {referralCardImages?.map((image: string, index: number) => {
-            return <ReferralCards image={image} />;
+            return (<div key={index}>
+              <ReferralCards image={image} />
+              </div>)
           })}
         </div>
       </div>
@@ -131,7 +136,6 @@ const Hero = () => {
           })}
         </div>
       </div>
-      
     </div>
   );
 };
