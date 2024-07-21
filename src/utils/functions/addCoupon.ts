@@ -6,7 +6,7 @@ export const addCoupon = async(inputs:any)=>{
           localStorage.getItem("token")
           
         const response = await axios.post(
-          `http://localhost:5000/coupons/add`,
+          `https://zoroz-ecommerce-backend.onrender.com/coupons/add`,
           inputs,
           {
             headers: {

@@ -8,7 +8,7 @@ export const deleteOrder = async(orderID:string,customerID:string)=>{
           const updatedInputs = { customer_id:customerID, order_id:orderID };
           console.log(updatedInputs)
         const response = await axios.post(
-          `http://localhost:5000/orders/delete`,
+          `https://zoroz-ecommerce-backend.onrender.com/orders/delete`,
           updatedInputs,
           {
             headers: {

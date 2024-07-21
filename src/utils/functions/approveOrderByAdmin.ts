@@ -4,7 +4,7 @@ export const approveOrderByAdmin = async (orderId: string) => {
     try {
         const token: any = localStorage.getItem("token");
         const response = await axios.post(
-        `http://localhost:5000/orders/admin/${orderId}`,
+        `https://zoroz-ecommerce-backend.onrender.com/orders/admin/${orderId}`,
         {
             headers: {
             Authorization: `Bearer ${token}`,

@@ -3,7 +3,7 @@ import axios from "axios";
 export const getOrders = async () => {
   try {
     const token: any = localStorage.getItem("token");
-    const response = await axios.get(`http://localhost:5000/orders/get`, {
+    const response = await axios.get(`https://zoroz-ecommerce-backend.onrender.com/orders/get`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

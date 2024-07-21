@@ -8,7 +8,7 @@ export const fetchCart = async(userId:string)=>{
         const token: any = localStorage.getItem("token");
 
         const data = await axios.get(
-          `http://localhost:5000/carts/${userId}`,
+          `https://zoroz-ecommerce-backend.onrender.com/carts/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

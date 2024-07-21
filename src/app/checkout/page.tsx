@@ -97,7 +97,7 @@ const page = () => {
       });
       console.log(orderDetails);
       const response = await fetch(
-        "http://localhost:5000/orders/add-multiple",
+        "https://zoroz-ecommerce-backend.onrender.com/orders/add-multiple",
         {
           method: "POST",
           headers: {
@@ -165,7 +165,7 @@ const page = () => {
           };
 
           const result = await fetch(
-            "http://localhost:5000/orders/paymentCapture",
+            "https://zoroz-ecommerce-backend.onrender.com/orders/paymentCapture",
             {
               method: "POST",
               body: JSON.stringify(data),

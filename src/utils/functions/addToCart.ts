@@ -9,7 +9,7 @@ export const addToCart = async (
     const details = {...productDetails, operation:operation};
     const token: any = localStorage.getItem("token");
     const data = await axios.post(
-      `http://localhost:5000/carts/${userId}`,
+      `https://zoroz-ecommerce-backend.onrender.com/carts/${userId}`,
       details,
       {
         headers: {
