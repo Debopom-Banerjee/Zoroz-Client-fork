@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useUser } from "@/lib/store/user";
 import { handleLogout } from "@/utils/functions/handleLogout";
 import { useCart } from "@/lib/store/cart";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCookies } from "next-client-cookies";
 import { MdSecurity } from "react-icons/md";
 
@@ -71,6 +71,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const router = useRouter();
   const user = useUser((state) => state.user);
   const cart: any = useCart((state) => state.cart);
   // console.log(cart)
@@ -95,6 +97,17 @@ const Navbar = () => {
       setLoggedIn(true);
     }
   }, []);
+  const handleKeyPress = (e:any) => {
+    if (e.key === 'Enter') {
+        if (searchText.trim().length > 0) {
+            router.push(`/search/${encodeURIComponent(searchText.trim())}`);
+        }
+    }
+};
+
+const handleChange = (e:any) => {
+    setSearchText(e.target.value);
+};
   return (
     <div className="relative w-full bg-white">
       <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-between lg:px-12   md:gap-20 py-3">
@@ -130,13 +143,20 @@ const Navbar = () => {
         </div>
 
         <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
-          <input
+        <input
             type="text"
+            value={searchText}
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
             placeholder="Search for products, brands and more"
             className="w-full p-2 border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-          />
+        />
           <div className="bg-red-500 h-full absolute rounded-tr-md cursor-pointer hover:bg-opacity-80 rounded-br-md right-0 top-0 w-10 mx-auto ">
-            <FaSearch size={25} className="text-white w-full h-full p-2 " />
+            <FaSearch onClick={()=>{
+              if(searchText.length>0 && searchText.trim().length>0){
+                router.push(`/search/${searchText}`)
+              }
+            }} size={25} className="text-white w-full h-full p-2 " />
           </div>
         </div>
 

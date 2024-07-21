@@ -5,7 +5,7 @@ export const getSubCategoriesByCategory = async (category: string) => {
         const token: any = localStorage.getItem("token");
         console.log(token);
         const response = await axios.get(
-        `https://zoroz-ecommerce-backend.onrender.com/categories/getSubCategories/${category}`,
+        `http://localhost:5000/categories/getSubCategories/${category}`,
         {
             headers: {
             Authorization: `Bearer ${token}`,

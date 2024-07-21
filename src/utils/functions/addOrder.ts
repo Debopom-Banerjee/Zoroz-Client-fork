@@ -5,7 +5,7 @@ export const addOrder = async(data:any)=>{
        const updatedData = {...data, transaction_id:uuidv4()}
         const token: any = localStorage.getItem("token");
         const response = await axios.post(
-          `https://zoroz-ecommerce-backend.onrender.com/orders/add`,
+          `http://localhost:5000/orders/add`,
           updatedData,
           {
             headers: {

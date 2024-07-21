@@ -7,7 +7,7 @@ export const editReview = async(inputs:any,userId:string,productId:string)=>{
           const updatedInputs = { ...inputs, userId: userId, productId: productId };
           console.log(updatedInputs)
         const response = await axios.post(
-          `https://zoroz-ecommerce-backend.onrender.com/products/reviews/edit`,
+          `http://localhost:5000/products/reviews/edit`,
           updatedInputs,
           {
             headers: {

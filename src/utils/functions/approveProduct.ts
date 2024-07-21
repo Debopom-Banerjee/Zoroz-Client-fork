@@ -5,7 +5,7 @@ export const approveProduct = async (id: string) => {
         const token: any = localStorage.getItem("token");
         console.log(id)
         const response = await axios.post(
-        `https://zoroz-ecommerce-backend.onrender.com/products/admin/approve/${id}`,
+        `http://localhost:5000/products/admin/approve/${id}`,
         {},
         {
             headers: {

@@ -1,18 +1,17 @@
 import axios from "axios";
 
-export const getOrderbyId = async (userId: string) => {
+export const getSearchData = async (searchText: string) => {
   try {
     const token: any = localStorage.getItem("token");
     const response = await axios.get(
-      `http://localhost:5000/orders/get/${userId}`,
+      `http://localhost:5000/products/search/${searchText}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    console.log(response);
-    return response;
+    return response?.data?.data;
   } catch (error) {
     console.log(error);
   }

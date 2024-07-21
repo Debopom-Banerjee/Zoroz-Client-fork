@@ -6,7 +6,7 @@ export const updateProduct = async(inputs:any,productId:string)=>{
           localStorage.getItem("token")
           
         const response = await axios.post(
-          `https://zoroz-ecommerce-backend.onrender.com/products/updateProduct/${productId}`,
+          `http://localhost:5000/products/updateProduct/${productId}`,
           inputs,
           {
             headers: {

@@ -3,7 +3,7 @@ import axios from "axios";
 export const updateVendor = async (data: any, userId: string) => {
   try {
     const userData = await axios.post(
-      `https://zoroz-ecommerce-backend.onrender.com/vendor/update/${userId}`,
+      `http://localhost:5000/vendor/update/${userId}`,
       data
     );
 

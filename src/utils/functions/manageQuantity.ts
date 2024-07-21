@@ -9,7 +9,7 @@ export const manageQuantity = async (
   try {
     console.log(quantity, operation, customerId, productId)
     const data = await axios.post(
-      `https://zoroz-ecommerce-backend.onrender.com/carts/${customerId}/${productId}`,
+      `http://localhost:5000/carts/${customerId}/${productId}`,
       {
         quantity: quantity,
         operation: operation,

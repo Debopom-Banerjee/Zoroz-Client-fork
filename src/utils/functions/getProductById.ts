@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const getProductById = async (id: string) => {
     try{
-        const data = await axios.get(`https://zoroz-ecommerce-backend.onrender.com/products/product/${id}`)
+        const data = await axios.get(`http://localhost:5000/products/product/${id}`)
         console.log(data)
         return data.data.data
     }

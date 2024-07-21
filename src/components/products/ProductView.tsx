@@ -3,7 +3,6 @@ import React from "react";
 import { IoMdCart } from "react-icons/io";
 
 const ProductView = ({ product,width="200px",height }: { product: any,width?:string,height?:string }) => {
-  console.log(product);
   const percentageOff = ((1 - product.price / product.mrp) * 100).toFixed(2);
   return (
     <div className={`flex flex-col self-center bg-white border h-[${height ? height : "400px"}] w-[${width}] rounded-xl p-5 gap-2 items-start justify-center`}>

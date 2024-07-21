@@ -4,7 +4,7 @@ export const getProductsForAdminAll = async()=>{
     try{
         const token:any =
         localStorage.getItem("token")
-        const productsData = await axios.get(`https://zoroz-ecommerce-backend.onrender.com/products/admin/products/all`,
+        const productsData = await axios.get(`http://localhost:5000/products/admin/products/all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

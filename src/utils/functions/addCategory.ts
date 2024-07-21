@@ -5,7 +5,7 @@ export const addCategory = async (category: any) => {
         console.log(category)
         const token: any = localStorage.getItem("token");
         const categoriesData = await axios.post(
-        `https://zoroz-ecommerce-backend.onrender.com/categories/addCategory`,
+        `http://localhost:5000/categories/addCategory`,
         category,
         {
             headers: {

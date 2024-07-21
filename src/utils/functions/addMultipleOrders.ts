@@ -12,7 +12,7 @@ export const addMultipleOrder = async(data:any)=>{
     console.log(ordersWithData)
         const token: any = localStorage.getItem("token");
         const response = await axios.post(
-          `https://zoroz-ecommerce-backend.onrender.com/orders/add-multiple`,
+          `http://localhost:5000/orders/add-multiple`,
           structuredOrders,
           {
             headers: {
