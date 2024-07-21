@@ -15,10 +15,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCookies } from "next-client-cookies";
 import { MdSecurity } from "react-icons/md";
 
-const LowerDrawer = () => {
+const LowerDrawer = ({setShowSearch,showSearch}:{setShowSearch:any,showSearch:boolean}) => {
   const pathname = usePathname();
   return (
-    <div className="w-full pt-2 pb-1 border border-r-slate-400 border-black rounded-t-xl flex flex-row items-center justify-evenly">
+    <div className="w-full pt-2 pb-1 border bg-white relative z-[100] border-r-slate-400 border-black rounded-t-xl flex flex-row items-center justify-evenly">
       <Link
         href={"/"}
         className={`${
@@ -37,12 +37,12 @@ const LowerDrawer = () => {
         <IoPerson size={25} />
         <h1 className="text-xs">Profile</h1>
       </Link>
-      <Link
-        href={"/"}
+      <div
+        onClick={()=>setShowSearch(!showSearch)}
         className="text-gray-700 flex flex-col border border-black p-3 rounded-full items-center hover:bg-slate-200"
       >
         <IoSearchOutline size={25} />
-      </Link>
+      </div>
       <Link
         href={"/profile/orders"}
         className={`${
@@ -104,43 +104,21 @@ const Navbar = () => {
         }
     }
 };
-
+  const [showSearch, setShowSearch] = useState(false);
 const handleChange = (e:any) => {
     setSearchText(e.target.value);
 };
   return (
     <div className="relative w-full bg-white">
       <div className="w-full sticky top-0 border border-slate-400   flex flex-row  items-center justify-between lg:px-12   md:gap-20 py-3">
-        <div className="flex flex-row items-center gap-3">
-          <div
-            className="flex h-full w-8 cursor-pointer flex-col items-center justify-center gap-[6px]
-             md:hidden
-            "
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span
-              className={`block h-[2px] w-6 bg-black transition-all duration-500
-              ${isMenuOpen ? "translate-y-2 rotate-45" : ""}
-              `}
-            ></span>
-            <span
-              className={`block h-[2px] w-6 bg-black transition-all duration-500
-              ${isMenuOpen ? "bg-white -translate-x-96 " : "translate-x-0"}
-              `}
-            ></span>
-            <span
-              className={`block h-[2px] w-6 bg-black transition-all duration-500
-              ${isMenuOpen ? "-translate-y-2 -rotate-45" : ""}
-              `}
-            ></span>
-          </div>
+        {!showSearch && <div className="flex flex-row items-center gap-3">
           <Link
             href={"/"}
             className="font-bold tracking-wide text-2xl  text-red-500 rounded-xl"
           >
             <Image src={"/assets/logo.webp"} height={40} width={180} alt="" />
           </Link>
-        </div>
+        </div>}
 
         <div className="w-[40%] hidden md:flex flex-row items-center relative  ">
         <input
@@ -160,15 +138,35 @@ const handleChange = (e:any) => {
           </div>
         </div>
 
+        {showSearch &&
+          <div className="md:hidden w-full flex flex-row items-center relative  ">
+          <input
+              type="text"
+              value={searchText}
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
+              placeholder="Search for products, brands and more"
+              className="w-full p-2 border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          />
+            <div className="bg-red-500 h-full absolute rounded-tr-md cursor-pointer hover:bg-opacity-80 rounded-br-md right-0 top-0 w-10 mx-auto ">
+              <FaSearch onClick={()=>{
+                if(searchText.length>0 && searchText.trim().length>0){
+                  router.push(`/search/${searchText}`)
+                }
+              }} size={25} className="text-white w-full h-full p-2 " />
+            </div>
+          </div>
+        }
+
         <div className="flex flex-row items-center md:gap-3">
-          <button
+       {!showSearch &&   <button
             onClick={() => {
               user ? logout() : setAuthOpen(true);
             }}
             className="text-white md:hidden px-2 text-sm py-1 rounded-xl font-semibold bg-red-600"
           >
             {user || loggedIn ? "Logout" : "Login"}
-          </button>
+          </button>}
           <AuthModal
             isOpen={isAuthOpen}
             onClose={() => setAuthOpen(false)}
@@ -226,7 +224,7 @@ const handleChange = (e:any) => {
           )}
         </div>
         <div className="fixed md:hidden bg-white z-[100] left-0 bottom-0 w-full">
-          <LowerDrawer />
+          <LowerDrawer setShowSearch={setShowSearch} showSearch={showSearch} />
         </div>
       </div>
     </div>

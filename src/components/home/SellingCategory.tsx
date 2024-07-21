@@ -7,6 +7,8 @@ import Link from "next/link";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { IoMdCart } from "react-icons/io";
+import Carousel from "react-multi-carousel";
+import { responsive } from "./Brands";
 
 const Brand = ({ brand }: { brand: any }) => {
   return (
@@ -59,7 +61,7 @@ const ProductCard = ({ product }: { product: any }) => {
   };
   const percentageOff = ((1 - product.price / product.mrp) * 100).toFixed(2);
   return (
-    <div className="flex flex-col items-start gap-3 bg-white p-4  w-[140px] md:w-[250px] rounded-xl">
+    <div className="flex flex-col items-start gap-3 bg-white p-4 mx-auto  w-[250px] md:w-[250px] rounded-xl">
       <Toaster position="bottom-right" />
       <img
         src={product.image}
@@ -159,19 +161,22 @@ const SellingCategory = ({ product }: { product: any }) => {
         </Link>
       </div>
 
-      <div className="flex bg-[#efeff4] w-full flex-col items-start justify-center gap-5 ">
+      <div className="flex bg-[#efeff4] px-5 w-full flex-col items-start justify-center gap-5 ">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-2 px-4 py-4">
           <TopBrands brands={product.brands} />
           <CategoriesAssemble categories={product.sub_categories} />
         </div>
 
-        <div className="px-2 md:px-4 pb-4 flex flex-row flex-wrap  gap-2 md:gap-3 items-center  justify-center">
+        <Carousel responsive={responsive} className="px-2 md:px-4  pb-4 w-full flex flex-row flex-wrap space-x-10 items-center ">
           {product
-            .products![0]!.slice(0, 6)
+            .products![0]!
             .map((productData: any, index: number) => {
-              return <ProductCard product={productData} key={index} />;
+              return(<div key={index} className="px-5 space-x-3">
+ <ProductCard product={productData} />
+              </div>
+              )
             })}
-        </div>
+        </Carousel>
       </div>
     </div>
   );

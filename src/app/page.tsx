@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-[90%] mx-auto h-full gap-10 mb-20 max-md:mb-28  flex flex-col items-center justify-center max-md:gap-20">
+      <main className="w-[100%] mx-auto h-full gap-10 mb-20 max-md:mb-28  flex flex-col items-center justify-center max-md:gap-20">
         <Hero />
         <Brands />
         <div className="w-full flex flex-col items-center gap-5">
