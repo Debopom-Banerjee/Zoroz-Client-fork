@@ -1,86 +1,55 @@
 "use client";
-import { Accordion } from "flowbite-react";
-import React from "react";
-
-const BrandSubChip = () => {
+import { getBrands } from "@/utils/functions/getBrands";
+import React, { useEffect, useState } from "react";
+import Carousel from "react-multi-carousel";
+const BrandSubChip = ({ brand }: { brand: any }) => {
+  console.log(brand);
   return (
-    <div className="flex flex-col pb-2 border-b border-slate-500 text-slate-500 w-full">
-      <div className="flex flex-row items-center justify-between w-full">
-        <h1>Wellton Healthcare</h1>
-        <h1>{">"}</h1>
-      </div>
+    <div className=" rounded-full p-4">
+      <img
+        src={brand.image}
+        alt={brand.name}
+        className="rounded-full w-full h-full"
+      />
     </div>
   );
 };
 
+export const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 12,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 8,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 12,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 2,
+  },
+};
 const Brands = () => {
+  const [brands, setBrands] = useState([]);
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const data = await getBrands();
+      setBrands(data);
+    };
+    fetchBrands();
+  }, []);
   return (
-    <Accordion className="w-full block md:hidden">
-      <Accordion.Panel>
-        <Accordion.Title className="font-semibold text-black">
-          Brands from Electronic Devices
-        </Accordion.Title>
-        <Accordion.Content>
-          <div className="flex flex-col items-center w-full gap-3">
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-          </div>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title className="font-semibold text-black">
-          Brands from Electronic Devices
-        </Accordion.Title>
-        <Accordion.Content>
-          <div className="flex flex-col items-center w-full gap-3">
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-          </div>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title className="font-semibold text-black">
-          Brands from Electronic Devices
-        </Accordion.Title>
-        <Accordion.Content>
-          <div className="flex flex-col items-center w-full gap-3">
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-          </div>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title className="font-semibold text-black">
-          Brands from Electronic Devices
-        </Accordion.Title>
-        <Accordion.Content>
-          <div className="flex flex-col items-center w-full gap-3">
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-            <BrandSubChip />
-          </div>
-        </Accordion.Content>
-      </Accordion.Panel>
-    </Accordion>
+    <Carousel responsive={responsive} className="flex h-full w-full space-x-10">
+      {brands?.map((brand: any, index: number) => {
+        return <BrandSubChip key={index} brand={brand} />;
+      })}
+    </Carousel>
   );
 };
 

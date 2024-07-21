@@ -8,6 +8,7 @@ import axios from "axios";
 import { getCategories } from "@/utils/functions/getCategories";
 import { getBrands } from "@/utils/functions/getBrands";
 import { BiSolidCategory } from "react-icons/bi";
+import Brands from "./Brands";
 
 const referralCardImages = [
   "https://i.postimg.cc/QNktmBST/banner5.jpg",
@@ -130,6 +131,7 @@ const Hero = () => {
           })}
         </div>
       </div>
+      
     </div>
   );
 };

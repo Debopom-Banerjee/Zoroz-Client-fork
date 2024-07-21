@@ -1,70 +1,53 @@
 "use client";
-import Navbar from '@/components/common/Navbar';
-import Footer from '@/components/home/Footer';
-import { getBrands } from '@/utils/functions/getBrands';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
-import { PuffLoader } from 'react-spinners';
-
-
-export const BrandCard = ({brand}:{brand:any})=>{
-    return(
-        <Link href={`/products/brands/${brand.name}`} className='flex flex-col hover:bg-gray-300 duration-500 transition-all items-center gap-5 justify-center w-[200px] h-[200px] mx-auto bg-white rounded-md '>
-                <img src={brand?.image} alt={brand?.name} className='w-20' />
-                <h1 className='font-semibold text-black text-lg'>{brand?.name}</h1>
-                
-        </Link>
-    )
-}
-
-export const CategoryCard = ({category}:{category:any})=>{
-    return(
-        <Link href={`/products/${category.name}/subCategories`} className='flex flex-col hover:bg-gray-300 duration-500 transition-all items-center gap-5 justify-center w-[200px] h-[200px] mx-auto bg-white rounded-md '>
-                <img src={category?.image} alt={category?.name} className='w-20' />
-                <h1 className='font-semibold text-black text-lg'>{category?.name}</h1>
-        </Link>
-    )
-};
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/home/Footer";
+import { BrandCard } from "@/components/products/BrandCard";
+import { getBrands } from "@/utils/functions/getBrands";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { PuffLoader } from "react-spinners";
 
 const page = () => {
-    const [brands,setBrands] = useState([]);
-    const [loading,setLoading] = useState(false);
+  const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
-        const fetchBrands = async()=>{
-            setLoading(true)
-            const data = await getBrands();
-            console.log(data);
-            setBrands(data)
-            setLoading(false)
-        }
-        fetchBrands()
-    },[])
+  useEffect(() => {
+    const fetchBrands = async () => {
+      setLoading(true);
+      const data = await getBrands();
+      console.log(data);
+      setBrands(data);
+      setLoading(false);
+    };
+    fetchBrands();
+  }, []);
   return (
     <>
-    <Navbar />
+      <Navbar />
 
-    <div className='flex flex-col items-start gap-5 w-full min-h-[60vh] lg:w-[70%] mx-auto my-10'>
-            <h1 className='font-semibold text-2xl'>All Brands</h1>
-            <div className='flex flex-row w-full flex-wrap gap-10 items-center'>
-            {loading? 
-            <div className='flex flex-col min-h-[60vh] w-full mx-auto justify-center items-center'>
-                <PuffLoader size={30} color='black' />
+      <div className="flex flex-col items-start gap-5 w-full min-h-[60vh] lg:w-[70%] mx-auto my-10">
+        <h1 className="font-semibold text-2xl">All Brands</h1>
+        <div className="flex flex-row w-full flex-wrap gap-10 items-center">
+          {loading ? (
+            <div className="flex flex-col min-h-[60vh] w-full mx-auto justify-center items-center">
+              <PuffLoader size={30} color="black" />
             </div>
-            :
-                brands?.map((brand:any,index:number)=>{
-                    return(
-                        <BrandCard key={index} brand={brand} />
-                    )
-                })
-            }
-    </div>
-    </div>
-    
-    <Footer />
-    </>
-  )
-}
+          ) : (
+            brands?.map((brand: any, index: number) => {
+              return (
+                <div key={index}>
+                  <BrandCard brand={brand} />
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
 
-export default page
+      <Footer />
+    </>
+  );
+};
+
+export default page;

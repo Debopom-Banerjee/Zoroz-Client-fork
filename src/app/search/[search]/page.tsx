@@ -5,8 +5,9 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/home/Footer";
 import { getSearchData } from "@/utils/functions/getSearchData";
 import ProductView from "@/components/products/ProductView";
-import { BrandCard, CategoryCard } from "@/app/products/brands/page";
 import { PuffLoader } from "react-spinners";
+import { CategoryCard } from "@/components/products/CategoryCard";
+import { BrandCard } from "@/components/products/BrandCard";
 
 const Tabs = ({
   selectedTab,
@@ -83,7 +84,9 @@ const Page = () => {
                 {searchResults?.brands?.length > 0 ?  <div className="grid grid-cols-1 justify-center items-center w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                   {searchResults?.brands?.length > 0 &&
                     searchResults?.brands?.map((brand: any, index) => (
-                      <BrandCard key={index} brand={brand} />
+                        <div key={index}>
+                            <BrandCard brand={brand} />
+                        </div>
                     ))}
                 </div>: <h1 className="text-center w-full text-red-600 justify-center flex h-[20vh]">No Brands found</h1>}
                 <h1 className="font-semibold text-2xl">Products</h1>
@@ -133,7 +136,9 @@ const Page = () => {
         {searchResults?.brands?.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 {searchResults.brands.map((brand: any, index: number) => (
-                    <BrandCard key={index} brand={brand} />
+                    <div key={index}>
+                        <BrandCard  brand={brand} />
+                    </div>
                 ))}
             </div>
         ) : (
